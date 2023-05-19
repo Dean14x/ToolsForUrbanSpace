@@ -33,6 +33,7 @@ class App extends React.Component {
     }
     return (
       <div>
+        Test 1
         {page}
       </div>
     );
