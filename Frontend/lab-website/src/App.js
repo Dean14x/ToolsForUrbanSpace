@@ -33,9 +33,14 @@ class App extends React.Component {
     }
     return (
       <div>
+<<<<<<< HEAD
         Test 1
+=======
+        <h1>Testest</h1>
+>>>>>>> 5815c149cad573edcdad2baffff376d691310b09
         {page}
       </div>
+
     );
   }
 }
