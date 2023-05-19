@@ -1,0 +1,31 @@
+.overviewWidget {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    max-height: 100%;
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+    background-color: #282c34;
+    color: white;
+    border-radius: 10px;
+}
+
+.overviewWidget:hover {
+    background-color: #6c6f77;
+    color: black;
+    cursor: pointer;
+}
+
+.overviewWidgets {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    flex-wrap: wrap;
+}

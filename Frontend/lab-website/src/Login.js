@@ -52,7 +52,7 @@ class LoginPanel extends React.Component {
             <div>
                 <FeedbackField type="text" placeholder="Username" />
                 <FeedbackField type="password" placeholder="Password" />
-                <button onClick={() => this.props.app.setPage("homepage")}>
+                <button onClick={() => this.props.app.setPage("overview")}>
                     Login
                 </button>
             </div>
@@ -78,7 +78,7 @@ class SignupPanel extends React.Component {
                 <FeedbackField type="text" placeholder="Email" />
                 <FeedbackField type="password" placeholder="Password" />
                 <FeedbackField type="password" placeholder="Confirm Password" />
-                <button onClick={() => this.props.app.setPage("homepage")}>
+                <button onClick={() => this.props.app.setPage("overview")}>
                     Sign up
                 </button>
 
