@@ -1,8 +1,31 @@
 import React from "react";
+import "./Overview.css";
 
-// Homepage component
-// This is the homepage of the website
-// It is the first page that the user sees
+// A basic Overview widget
+// Contains info about some aspect of the project
+// e.g. current budget, current resources, etc.
+class OverviewWidget extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    render() {
+        return (
+            <div className="overviewWidget">
+                <h2>{this.props.title}</h2>
+                <p>
+                    Here is an overview of some {this.props.title} data.
+                </p>
+            </div>
+        );
+    }
+}
+
+// Overview component
+// This is the overview page of the users project
+// It is the first page a user sees after logging in
 class Overview extends React.Component {
     constructor(props) {
         super(props);
@@ -16,12 +39,21 @@ class Overview extends React.Component {
     render() {
         return (
             <div>
-                <h1>Tools For Urban Space</h1>
-                <p>
-                    This is a website for the Tools For Urban Space project.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam id nunc vitae magna aliquam aliquet. Donec euismod
-                </p>
+                <div>
+                    <h1>Project Overview</h1>
+                    <p>
+                        This is the project overview page.
+                        Here is a small overview of the ResourceChecker and NetworkAnalysis tools.
+                    </p>
+                </div>
+                <div className="overviewWidgets">
+                    <OverviewWidget title="ResourceChecker" />
+                    <OverviewWidget title="NetworkAnalysis" />
+                    <OverviewWidget title="Other Tool" />
+                    <OverviewWidget title="ResourceChecker" />
+                    <OverviewWidget title="NetworkAnalysis" />
+                    <OverviewWidget title="Other Tool" />
+                </div>
             </div>
         );
     }
