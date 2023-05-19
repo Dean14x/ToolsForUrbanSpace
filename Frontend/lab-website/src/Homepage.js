@@ -1,5 +1,8 @@
 import React from "react";
 
+// Homepage component
+// This is the homepage of the website
+// It is the first page that the user sees
 class Homepage extends React.Component {
     constructor(props) {
         super(props);
