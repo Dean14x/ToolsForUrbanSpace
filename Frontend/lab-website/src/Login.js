@@ -1,6 +1,8 @@
 import React from "react";
 // import css
 import "./Login.css";
+import "./general.css";
+import { Link } from "react-router-dom";
 
 // Login and Signup components
 
@@ -52,9 +54,7 @@ class LoginPanel extends React.Component {
             <div>
                 <FeedbackField type="text" placeholder="Username" />
                 <FeedbackField type="password" placeholder="Password" />
-                <button onClick={() => this.props.app.setPage("overview")}>
-                    Login
-                </button>
+                <Link className="basicButton" to="/overview">Login</Link>
             </div>
         );
     }
@@ -78,9 +78,7 @@ class SignupPanel extends React.Component {
                 <FeedbackField type="text" placeholder="Email" />
                 <FeedbackField type="password" placeholder="Password" />
                 <FeedbackField type="password" placeholder="Confirm Password" />
-                <button onClick={() => this.props.app.setPage("overview")}>
-                    Sign up
-                </button>
+                <Link className="basicButton" to="/overview">Sign up</Link>
 
             </div>
         );
