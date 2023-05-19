@@ -51,7 +51,9 @@ class NetworkAnalysis extends React.Component {
                     </table>
 
                 </div>
-
+                <div>
+                    <button onClick={() => this.setPage("networkmap")}>NetworkMap</button>
+                </div>
             </div>
         );
     }
