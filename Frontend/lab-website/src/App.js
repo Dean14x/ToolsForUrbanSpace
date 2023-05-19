@@ -1,5 +1,6 @@
 import React from "react";
 import Homepage from "./Homepage";
+import Login from "./Login";
 
 class App extends React.Component {
   constructor(props) {
@@ -7,10 +8,11 @@ class App extends React.Component {
     this.state = {
       name: "React",
       username: "",
-      session: ""
+      session: "",
+      page: "login"
     };
 
-    this.setPage("homepage");
+    this.setPage("login");
   }
 
   getUsername() {
@@ -18,14 +20,19 @@ class App extends React.Component {
   }
 
   setPage(page) {
-    this.setState({ page: page });
+    // switch page to new page given by string, e.g. "login"
+    if (page !== this.state.page)
+      this.setState({ page: page });
   }
 
   render() {
-    let page = [];
+    let page;
     switch (this.state.page) {
       case "homepage":
         page = <Homepage app={this} />;
+        break;
+      case "login":
+        page = <Login app={this} />;
         break;
       default:
         page = <Homepage app={this} />;
