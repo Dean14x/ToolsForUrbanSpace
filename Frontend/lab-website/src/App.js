@@ -33,7 +33,6 @@ class App extends React.Component {
     }
     return (
       <div>
-        <h1>Testest</h1>
         {page}
       </div>
 
