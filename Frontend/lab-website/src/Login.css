@@ -6,6 +6,10 @@ button {
     cursor: pointer;
 }
 
+button:hover {
+    opacity: 0.8;
+}
+
 .login-container {
     padding: 16px;
     max-width: 90vw;
