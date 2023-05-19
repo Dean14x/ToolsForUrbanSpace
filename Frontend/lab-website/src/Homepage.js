@@ -23,6 +23,7 @@ class Homepage extends React.Component {
                     Nullam id nunc vitae magna aliquam aliquet. Donec euismod
                 </p>
             </div>
+
         );
     }
 }
