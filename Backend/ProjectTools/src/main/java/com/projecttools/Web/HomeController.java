@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping(path = "/")
-    public String getH(){
-        return "pace";
+    public String getHome(){
+        return "home";
     }
 }
