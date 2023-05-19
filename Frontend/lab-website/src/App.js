@@ -1,19 +1,39 @@
 import React from "react";
+import Homepage from "./Homepage";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "React"
+      name: "React",
+      username: "",
+      session: ""
     };
+
+    this.setPage("homepage");
+  }
+
+  getUsername() {
+    return this.state.username;
+  }
+
+  setPage(page) {
+    this.setState({ page: page });
   }
 
   render() {
+    let page = [];
+    switch (this.state.page) {
+      case "homepage":
+        page = <Homepage app={this} />;
+        break;
+      default:
+        page = <Homepage app={this} />;
+        break;
+    }
     return (
       <div>
-        <h1>Hello, {this.state.name}!</h1>
-        <h1>Hello, {this.state.name}!</h1>
-
+        {page}
       </div>
     );
   }
