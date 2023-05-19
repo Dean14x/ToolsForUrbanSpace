@@ -12,6 +12,8 @@ class App extends React.Component {
     return (
       <div>
         <h1>Hello, {this.state.name}!</h1>
+        <h1>Hello, {this.state.name}!</h1>
+
       </div>
     );
   }
