@@ -4,6 +4,7 @@ import Login from "./Login";
 import NetworkAnalysis from "./NetworkAnalysis";
 import Overview from "./Overview";
 import ResourceChecker from "./ResourceChecker";
+import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 
 
 class App extends React.Component {
