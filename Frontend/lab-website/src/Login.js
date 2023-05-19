@@ -113,7 +113,7 @@ class Login extends React.Component {
         }
 
         return (
-            <div>
+            <div className="login-container">
                 <div>
                     <button onClick={() => this.setState({display: 0})}>
                         Login
