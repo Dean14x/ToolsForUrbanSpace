@@ -14,6 +14,7 @@ public class Network {
     double rating;
     String contact;
     @ManyToOne
+    @JoinColumn(name = "fk_")
     Category category;
     @OneToMany
     List<Address> address;
