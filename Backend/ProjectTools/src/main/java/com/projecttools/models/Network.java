@@ -1,6 +1,8 @@
 package com.projecttools.models;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,5 +15,7 @@ public class Network {
     String contact;
     @ManyToOne
     Category category;
+    @OneToMany
+    List<Address> address;
 
 }
