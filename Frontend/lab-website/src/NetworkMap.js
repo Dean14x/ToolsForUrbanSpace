@@ -17,10 +17,8 @@ class NetworkAnalysis extends React.Component {
     render() {
         return (
             <div >
-
                 <form action="/" method="get">
                     <label htmlFor="header-search">
-
                     </label>
                     <input
                         type="text"
@@ -30,8 +28,6 @@ class NetworkAnalysis extends React.Component {
                     />
                     <button type="submit">Search</button>
                 </form>
-
-
             </div>
         );
     }

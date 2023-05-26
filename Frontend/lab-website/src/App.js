@@ -7,6 +7,7 @@ import ResourceChecker from "./ResourceChecker";
 import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import logo2 from './logos/logo2.png';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
@@ -34,7 +35,9 @@ class App extends React.Component {
 
     return (
       <div className="appRoot">
+
         <BrowserRouter>
+
           <Navbar app={this} />
 
           <Routes>
