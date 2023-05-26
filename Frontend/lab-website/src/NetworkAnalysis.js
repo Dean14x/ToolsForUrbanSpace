@@ -1,5 +1,10 @@
 import React from "react";
+import NetworkMap from "./NetworkMap";
 import './infopage_style.css';
+import Homepage from "./Homepage";
+import Login from "./Login";
+import Overview from "./Overview";
+import ResourceChecker from "./ResourceChecker";
 
 // Homepage component
 // This is the homepage of the website
@@ -14,7 +19,17 @@ class NetworkAnalysis extends React.Component {
         };
     }
 
+    setPage(page) {
+        this.setState({ page: page });
+    }
+
     render() {
+        let page;
+        switch (this.state.page) {
+            case "networkmap":
+                page = <NetworkMap app={this} />;
+                break;
+        }
         return (
             <div>
                 <div className={"info_text"}>
@@ -52,7 +67,12 @@ class NetworkAnalysis extends React.Component {
 
                 </div>
                 <div>
-                    <button onClick={() => this.setPage("networkmap")}>NetworkMap</button>
+                    <div>
+
+                        <button onClick={() => this.setPage("networkmap")}>Network Map</button>
+
+                    </div>
+                    {page}
                 </div>
             </div>
         );
