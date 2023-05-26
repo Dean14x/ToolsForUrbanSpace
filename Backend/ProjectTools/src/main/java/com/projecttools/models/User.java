@@ -1,10 +1,10 @@
 package com.projecttools.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,10 +13,18 @@ import java.util.UUID;
 public class User {
     @Id
     private UUID id;
-    private char name;
-    private char email;
-    private char password;
+    private String name;
+    private String email;
+    private String password;
     private double budget;
     private boolean is_Admin;
+    @OneToMany
+    List<UserResources> resourcesNeeded;
+    @OneToMany
+    List<UserResources> resourcesAvailable;
+    @ManyToMany
+    List<Network> networksNeeded;
+    @ManyToMany
+    List<Network> networksAvailable;
 
 }

@@ -1,0 +1,11 @@
+functionalities:
+    Login
+    register
+    getInfoAboutProject
+    listAllInventoryOfTheLab
+    listAllResources
+    listAllInventoryPlanned
+    listAllNetworksTheCity
+    listAllAvailableNetworks
+    listAllNeededNetworks
+    edit
