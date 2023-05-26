@@ -1,9 +1,6 @@
 package com.projecttools.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,9 +15,18 @@ public class UserResources {
     private UUID id;
     private int amount;
     private boolean available;
-
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     @ManyToOne
     Resource resource;
 
+    public UserResources(){}
 
+    public UserResources(int amount, boolean available, User user, Resource resource) {
+        this.amount = amount;
+        this.available = available;
+        this.user = user;
+        this.resource = resource;
+    }
 }

@@ -17,4 +17,10 @@ public class Category {
     UUID id;
     @NonNull
     String name;
+
+    public Category(){}
+
+    public Category(String name){
+        this.name = name;
+    }
 }
