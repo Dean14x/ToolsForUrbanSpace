@@ -14,4 +14,13 @@ public class Resource {
     double cost;
     @ManyToOne
     Category category;
+
+    public Resource(){}
+
+    public Resource(String name, String description, double cost, Category category) {
+        this.name = name;
+        this.description = description;
+        this.cost = cost;
+        this.category = category;
+    }
 }

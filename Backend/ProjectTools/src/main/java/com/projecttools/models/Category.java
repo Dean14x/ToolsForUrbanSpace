@@ -9,4 +9,10 @@ public class Category {
     @Id
     UUID id;
     String name;
+
+    public Category(){}
+
+    public Category(String name){
+        this.name = name;
+    }
 }

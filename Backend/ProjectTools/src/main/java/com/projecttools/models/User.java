@@ -10,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
+@Table(name = "user_table")
 public class User {
     @Id
     private UUID id;
@@ -18,13 +19,34 @@ public class User {
     private String password;
     private double budget;
     private boolean is_Admin;
-    @OneToMany
+
+    public User(){}
+
+    public User(String name, String email, String password, double budget, boolean is_Admin, List<UserResources> resourcesNeeded, List<UserResources> resourcesAvailable, List<Network> networksNeeded, List<Network> networksAvailable) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.budget = budget;
+        this.is_Admin = is_Admin;
+        this.resourcesNeeded = resourcesNeeded;
+        this.resourcesAvailable = resourcesAvailable;
+        this.networksNeeded = networksNeeded;
+        this.networksAvailable = networksAvailable;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER)
     List<UserResources> resourcesNeeded;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     List<UserResources> resourcesAvailable;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_network_needed",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "network_id"))
     List<Network> networksNeeded;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_network_available",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "network_id"))
     List<Network> networksAvailable;
 
 }

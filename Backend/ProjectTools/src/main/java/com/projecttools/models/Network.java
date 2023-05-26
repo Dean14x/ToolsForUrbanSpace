@@ -13,9 +13,21 @@ public class Network {
     String email;
     double rating;
     String contact;
+    String city;
+    String street;
     @ManyToOne
     Category category;
-    @OneToMany
-    List<Address> address;
+
+    public Network(){}
+
+    public Network(String name,String email,double rating,String contact,String city,String street,Category category){
+        this.name = name;
+        this.email=email;
+        this.rating=rating;
+        this.contact = contact;
+        this.city = city;
+        this.street = street;
+        this.category = category;
+    }
 
 }
