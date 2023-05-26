@@ -33,7 +33,7 @@ class App extends React.Component {
         <BrowserRouter>
 
           <Navbar app={this} />
-          <img src= {logo2} alt="logo" width={100} height={100} />
+
           <Routes>
             <Route path="/" element={<Homepage app={this} />} />
             <Route path="/overview" element={<Overview app={this} />} />
