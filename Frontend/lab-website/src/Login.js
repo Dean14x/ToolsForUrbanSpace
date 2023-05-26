@@ -258,7 +258,7 @@ class LoginPanel extends React.Component {
             <div className="login-signup-controls-container">
                 <CustomFeedbackField ref={this.usernameField} type="text" placeholder="Username" />
                 <CustomFeedbackField ref={this.passwordField} type="password" placeholder="Password" />
-                <div className="basicButton loginButton" onClick={() => { this.login(); }}>Login</div>
+                <div className="loginButton" onClick={() => { this.login(); }}><div>Login</div></div>
             </div>
         );
     }
@@ -330,7 +330,7 @@ class SignupPanel extends React.Component {
                 <PasswordFeedbackField ref={this.passwordField} setMyVal={set} type="password" placeholder="Password" />
                 <PasswordMatchFeedbackField ref={this.passwordMatchField} getOtherVal={get} type="password" placeholder="Confirm Password" />
                 <div className="signup-feedback">{this.state.signupFeedback}</div>
-                <div className="basicButton loginButton" onClick={() => { this.signUp(); }}>Sign up</div>
+                <div className="loginButton" onClick={() => { this.signUp(); }}><div>Sign up</div></div>
 
             </div>
         );
@@ -379,6 +379,12 @@ class Login extends React.Component {
                 </div>
 
                 {panel}
+
+            <div className="login-bg">
+                <img src="/static/images/login/Vector3.png" alt="login-vec3"/>
+                <img src="/static/images/login/Vector4.png" alt="login-vec4"/>
+                <img src="/static/images/login/Ellipse2.png" alt="login-ellipse"/>
+            </div>
 
             </div>
         );

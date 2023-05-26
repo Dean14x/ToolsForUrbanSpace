@@ -22,7 +22,6 @@ button:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: lightblue;
     border-radius: 10px;
 
 }
@@ -138,15 +137,55 @@ button:hover {
 }
 
 .loginButton {
-    width: 70px;
-    height: 20px;
+    width: 100px;
+    height: 40px;
     text-align: center;
     border-radius: 10px;
     color: white;
-    font-size: 16px;
+    font-size: 20px;
     border: none;
     outline: none;
     cursor: pointer;
     margin-right: 0;
     margin-left: auto;
+    background-color: #4CAF50;
+    /* text hight center */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.loginButton:hover {
+    opacity: 0.8;
+}
+
+.loginButton > div {
+    margin: 0;
+    padding-bottom: 3px;
+}
+
+.login-bg {
+    /*
+    *   container for background images
+    */
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.login-bg > img {
+    /*
+    *   background images
+    */
+
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    object-fit: cover;
+    z-index: -1;
 }
