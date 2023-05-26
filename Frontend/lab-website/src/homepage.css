@@ -1,0 +1,54 @@
+
+
+.info_titel{
+   position: absolute;
+   width: 700px;
+   height: 104px;
+   left: 151px;
+   top: 200px;
+
+   font-family: 'Inter', sans-serif;
+   font-style: normal;
+   font-weight: 700;
+   font-size: 72px;
+   line-height: 103px;
+
+   color: #043051;
+}
+.info{
+   position: absolute;
+   width: 400px;
+   height: 174px;
+   left: 147px;
+   top: 354px;
+
+   font-family: 'Inter', sans-serif;
+   font-style: normal;
+   font-weight: 700;
+   font-size: 35px;
+   line-height: 58px;
+
+   color: #043051;
+}
+
+.deko{
+   position: absolute;
+   width: 682px;
+   height: 650px;
+   left: 800px;
+}
+
+.deko3{
+   z-index: -2;
+   position: absolute;
+   width: 980px;
+   height: 650px;
+   left: 500px;
+}
+
+.buttonLogin{
+   color: white;
+   text-align: center;
+   margin-top: 60px;
+   margin-left: -1015px;
+}

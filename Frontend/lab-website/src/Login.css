@@ -1,9 +1,11 @@
 button {
-    background-color: #4CAF50;
+    background-color: orange;
     color: white;
+    border: none;
     padding: 14px 20px;
     margin: 8px 0px;
     cursor: pointer;
+    border-radius: 30px;
 }
 
 button:hover {
