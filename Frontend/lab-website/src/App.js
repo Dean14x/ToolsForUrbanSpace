@@ -6,13 +6,13 @@ import Overview from "./Overview";
 import ResourceChecker from "./ResourceChecker";
 import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "React",
       username: "",
       session: "",
       count: 0,
@@ -24,12 +24,16 @@ class App extends React.Component {
     return this.state.username;
   }
 
+  setUser(username, session) {
+    this.setState({ username: username, session: session });
+  }
+
 
 
   render() {
 
     return (
-      <div>
+      <div className="appRoot">
         <BrowserRouter>
           <Navbar app={this} />
 
@@ -40,6 +44,7 @@ class App extends React.Component {
             <Route path="/resources" element={<ResourceChecker app={this} />} />
             <Route path="/login" element={<Login app={this} />} />
           </Routes>
+          <Footer app={this} />
         </BrowserRouter>
       </div>
 
