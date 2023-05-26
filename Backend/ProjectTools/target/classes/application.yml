@@ -1,14 +1,12 @@
+spring:
 
-version: '3.6'
+  datasource:
+    url: jdbc:mysql://localhost:3306/projekt_tool
+    username: root
+    password: user
 
-services:
 
-  db:
-    image: 'mysql:8'
-    ports:
-      - 3309:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: db#1234
-      MYSQL_DATABASE : eshop-backend-db
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'db#1234'
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
