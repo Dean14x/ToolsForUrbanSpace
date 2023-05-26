@@ -30,6 +30,10 @@ class FeedbackField extends React.Component {
         return "";
     }
 
+    isValid() {
+        return this.state.value.length !== 0 && this.getFeedback() === "";
+    }
+
 
 
     render() {
@@ -259,7 +263,8 @@ class SignupPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            loggedIn: false
+            loggedIn: false,
+            signupFeedback: ""
         };
         this.usernameField = React.createRef();
         this.emailField = React.createRef();
@@ -267,13 +272,44 @@ class SignupPanel extends React.Component {
         this.passwordMatchField = React.createRef();
     }
 
+    setFeedback(val) {
+        this.setState({signupFeedback: val});
+    }
+
     signUp() {
         // check if all fields are valid
-
+        if(!this.usernameField.current.isValid()) {
+            this.setFeedback("Invalid username");
+            return;
+        }
+        if(!this.emailField.current.isValid()) {
+            this.setFeedback("Invalid email");
+            return;
+        }
+        if(!this.passwordField.current.isValid()) {
+            this.setFeedback("Invalid password");
+            return;
+        }
+        if(!this.passwordMatchField.current.isValid()) {
+            this.setFeedback("Passwords do not match");
+            return;
+        }
+        // get values
+        let username = this.usernameField.current.getVal();
+        let email = this.emailField.current.getVal();
+        let password = this.passwordField.current.getVal();
         // call api to sign up
+        // let res = await fetch("http://localhost:5000/signup", {
+            // ...
+        // });
+        
+        // let data = await res.json();
+
+        this.props.login.setState({loggedIn: true});
+        this.props.app.setUser(username, "some session");
+        return;
 
         // on success, redirect to overview
-        this.props.login.setState({loggedIn: true});
     }
 
     render() {
@@ -286,6 +322,7 @@ class SignupPanel extends React.Component {
                 <EmailFeedbackField ref={this.emailField} type="text" placeholder="Email" />
                 <PasswordFeedbackField ref={this.passwordField} setMyVal={set} type="password" placeholder="Password" />
                 <PasswordMatchFeedbackField ref={this.passwordMatchField} getOtherVal={get} type="password" placeholder="Confirm Password" />
+                <div className="signup-feedback">{this.state.signupFeedback}</div>
                 <div className="basicButton" onClick={() => {this.signUp();}}>Sign up</div>
 
             </div>
