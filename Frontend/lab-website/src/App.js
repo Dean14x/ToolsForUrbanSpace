@@ -6,6 +6,7 @@ import Overview from "./Overview";
 import ResourceChecker from "./ResourceChecker";
 import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 import Navbar from "./Navbar";
+import logo2 from './logos/logo2.png';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
@@ -24,15 +25,15 @@ class App extends React.Component {
     return this.state.username;
   }
 
-
-
   render() {
 
     return (
       <div>
-        <BrowserRouter>
-          <Navbar app={this} />
 
+        <BrowserRouter>
+
+          <Navbar app={this} />
+          <img src= {logo2} alt="logo" width={100} height={100} />
           <Routes>
             <Route path="/" element={<Homepage app={this} />} />
             <Route path="/overview" element={<Overview app={this} />} />

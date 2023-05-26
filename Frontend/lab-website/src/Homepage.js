@@ -16,11 +16,10 @@ class Homepage extends React.Component {
     render() {
         return (
             <div>
-                <h1>Tools For Urban Space</h1>
+                <h1>Tools For Urban Spaces</h1>
                 <p>
-                    This is a website for the Tools For Urban Space project.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam id nunc vitae magna aliquam aliquet. Donec euismod
+                    This is a website is for the Tools For Urban Space project.
+                    You can use the tools provided to plan and organize your lab for your commune.
                 </p>
             </div>
 
