@@ -3,9 +3,14 @@ package com.projecttools.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
 public class Resource {
     @Id
     UUID id;
