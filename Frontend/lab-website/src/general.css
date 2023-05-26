@@ -1,3 +1,10 @@
+.appRoot {
+    min-height: 100vh;
+        
+    display: flex;
+    flex-direction: column;
+}
+
 .basicButton {
     background-color: red;
     border: none;
@@ -7,6 +14,7 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    cursor: pointer;
 }
 
 .basicButton:hover {
