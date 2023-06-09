@@ -1,0 +1,130 @@
+
+.resourceChecker {
+    width: 100vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabView {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.tabViewHeader {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #ccc;
+    background-color: #ccc;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.tabViewHeader .tabViewHeaderItemActive {
+    background-color: #f1f1f1;
+}
+
+.tabViewHeader button {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #ccc;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 20px;
+}
+
+
+.tabViewHeader button:hover {
+    background-color: #ddd;
+}
+
+.tabViewContent {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.resourceView {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.resourceView table {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border: 1px solid #ccc;
+}
+
+.resourceView table tr {
+    background-color: #f1f1f1;
+    padding: 5px;
+}
+
+.resourceView table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.resourceView table tr td {
+    text-align: right;
+    border-bottom: 1px solid #ccc;
+    font-size: 20px;
+}
+
+
+
+.resourceView table tr th {
+    text-align: right;
+    border-bottom: 1px solid #ccc;
+    font-size: 22px;
+    
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+
+.resourceView table tr th:hover {
+    background-color: #ddd;
+}
+
+.resourceViewButton {
+    height: 40px;
+    margin: 5px;
+    padding: 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+    color: black;
+}
+
+.resourceViewButton:hover {
+    background-color: #ddd;
+}
+
