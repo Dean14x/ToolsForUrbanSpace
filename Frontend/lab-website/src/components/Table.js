@@ -10,27 +10,34 @@ export const Table = ({ rows, deleteRow, editRow }) => {
             <table className="table">
                 <thead>
                 <tr>
-                    <th>Page</th>
-                    <th className="expand">Description</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Address</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Rating</th>
+                    <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
                 {rows.map((row, idx) => {
                     const statusText =
-                        row.status.charAt(0).toUpperCase() + row.status.slice(1);
+                        row.type.charAt(0).toUpperCase() + row.type.slice(1);
 
                     return (
                         <tr key={idx}>
-                            <td>{row.page}</td>
-                            <td className="expand">{row.description}</td>
+                            <td>{row.name}</td>
                             <td>
-                  <span className={`label label-${row.status}`}>
-                    {statusText}
-                  </span>
+                                <span className={`label label-${row.type}`}>
+                                    {statusText}
+                                </span>
                             </td>
-                            <td className="fit">
+                            <td>{row.description}</td>
+                            <td>{row.email}</td>
+                            <td>{row.contact}</td>
+                            <td >{row.rating}</td>
+                            <td className={"expand"}>
+
                   <span className="actions">
                     <BsFillTrashFill
                         className="delete-btn"

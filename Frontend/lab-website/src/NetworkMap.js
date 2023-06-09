@@ -8,20 +8,14 @@ function NetworkMap() {
     const [modalOpen, setModalOpen] = useState(false);
     const [rows, setRows] = useState([
         {
-            page: "Home",
-            description: "This is the main page of the website",
-            status: "live",
+            name: "Name",
+            type: "none",
+            description: "Address",
+            email:"Email",
+            contact:"Contact",
+            rating:"Rating",
         },
-        {
-            page: "About Us",
-            description: "This page has details about the company",
-            status: "draft",
-        },
-        {
-            page: "Pricing",
-            description: "Prices for different subscriptions",
-            status: "error",
-        },
+
     ]);
     const [rowToEdit, setRowToEdit] = useState(null);
 

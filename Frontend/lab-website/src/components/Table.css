@@ -47,15 +47,19 @@
     color: white;
 }
 
-.label-draft {
+.label-teacher {
     background-color: #777;
 }
 
-.label-live {
-    background-color: #42a942;
+.label-worker {
+    background-color: #61dafb;
 }
 
-.label-error {
+.label-other {
+    background-color: #6c6f77;
+}
+
+.label-none {
     background-color: #d9534f;
 }
 

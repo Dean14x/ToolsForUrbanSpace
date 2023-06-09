@@ -5,15 +5,20 @@ import "./Modal.css";
 export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
     const [formState, setFormState] = useState(
         defaultValue || {
-            page: "",
+            name: "",
+            type: "",
             description: "",
-            status: "live",
+            email: "",
+            contact: "",
+            rating: "",
+
+
         }
     );
     const [errors, setErrors] = useState("");
 
     const validateForm = () => {
-        if (formState.page && formState.description && formState.status) {
+        if (formState.name && formState.description && formState.type && formState.email && formState.contact && formState.rating) {
             setErrors("");
             return true;
         } else {
@@ -36,9 +41,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
         e.preventDefault();
 
         if (!validateForm()) return;
-
         onSubmit(formState);
-
         closeModal();
     };
 
@@ -52,11 +55,23 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
             <div className="modal">
                 <form>
                     <div className="form-group">
-                        <label htmlFor="page">Page</label>
-                        <input name="page" onChange={handleChange} value={formState.page} />
+                        <label htmlFor="name">Name</label>
+                        <input name="name" onChange={handleChange} value={formState.name} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="description">Description</label>
+                    <label htmlFor="type">Type</label>
+                    <select
+                        name="type"
+                        onChange={handleChange}
+                        value={formState.type}
+                    >
+                        <option value="teacher">Teacher</option>
+                        <option value="worker">Worker</option>
+                        <option value="other">Other</option>
+                    </select>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="description">Address</label>
                         <textarea
                             name="description"
                             onChange={handleChange}
@@ -64,17 +79,30 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="status">Status</label>
-                        <select
-                            name="status"
+                        <label htmlFor="email">Email</label>
+                        <textarea
+                            name="email"
                             onChange={handleChange}
-                            value={formState.status}
-                        >
-                            <option value="live">Live</option>
-                            <option value="draft">Draft</option>
-                            <option value="error">Error</option>
-                        </select>
+                            value={formState.email}
+                        />
                     </div>
+                    <div className="form-group">
+                        <label htmlFor="contact">Contact</label>
+                        <textarea
+                            name="contact"
+                            onChange={handleChange}
+                            value={formState.contact}
+                        />
+                    </div>
+                    <div className="form-group">
+                    <label htmlFor="rating">Rating</label>
+                    <textarea
+                        name="rating"
+                        onChange={handleChange}
+                        value={formState.rating}
+                    />
+                </div>
+
                     {errors && <div className="error">{`Please include: ${errors}`}</div>}
                     <button type="submit" className="btn" onClick={handleSubmit}>
                         Submit
