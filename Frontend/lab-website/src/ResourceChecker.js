@@ -17,7 +17,6 @@ class ResourceChecker extends React.Component {
         return (
             <div>
                 <h1>Info Text</h1>
-
                 <div>
                     <table>
                         <tr>
@@ -51,7 +50,6 @@ class ResourceChecker extends React.Component {
                             </td>
                         </tr>
                     </table>
-
                 </div>
             </div>
         );

@@ -1,38 +1,70 @@
-import React from "react";
-import './searchstyle.css';
+import { useState } from "react";
 
-// Homepage component
-// This is the homepage of the website
-// It is the first page that the user sees
-class NetworkAnalysis extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: "React",
-            username: "",
-            session: ""
-        };
-    }
+import "./App.css";
+import { Table } from "./components/Table";
+import { Modal } from "./components/Modal";
 
-    render() {
-        return (
-            <div >
-                <form action="/" method="get">
-                    <label htmlFor="header-search">
-                    </label>
-                    <input
-                        type="text"
-                        id="header-search"
-                        placeholder="Search blog posts"
-                        name="s"
-                    />
-                    <button type="submit">Search</button>
-                </form>
-                <iframe src="https://www.google.com/maps/d/embed?mid=1WmSbee3PO_N043CDlwHYUcd4LOvNcS8&ehbc=2E312F" width="1500" height="480"></iframe>
-            </div>
+function NetworkMap() {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [rows, setRows] = useState([
+        {
+            page: "Home",
+            description: "This is the main page of the website",
+            status: "live",
+        },
+        {
+            page: "About Us",
+            description: "This page has details about the company",
+            status: "draft",
+        },
+        {
+            page: "Pricing",
+            description: "Prices for different subscriptions",
+            status: "error",
+        },
+    ]);
+    const [rowToEdit, setRowToEdit] = useState(null);
 
-        );
-    }
+    const handleDeleteRow = (targetIndex) => {
+        setRows(rows.filter((_, idx) => idx !== targetIndex));
+    };
+
+    const handleEditRow = (idx) => {
+        setRowToEdit(idx);
+
+        setModalOpen(true);
+    };
+
+    const handleSubmit = (newRow) => {
+        rowToEdit === null
+            ? setRows([...rows, newRow])
+            : setRows(
+                rows.map((currRow, idx) => {
+                    if (idx !== rowToEdit) return currRow;
+
+                    return newRow;
+                })
+            );
+    };
+
+    return (
+        <div className="NetworkMap">
+            <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
+            <button onClick={() => setModalOpen(true)} className="btn">
+                Add
+            </button>
+            {modalOpen && (
+                <Modal
+                    closeModal={() => {
+                        setModalOpen(false);
+                        setRowToEdit(null);
+                    }}
+                    onSubmit={handleSubmit}
+                    defaultValue={rowToEdit !== null && rows[rowToEdit]}
+                />
+            )}
+        </div>
+    );
 }
 
-export default NetworkAnalysis;
+export default NetworkMap;
