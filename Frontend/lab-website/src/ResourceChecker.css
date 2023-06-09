@@ -91,6 +91,10 @@
     padding: 5px;
 }
 
+.resourceView table tr:hover:has(td) {
+    background-color: #ddd;
+}
+
 .resourceView table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
@@ -111,6 +115,10 @@
     cursor: pointer;
     transition: 0.3s;
 
+}
+
+.resourceView table tr * {
+    padding: 0 20px;
 }
 
 .resourceView table tr th:hover {
