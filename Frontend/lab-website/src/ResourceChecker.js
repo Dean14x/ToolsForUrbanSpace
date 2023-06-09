@@ -202,6 +202,7 @@ class ResourceView extends React.Component {
 
         return (
             <div className="resourceView">
+                <h1>TODO: filter and search</h1>
                 <table>
                     <thead>
                         {this.generateHeader()}
@@ -334,10 +335,27 @@ class CatalogView extends React.Component {
 
 class OverviewView extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
+
     render() {
         return (
             <div className="overviewView">
-                Overview
+                <h1>TODO: overview</h1>
+                <div>
+                    <h2>Hardware progress</h2>
+                    <h2>Software progress</h2>
+                    <h2>Service progress</h2>
+                    <h2>Costs per month</h2>
+                    <h2>Remaining budget</h2>
+                    <h2>Planned cost</h2>
+
+                </div>
+
+
             </div>
         );
     }
