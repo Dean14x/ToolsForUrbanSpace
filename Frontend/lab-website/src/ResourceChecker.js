@@ -1,5 +1,6 @@
 import React from "react";
 import "./ResourceChecker.css";
+import { Link, Outlet } from "react-router-dom";
 
 
 class TabView extends React.Component {
@@ -9,22 +10,8 @@ class TabView extends React.Component {
             activeTab: 0
         };
 
-        this.tabs = ["Test 1", "Test 2", "Test 3"];
-        if (this.props.tabs) {
-            this.tabs = this.props.tabs;
-        } else {
-            // throw error
-        }
-        this.children = [
-            <div>Test 1</div>,
-            <div>Test 2</div>,
-            <div>Test 3</div>
-        ];
-        if (this.props.children) {
-            this.children = this.props.children;
-        } else {
-            // throw error
-        }
+        this.tabs = ["Übersicht", "Inventar", "Geplant", "Katalog"];
+        this.links = ["/resources", "/resources/inventory", "/resources/planned", "/resources/catalog"];
 
     }
 
@@ -33,15 +20,22 @@ class TabView extends React.Component {
     }
 
     render() {
+        console.log(this.tabs);
         return (
             <div className="tabView">
                 <div className="tabViewHeader">
-                    {this.tabs.map((item, index) => (
-                        <button key={index} className={this.state.activeTab === index ? "tabViewHeaderItem tabViewHeaderItemActive" : "tabViewHeaderItem"} onClick={() => { this.clickHandler(index); }}>{item}</button>
-                    ))}
+                    
+                    {this.tabs.map((tab, index) => 
+                        (
+                            
+                            <Link className={"tabViewHeaderItem" + (this.state.activeTab === index ? " tabViewHeaderItemActive" : "")} to={this.links[index]} onClick={() => this.clickHandler(index)}>
+                                {tab}
+                            </Link>
+                        )
+                    )}
                 </div>
                 <div className="tabViewContent">
-                    {this.children[this.state.activeTab]}
+                    <Outlet />
                 </div>
             </div>
         );
@@ -332,8 +326,19 @@ class CatalogView extends React.Component {
                         text: "Planen",
                         onClick: (item) => { console.log(item); }
                     }
-                    
+
                 ]} />
+        );
+    }
+}
+
+class OverviewView extends React.Component {
+
+    render() {
+        return (
+            <div className="overviewView">
+                Overview
+            </div>
         );
     }
 }
@@ -355,16 +360,11 @@ class ResourceChecker extends React.Component {
     render() {
         return (
             <div className="resourceChecker">
-                <TabView tabs={["Übersicht", "Inventar", "Geplant", "Katalog"]}>
-                    <div>Übersicht mit Kosten, empfohlene Anzahl, etc.</div>
-                    <InventoryView />
-                    <PlannedView />
-                    <CatalogView />
-                </TabView>
+                <TabView />
             </div>
         );
     }
 }
 
-export default ResourceChecker;
+export { ResourceChecker, OverviewView, InventoryView, PlannedView, CatalogView }
 

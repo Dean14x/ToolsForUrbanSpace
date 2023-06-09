@@ -3,7 +3,7 @@ import Homepage from "./Homepage";
 import Login from "./Login";
 import NetworkAnalysis from "./NetworkAnalysis";
 import Overview from "./Overview";
-import ResourceChecker from "./ResourceChecker";
+import { ResourceChecker, OverviewView, InventoryView, PlannedView, CatalogView } from "./ResourceChecker";
 import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -45,7 +45,12 @@ class App extends React.Component {
             <Route path="/" element={<Homepage app={this} />} />
             <Route path="/overview" element={<Overview app={this} />} />
             <Route path="/network" element={<NetworkAnalysis app={this} />} />
-            <Route path="/resources" element={<ResourceChecker app={this} />} />
+            <Route path="/resources" element={<ResourceChecker app={this} />}>
+              <Route path="/resources" element={<OverviewView app={this} />} />
+              <Route path="/resources/inventory" element={<InventoryView app={this} />} />
+              <Route path="/resources/planned" element={<PlannedView app={this} />} />
+              <Route path="/resources/catalog" element={<CatalogView app={this} />} />
+            </Route>
             <Route path="/login" element={<Login app={this} />} />
             <Route path="/impressum" element={<Impressum app={this} />} />
           </Routes>

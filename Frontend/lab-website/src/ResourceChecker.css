@@ -35,9 +35,9 @@
     background-color: #f1f1f1;
 }
 
-.tabViewHeader button {
+.tabViewHeaderItem {
     width: 20%;
-    height: 100%;
+    height: 50px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -48,10 +48,12 @@
     cursor: pointer;
     transition: 0.3s;
     font-size: 20px;
+    text-decoration: none;
+    border-radius: 25px;
 }
 
 
-.tabViewHeader button:hover {
+.tabViewHeaderItem:hover {
     background-color: #ddd;
 }
 
