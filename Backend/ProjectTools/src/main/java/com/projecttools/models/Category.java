@@ -7,8 +7,6 @@ import lombok.*;
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
 @Getter
 @Setter
 public class Category {
@@ -21,6 +19,7 @@ public class Category {
     public Category(){}
 
     public Category(String name){
+        this.id=UUID.randomUUID();
         this.name = name;
     }
 }

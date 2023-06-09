@@ -23,6 +23,7 @@ public class User {
     public User(){}
 
     public User(String name, String email, String password, double budget, boolean is_Admin, List<UserResources> resourcesNeeded, List<UserResources> resourcesAvailable, List<Network> networksNeeded, List<Network> networksAvailable) {
+        this.id= UUID.randomUUID();
         this.name = name;
         this.email = email;
         this.password = password;
@@ -32,6 +33,15 @@ public class User {
         this.resourcesAvailable = resourcesAvailable;
         this.networksNeeded = networksNeeded;
         this.networksAvailable = networksAvailable;
+    }
+
+    public User(String name, String email, String password, double budget, boolean is_Admin) {
+        this.id= UUID.randomUUID();
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.budget = budget;
+        this.is_Admin = is_Admin;
     }
 
     @OneToMany(fetch = FetchType.EAGER)

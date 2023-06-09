@@ -1,5 +1,6 @@
 package com.projecttools.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -20,9 +21,11 @@ public class Resource {
     @ManyToOne
     Category category;
 
-    public Resource(){}
+    public Resource() {
+    }
 
     public Resource(String name, String description, double cost, Category category) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.description = description;
         this.cost = cost;

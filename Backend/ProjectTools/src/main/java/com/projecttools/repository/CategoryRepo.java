@@ -1,4 +1,4 @@
-package com.projecttools.repo;
+package com.projecttools.repository;
 
 import com.projecttools.models.Category;
 

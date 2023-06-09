@@ -17,7 +17,7 @@ public class UserService implements IUserService {
     }
     @Override
     public User Login(String email, String password) {
-        return _userRepo.findUserByEmailAndPassword(email,password);
+        return _userRepo.findUserByEmailAndPassword(email,password).get();
     }
 
     @Override

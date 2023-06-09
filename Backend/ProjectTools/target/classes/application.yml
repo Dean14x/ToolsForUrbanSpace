@@ -5,8 +5,18 @@ spring:
     username: root
     password: user
 
-
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: true
+
+
+
+
+
