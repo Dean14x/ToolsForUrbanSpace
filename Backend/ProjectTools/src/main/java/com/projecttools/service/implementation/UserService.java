@@ -66,4 +66,40 @@ public class UserService implements IUserService {
         user.setNetworksNeeded(networksNeeded);
         return _userRepo.save(user);
     }
+
+    @Override
+    public User AddResourcesAvailable(UUID id, List<UserResources> resourceAvailable) {
+        User user = _userRepo.findUserById(id);
+        if(user != null){
+            user.setResourcesAvailable(resourceAvailable);
+        }
+        return null;
+    }
+
+    @Override
+    public User AddResourcesNeeded(UUID id, List<UserResources> resourcesNeeded) {
+        User user = _userRepo.findUserById(id);
+        if(user != null){
+            user.setResourcesNeeded(resourcesNeeded);
+        }
+        return null;
+    }
+
+    @Override
+    public User AddNetworksNeeded(UUID id, List<Network> networksNeeded) {
+        User user = _userRepo.findUserById(id);
+        if(user != null){
+            user.setNetworksNeeded(networksNeeded);
+        }
+        return null;
+    }
+
+    @Override
+    public User AddNetworksAvailable(UUID id, List<Network> networksAvailable) {
+        User user = _userRepo.findUserById(id);
+        if(user != null){
+            user.setNetworksAvailable(networksAvailable);
+        }
+        return null;
+    }
 }

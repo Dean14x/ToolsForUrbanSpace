@@ -17,4 +17,10 @@ public interface IUserService {
     public void DeleteUser(UUID id);
     public User EditUser(UUID id, String name, String email, String password, double budget, boolean isAdmin, List<UserResources> resourceNeeded, List<UserResources> resourceAvailable, List<Network> networksNeeded,List<Network> networksAvailable);
 
+    public User AddResourcesAvailable(UUID id,List<UserResources> resourceAvailable);
+    public User AddResourcesNeeded(UUID id,List<UserResources> resourcesNeeded);
+
+    public User AddNetworksNeeded(UUID id,List<Network> networksNeeded);
+    public User AddNetworksAvailable(UUID id,List<Network> networksAvailable);
+
 }
