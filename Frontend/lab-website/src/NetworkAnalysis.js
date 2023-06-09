@@ -1,10 +1,9 @@
 import React from "react";
 import NetworkMap from "./NetworkMap";
 import './infopage_style.css';
-import Homepage from "./Homepage";
-import Login from "./Login";
-import Overview from "./Overview";
-import ResourceChecker from "./ResourceChecker";
+import './NetworkAnalysisDesign.css';
+import networkMap from "./NetworkMap";
+
 
 // Homepage component
 // This is the homepage of the website
@@ -20,60 +19,61 @@ class NetworkAnalysis extends React.Component {
     }
 
     setPage(page) {
-        this.setState({ page: page });
+        this.setState({ pages: page });
     }
 
     render() {
         let page;
         switch (this.state.page) {
-            case "networkmap":
+            case "networkMap":
                 page = <NetworkMap app={this} />;
                 break;
         }
         return (
             <div>
-                <div className={"info_text"}>
-                    <h2>Info Text</h2>
-                <p>
-                    This is a website for the Tools For Urban Space project.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam id nunc vitae magna aliquam aliquet. Donec euismod
-                    This is a website for the Tools For Urban Space project.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam id nunc vitae magna aliquam aliquet. Donec euismod
-                </p></div>
-                <div>
-                    <table>
-                        <tr>
-                            <th>Manage Network</th>
-                            <th>Show Network</th>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                A function that displays a list of available devices and their key
-                                information such as description, cost and available quantity. Users
-                                can search, filter and select devices to check their availability and cost.
-                            </td>
-
-                            <td>
-                                A function that displays a list of resources to be purchased and their
-                                key information such as description, cost and quantity required. Users
-                                can insert, remove, move resources to the "existing equipment" list and
-                                mark when these devices should be procured.
-                            </td>
-                        </tr>
-                    </table>
-
-                </div>
-                <div>
-                    <div>
-
-                        <button onClick={() => this.setPage("networkmap")}>Network Map</button>
-
+                <div className="ManageNetwork">
+                    <div className="rect"></div>
+                    <div className="text1">
+                        <h1>Manage Network</h1>
                     </div>
-                    {page}
+
+                    <div >
+                        <table id="table1">
+                            <td >
+                                <p>- some text</p>
+                                <p>- more text</p>
+                                <p>- less text</p>
+                            </td>
+                        </table>
+                    </div>
+
+                        <button className={"manageB"} onClick={() => this.setPage("networkMap")}>Start</button>
+
                 </div>
+
+
+
+                <div className = "linie"></div>
+
+
+                <div className="ShowNetwork">
+                    <div className="rect2"></div>
+                    <div className="text2">
+                        <h1>Show Network</h1>
+                    </div>
+
+                    <div >
+                         <table id ="table2">
+                            <td >
+                                <p>- some text</p>
+                                <p>- more text</p>
+                                <p>- less text</p>
+                            </td>
+                        </table>
+                    </div>
+                </div>
+
+                <button className={"showB"} onClick={() => this.setPage("networkMap")}>Start</button>
             </div>
         );
     }

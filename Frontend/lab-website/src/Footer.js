@@ -17,7 +17,7 @@ class Footer extends React.Component {
             <div className="footer">
                 <div className="footer-item">
                     {/*<Link className="footer-link" to="/">Home</Link>*/}
-                    Some footer text
+                    Impressum
                     
                 </div>
             </div>

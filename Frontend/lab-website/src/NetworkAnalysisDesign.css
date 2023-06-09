@@ -1,0 +1,121 @@
+.parent {
+    position: relative;
+}
+
+.rect{
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    left: 219px;
+    top: 200px;
+    background: #EEEEEE;
+    border-radius: 40px;
+}
+
+.text1{
+    position: absolute;
+    width: 400px;
+    height: 10px;
+    left: 268px;
+    top: 240px;
+    font-family: 'Arial';
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #103754;
+}
+
+
+
+
+#table1 {
+    position: absolute;
+    left: 268px;
+    top: 280px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+.manageB{
+    position: absolute;
+    width: 140px;
+    height: 45px;
+    left: 325px;
+    top: 460px;
+    font-weight: 600;
+    font-family: 'Arial';
+    font-size: 22px;
+    line-height: 18px;
+    background: #EB7C61;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+}
+
+
+.linie{
+    position: absolute;
+    width: 6px;
+    height: 400px;
+    top: 390px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: rgba(206, 229, 246, 1);
+    border-radius: 40px;
+}
+
+
+.rect2{
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    right: 219px;
+    top: 200px;
+
+    background: #EEEEEE;
+    border-radius: 40px;
+}
+
+
+.text2{
+    position: absolute;
+    width: 400px;
+    height: 10px;
+    right: 110px;
+    top: 240px;
+    font-family: 'Arial';
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #103754;
+}
+
+#table2{
+    position: absolute;
+    right: 410px;
+    top: 280px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #103754;
+
+}
+
+
+.showB{
+    position: absolute;
+    width: 140px;
+    height: 45px;
+    right: 325px;
+    top: 460px;
+    font-weight: 600;
+    font-family: 'Arial';
+    font-size: 22px;
+    line-height: 18px;
+    background: #DBAE6D;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+
+
+
+}
