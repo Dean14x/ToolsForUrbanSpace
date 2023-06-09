@@ -16,8 +16,7 @@ class Footer extends React.Component {
         return (
             <div className="footer">
                 <div className="footer-item">
-                    {/*<Link className="footer-link" to="/">Home</Link>*/}
-                    Some footer text
+                    <Link className="footer-link" to="/impressum">Impressum</Link>
                     
                 </div>
             </div>

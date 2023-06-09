@@ -19,13 +19,6 @@
 }
 
 .footer-link {
-    float: left;
-    display: block;
     color: black;
-    text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
-    border-radius: 28px;
-    min-width: 40px;
-    margin: 0px 15px;
 }

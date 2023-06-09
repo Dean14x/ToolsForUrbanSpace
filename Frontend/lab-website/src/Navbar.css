@@ -6,7 +6,8 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: 150px;
+    height: 80px;
+    width: 100%;
 }
 
 .navbar div{
@@ -35,9 +36,6 @@
 }
 
 .logo{
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    left: 100px;
-    top: -10px;
+    width: 100px;
+    height: 100px;
 }
