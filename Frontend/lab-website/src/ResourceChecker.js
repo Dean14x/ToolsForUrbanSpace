@@ -375,6 +375,10 @@ class ResourceChecker extends React.Component {
         };
     }
 
+    setPage(page) {
+        this.setState({ page: page });
+    }
+
     render() {
         return (
             <div className="resourceChecker">
