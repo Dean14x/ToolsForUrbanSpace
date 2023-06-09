@@ -28,7 +28,9 @@ class NetworkAnalysis extends React.Component {
                     />
                     <button type="submit">Search</button>
                 </form>
+                <iframe src="https://www.google.com/maps/d/embed?mid=1WmSbee3PO_N043CDlwHYUcd4LOvNcS8&ehbc=2E312F" width="1500" height="480"></iframe>
             </div>
+
         );
     }
 }

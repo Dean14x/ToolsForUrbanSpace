@@ -42,35 +42,21 @@ class NetworkAnalysis extends React.Component {
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Nullam id nunc vitae magna aliquam aliquet. Donec euismod
                 </p></div>
-                <div>
-                    <table>
-                        <tr>
-                            <th>Manage Network</th>
-                            <th>Show Network</th>
-                        </tr>
 
-                        <tr>
-                            <td>
-                                A function that displays a list of available devices and their key
-                                information such as description, cost and available quantity. Users
-                                can search, filter and select devices to check their availability and cost.
-                            </td>
-
-                            <td>
-                                A function that displays a list of resources to be purchased and their
-                                key information such as description, cost and quantity required. Users
-                                can insert, remove, move resources to the "existing equipment" list and
-                                mark when these devices should be procured.
-                            </td>
-                        </tr>
-                    </table>
-
-                </div>
                 <div>
                     <div>
-
-                        <button onClick={() => this.setPage("networkmap")}>Network Map</button>
-
+                        <form action="/" method="get">
+                            <label htmlFor="header-search">
+                            </label>
+                            <input
+                                type="text"
+                                id="header-search"
+                                placeholder="Search"
+                                name="s"
+                            />
+                            <button type="submit">Search</button>
+                        </form>
+                        <iframe src="https://www.google.com/maps/d/embed?mid=1WmSbee3PO_N043CDlwHYUcd4LOvNcS8&ehbc=2E312F" width="1500" height="480"></iframe>
                     </div>
                     {page}
                 </div>
