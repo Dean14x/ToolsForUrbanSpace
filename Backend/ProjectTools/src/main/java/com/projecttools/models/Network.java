@@ -25,6 +25,7 @@ public class Network {
     public Network(){}
 
     public Network(String name,String email,double rating,String contact,String city,String street,Category category){
+        this.id=UUID.randomUUID();
         this.name = name;
         this.email=email;
         this.rating=rating;

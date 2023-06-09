@@ -2,6 +2,7 @@ package com.projecttools.Web;
 
 import com.projecttools.models.Category;
 import com.projecttools.request.CategoryRequest;
+import com.projecttools.request.NetworkRequest;
 import com.projecttools.request.ResourceRequest;
 import com.projecttools.service.AdminService;
 import com.projecttools.service.implementation.CategoryService;
@@ -23,13 +24,6 @@ public class AdminController {
         categoryService = categoryService1;
         this.adminService =adminService;
     }
-    // /home/test
-
-    @GetMapping("/cx")
-    public Category getHome() {
-        Category category = categoryService.FindCategoryById(UUID.fromString("8bb748d9-22c5-4f8e-872a-9d6b3c167001"));
-        return category;
-    }
 
     @PostMapping("/addResource")
     public void addResource(@RequestBody List<ResourceRequest> resource) {
@@ -40,6 +34,13 @@ public class AdminController {
     @PostMapping("/addgategorie")
     public void addgategorie(@RequestBody List<CategoryRequest> categoryRequests) {
         adminService.addCategory(categoryRequests);
+    }
+
+
+
+    @PostMapping("/addNetwork")
+    public void addNetworks(@RequestBody List<NetworkRequest> networkRequest){
+        adminService.addNetworks(networkRequest);
     }
 
     @GetMapping

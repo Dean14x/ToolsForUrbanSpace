@@ -23,6 +23,5 @@ public class AuthController {
     @PostMapping("/regis")
     public void register(@RequestBody UserCrediting userCrediting){
         authService.registerUser(userCrediting);
-
     }
 }

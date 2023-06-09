@@ -23,8 +23,7 @@ public class ResourceRequest {
 
     public static List<Resource> resourceRequestToResource(List<ResourceRequest> resourceRequests) {
         return resourceRequests.stream().map((resourceRequest) -> {
-
-              return       new Resource(resourceRequest.getName(), resourceRequest.getDescription(), resourceRequest.getCost()
+                    return new Resource(resourceRequest.getName(), resourceRequest.getDescription(), resourceRequest.getCost()
                             , new Category(resourceRequest.getCategoryRequest().getName()));
 
                 }
