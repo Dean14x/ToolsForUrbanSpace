@@ -405,6 +405,8 @@ class EditItemPanel extends React.Component {
             this.buttons = this.props.buttons;
         }
 
+        
+
     }
 
     changeItem(newVal, field) {
@@ -455,10 +457,10 @@ class EditItemPanel extends React.Component {
                     <div className="editItemPanelRow">
                     <input onChange={(e) => this.changeItem(e.target.value, "name")}
                         type="text" placeholder="Name" className="editItemPanelInput editItemPanelInputName" value={item.name}></input>
-                    <select onChange={(e) => this.changeItem(e.target.value, "category")}
+                    <select defaultValue={item.category} onChange={(e) => this.changeItem(e.target.value, "category")}
                         className="editItemPanelInput">
                         {Object.keys(CATEGORIES).map((citem, index) => (
-                            <option selected={item.category == citem ? true : false} key={index}>{citem}</option>
+                            <option  key={index}>{citem}</option>
                         ))}
                     </select>
                     </div>
@@ -561,6 +563,8 @@ class BaseView extends React.Component {
 class InventoryView extends BaseView {
     constructor(props) {
         super(props);
+
+        this.view = React.createRef();
     }
 
     itemAsArray(item) {
@@ -573,6 +577,17 @@ class InventoryView extends BaseView {
         ];
     }
 
+    editItem(item) {
+        // edit item
+        // overwrite this function
+        console.log("Edit item " + item);
+    }
+
+    removeItem(item) {
+        // remove item
+        // overwrite this function
+        console.log("Remove item: " + item);
+    }
 
 
     render() {
@@ -580,15 +595,31 @@ class InventoryView extends BaseView {
 
         return (
             <ResourceView
+                ref={this.view}
                 header={["Name", "Kategorie", "Kosten/Monat", "Anzahl"]}
                 data={this.convertData()}
                 buttons={[{
                     text: "Bearbeiten",
-                    onClick: (item) => { console.log(item); }
+                    onClick: (item) => {
+                        this.view.current.showDialog(<EditItemPanel 
+                        title="Bearbeiten"
+                        item={item}
+                        getItem={this.getItemFromId.bind(this)}
+                        buttons={[
+                            { text: "Abbrechen", 
+                            onClick: (item) => { this.view.current.hideDialog(); } 
+                        },
+                            { text: "Bestätigen",
+                            onClick: (item) => { 
+                                this.editItem(item);
+                                this.view.current.hideDialog(); }
+                        }
+                        ]} />);
+                    }
                 },
                 {
                     text: "Entfernen",
-                    onClick: (item) => { console.log(item); }
+                    onClick: (item) => { this.removeItem(this.getItemFromId(item[0])); }
                 }
                 ]} />
         );
@@ -598,6 +629,8 @@ class InventoryView extends BaseView {
 class PlannedView extends BaseView {
     constructor(props) {
         super(props);
+
+        this.view = React.createRef();
     }
 
     itemAsArray(item) {
@@ -611,24 +644,74 @@ class PlannedView extends BaseView {
         ];
     }
 
+    addItem(item) {
+        // add item to inventory
+        // overwrite this function with api call
+        console.log("add item", item);
+    }
+
+    removeItem(item) {
+        // remove item from planned items
+        // overwrite this function with api call
+        console.log("remove item", item);
+    }
+
+    editItem(item) {
+        // edit item in planned items
+        // overwrite this function with api call
+        console.log("edit item", item);
+    }
+
+
 
     render() {
         return (
             <ResourceView
+                ref={this.view}
                 header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
                 data={this.convertData()}
                 buttons={[
                     {
                         text: "Hinzufügen",
-                        onClick: (item) => { console.log(item); }
+                        onClick: (item) => {
+                            this.view.current.showDialog(<EditItemPanel 
+                            title="Hinzufügen"
+                            item={item}
+                            getItem={this.getItemFromId.bind(this)}
+                            buttons={[
+                                { text: "Abbrechen", 
+                                onClick: (item) => { this.view.current.hideDialog(); } 
+                            },
+                                { text: "Bestätigen",
+                                onClick: (item) => { 
+                                    this.addItem(item);
+                                    this.view.current.hideDialog(); }
+                            }
+                            ]} />);
+                        }
                     },
                     {
                         text: "Bearbeiten",
-                        onClick: (item) => { console.log(item); }
+                        onClick: (item) => {
+                            this.view.current.showDialog(<EditItemPanel 
+                            title="Bearbeiten"
+                            item={item}
+                            getItem={this.getItemFromId.bind(this)}
+                            buttons={[
+                                { text: "Abbrechen", 
+                                onClick: (item) => { this.view.current.hideDialog(); } 
+                            },
+                                { text: "Bestätigen",
+                                onClick: (item) => { 
+                                    this.editItem(item);
+                                    this.view.current.hideDialog(); }
+                            }
+                            ]} />);
+                        }
                     },
                     {
                         text: "Entfernen",
-                        onClick: (item) => { console.log(item); }
+                        onClick: (item) => { this.removeItem(this.getItemFromId(item[0])); }
                     }
                 ]} />
         );
@@ -677,6 +760,7 @@ class CatalogView extends BaseView {
                         text: "Hinzufügen",
                         onClick: (item) => {
                             this.view.current.showDialog(<EditItemPanel 
+                            title="Hinzufügen"
                             item={item}
                             getItem={this.getItemFromId.bind(this)}
                             buttons={[
@@ -689,13 +773,28 @@ class CatalogView extends BaseView {
                                     this.view.current.hideDialog(); }
                             }
                             ]} />);
-                            console.log(item);
                         }
                     },
                     {
                         text: "Planen",
-                        onClick: (item) => { console.log(item); }
-                    }
+                        onClick: (item) => {
+                            this.view.current.showDialog(<EditItemPanel
+                                title="Planen"
+                                item={item}
+                                getItem={this.getItemFromId.bind(this)}
+                                buttons={[
+                                    {
+                                        text: "Abbrechen",
+                                        onClick: (item) => { this.view.current.hideDialog(); }
+                                    },
+                                    {
+                                        text: "Bestätigen",
+                                        onClick: (item) => {
+                                            this.planItem(item);
+                                            this.view.current.hideDialog();
+                                        }
+                                    }]}/>);
+                    }}
 
                 ]} />
         );
