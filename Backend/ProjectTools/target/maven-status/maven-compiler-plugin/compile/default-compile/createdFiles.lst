@@ -15,7 +15,6 @@ com\projecttools\ProjectToolsApplication.class
 com\projecttools\service\INetworkService.class
 com\projecttools\repository\CategoryRepo.class
 com\projecttools\Web\TestController.class
-com\projecttools\config\OpenApi.class
 com\projecttools\service\implementation\ResourceService.class
 com\projecttools\models\Category.class
 com\projecttools\repository\NetworkRepository.class
@@ -28,7 +27,6 @@ com\projecttools\exception\NotFoundException.class
 com\projecttools\request\NetworkRequest.class
 com\projecttools\filter\JWTTokenValidatorFilter$Authorities.class
 com\projecttools\Web\UserController.class
-com\projecttools\request\UserCrediting.class
 com\projecttools\service\AdminService.class
 com\projecttools\Web\AuthController.class
 com\projecttools\repository\ResourceRepository.class

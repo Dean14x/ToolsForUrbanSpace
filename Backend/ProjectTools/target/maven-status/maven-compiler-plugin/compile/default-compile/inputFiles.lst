@@ -1,14 +1,15 @@
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\models\Category.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\models\Resource.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\exception\NotFoundException.java
-D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\request\UserCrediting.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\service\implementation\ResourceService.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\config\ForUrbanDateils.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\filter\JWTTokenValidatorFilter.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\service\implementation\CategoryService.java
+D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\config\ApiDoc.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\request\ResourceRequest.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\repository\UserRepository.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\Web\UserController.java
+D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\request\UserCredentials.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\service\IUserService.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\config\Security.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\service\implementation\UserService.java
@@ -18,7 +19,6 @@ D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\jav
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\models\UserResources.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\service\ICategoryService.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\Web\AuthController.java
-D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\config\OpenApi.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\repository\CategoryRepository.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\request\NetworkRequest.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\models\User.java
