@@ -1,6 +1,15 @@
 import React from "react";
 import "./ResourceChecker.css";
 import { Link, Outlet } from "react-router-dom";
+import CatalogItem from "./catalogItem";
+
+// enum for categories
+const CATEGORIES = {
+    Hardware: "Hardware",
+    Software: "Software",
+    Service: "Service",
+    Other: "Other"
+};
 
 
 class TabView extends React.Component {
@@ -89,15 +98,11 @@ class ResourceView extends React.Component {
             sortRow: 0,
             sortDirection: 1,
             filter: null,
-            search: ""
+            search: "",
+            dialogElement: null
         };
 
-        if (this.props.header) {
-            this.state.header = this.props.header;
-        }
-        if (this.props.data) {
-            this.state.data = this.props.data;
-        }
+
         if (!this.props.buttons) {
             this.buttons = [];
         } else {
@@ -107,7 +112,7 @@ class ResourceView extends React.Component {
         if (this.props.ignoreFirstColumn) {
             this.ignoreFirstColumn = true;
         } else {
-            this.ignoreFirstColumn = false;
+            this.ignoreFirstColumn = true;
         }
 
         this.dialog = React.createRef();
@@ -117,7 +122,7 @@ class ResourceView extends React.Component {
     }
 
     componentDidMount() {
-        this.setTestData();
+        //this.setTestData();
     }
 
     setTestData() {
@@ -146,6 +151,29 @@ class ResourceView extends React.Component {
             ["Other 4", "Other", "100", "10"]
         ];
 
+        var asItems = [
+            new CatalogItem(0, "PC", CATEGORIES.Hardware, 1000, 0, "A PC", 10),
+            new CatalogItem(1, "laptop", CATEGORIES.Hardware, 2000, 0, "A laptop", 5),
+            new CatalogItem(2, "VR headset", CATEGORIES.Hardware, 500, 0, "A VR headset", 2),
+            new CatalogItem(3, "monitor", CATEGORIES.Hardware, 200, 0, "A monitor", 20),
+            new CatalogItem(4, "keyboard", CATEGORIES.Hardware, 50, 0, "A keyboard", 50),
+            new CatalogItem(5, "mouse", CATEGORIES.Hardware, 20, 0, "A mouse", 100),
+            new CatalogItem(6, "headphones", CATEGORIES.Hardware, 100, 0, "A headphones", 20),
+            new CatalogItem(7, "3D printer", CATEGORIES.Hardware, 1000, 0, "A 3D printer", 1),
+            new CatalogItem(8, "3D scanner", CATEGORIES.Hardware, 500, 0, "A 3D scanner", 1),
+            new CatalogItem(9, "camera", CATEGORIES.Hardware, 500, 0, "A camera", 1),
+            new CatalogItem(10, "Adobe Photoshop", CATEGORIES.Software, 100, 0, "A Adobe Photoshop", 10),
+            new CatalogItem(11, "Adobe Illustrator", CATEGORIES.Software, 100, 0, "A Adobe Illustrator", 10),
+            new CatalogItem(12, "Adobe Premiere", CATEGORIES.Software, 100, 0, "A Adobe Premiere", 10),
+            new CatalogItem(13, "Adobe After Effects", CATEGORIES.Software, 100, 0, "A Adobe After Effects", 10),
+            new CatalogItem(14, "Betreuung", CATEGORIES.Service, 100, 0, "A Betreuung", 10),
+            new CatalogItem(15, "Beratung", CATEGORIES.Service, 100, 0, "A Beratung", 10),
+            new CatalogItem(16, "Other 1", CATEGORIES.Other, 100, 0, "A Other 1", 10),
+            new CatalogItem(17, "Other 2", CATEGORIES.Other, 100, 0, "A Other 2", 10),
+            new CatalogItem(18, "Other 3", CATEGORIES.Other, 100, 0, "A Other 3", 10),
+            new CatalogItem(19, "Other 4", CATEGORIES.Other, 100, 0, "A Other 4", 10)
+        ];
+
 
         this.setState({ header: headerNew, data: dataNew });
 
@@ -167,7 +195,7 @@ class ResourceView extends React.Component {
     setSort(index) {
         // ignore if button header is clicked
         let min = this.ignoreFirstColumn ? 1 : 0;
-        if (index < min || index >= this.state.header.length + min) {
+        if (index < min || index >= this.props.header.length + min) {
             return;
         }
 
@@ -192,8 +220,8 @@ class ResourceView extends React.Component {
     getCategoryIndex() {
         // returns the index of the category column
         var categoryIndex = -1;
-        for (let i = 0; i < this.state.header.length; i++) {
-            let v = this.state.header[i];
+        for (let i = 0; i < this.props.header.length; i++) {
+            let v = this.props.header[i];
             v = v.toLowerCase();
             if (v === "kategorie" || v === "category") {
                 categoryIndex = i;
@@ -203,7 +231,7 @@ class ResourceView extends React.Component {
         if (categoryIndex === -1) {
             return -1;
         }
-        if (this.props.ignoreFirstColumn) {
+        if (this.ignoreFirstColumn) {
             categoryIndex++;
         }
         return categoryIndex;
@@ -262,7 +290,7 @@ class ResourceView extends React.Component {
     generateHeader() {
         return (
             <tr>
-                {this.state.header.map((item, index) => (
+                {this.props.header.map((item, index) => (
                     <th key={index} onClick={() => this.setSort(index)}>{item}</th>
                 ))}
                 {this.buttons.length > 0 ? <th></th> : null}
@@ -278,8 +306,8 @@ class ResourceView extends React.Component {
             return null;
         }
 
-        for (let i = 0; i < this.state.data.length; i++) {
-            let v = this.state.data[i][categoryIndex];
+        for (let i = 0; i < this.props.data.length; i++) {
+            let v = this.props.data[i][categoryIndex];
             if (categories.indexOf(v) === -1) {
                 categories.push(v);
             }
@@ -309,7 +337,10 @@ class ResourceView extends React.Component {
         this.setState({ search: search });
     }
 
-    showDialog() {
+    showDialog(element=null) {
+
+        this.setState({dialogElement: element});
+        
         this.dialog.current.showModal();
     }
 
@@ -318,14 +349,17 @@ class ResourceView extends React.Component {
     }
 
     render() {
-        var data = this.state.data;
+        var data = this.props.data;
         data = this.filter(data);
         data = this.sort(data);
+
 
         return (
             <div className="resourceView">
                 <dialog ref={this.dialog} className="resourceViewDialog">
-                    <ResourceDialog view={this} onClose={() => { this.hideDialog(); }} />
+                    <ResourceDialog view={this} onClose={() => { this.hideDialog(); }}>
+                        {this.state.dialogElement}
+                    </ResourceDialog>
                 </dialog>
 
                 <div className="filterBar">
@@ -361,34 +395,94 @@ class EditItemPanel extends React.Component {
             item: null
         };
 
-        if(this.props.item) {
-            this.state.item = this.props.item;
+        // gets the actual item object from the list
+        if(this.props.item && this.props.getItem) {
+            this.baseItem = this.props.getItem(this.props.item[0]);
         }
+
+        this.buttons = [];
+        if(this.props.buttons) {
+            this.buttons = this.props.buttons;
+        }
+
+    }
+
+    changeItem(newVal, field) {
+        let item = this.state.item;
+        if (!item) {
+            item = this.baseItem;
+        }
+
+        if (field==="cost" || field==="monthlyCost") {
+            newVal = parseFloat(newVal);
+            if(isNaN(newVal)) {
+                newVal = 0;
+            }
+        }
+
+        if (field === "amount") {
+            newVal = parseInt(newVal);
+            if (isNaN(newVal)) {
+                newVal = 0;
+            }
+        }
+
+        item[field] = newVal;
+
+        if(item.name != this.baseItem.name || item.category != this.baseItem.category || item.cost != this.baseItem.cost || item.monthlyCost != this.baseItem.monthlyCost) {
+            item.id = -1;
+        }
+
+        this.setState({ item: item });
     }
 
     render() {
-        if(this.state.item === null) {
-            return null;
+
+        if(this.props.item[0] !== this.baseItem.id) {
+            this.baseItem = this.props.getItem(this.props.item[0]);
+            this.setState({item: this.baseItem});
+        }
+
+        let item = this.baseItem;
+
+        if(this.state.item) {
+            item = this.state.item;
         }
 
         return (
             <div className="editItemPanel">
                 <div className="editItemPanelFields">
-                    <input type="text" placeholder="Name" className="editItemPanelInput"></input>
-                    <input type="text" placeholder="Kategorie" className="editItemPanelInput"></input>
-                    <input type="text" placeholder="Kosten/Monat" className="editItemPanelInput"></input>
-                    <input type="text" placeholder="Kosten" className="editItemPanelInput"></input>
-                    <input type="text" placeholder="Anzahl" className="editItemPanelInput"></input>
+                    <div className="editItemPanelRow">
+                    <input onChange={(e) => this.changeItem(e.target.value, "name")}
+                        type="text" placeholder="Name" className="editItemPanelInput editItemPanelInputName" value={item.name}></input>
+                    <select onChange={(e) => this.changeItem(e.target.value, "category")}
+                        className="editItemPanelInput">
+                        {Object.keys(CATEGORIES).map((citem, index) => (
+                            <option selected={item.category == citem ? true : false} key={index}>{citem}</option>
+                        ))}
+                    </select>
+                    </div>
+
+                    <div className="editItemPanelRow">
+                    <input onChange={(e) => this.changeItem(e.target.value, "monthlyCost")}
+                        type="text" placeholder="Kosten/Monat" className="editItemPanelInput" value={item.monthlyCost}></input>
+                    <input onChange={(e) => this.changeItem(e.target.value, "cost")}
+                        type="text" placeholder="Kosten" className="editItemPanelInput" value={item.cost}></input>
+                    <input onChange={(e) => this.changeItem(e.target.value, "amount")}
+                        type="text" placeholder="Anzahl" className="editItemPanelInput" value={item.amount}></input>
+                    </div>
                 </div>
-                <div className="editItemPanelControls">
-                    {this.props.children}
+                <div className="editItemPanelControls editItemPanelRow">
+                    {this.buttons.map((v, index) => (
+                        <button key={index} className="editItemPanelButton" onClick={() => { v.onClick(item) }}>{v.text}</button>
+                    ))}
                 </div>
             </div>
         );
     }
 }
 
-class InventoryView extends React.Component {
+class BaseView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -398,13 +492,88 @@ class InventoryView extends React.Component {
 
     async componentDidMount() {
         // load data from server
+        await this.loadData();
+    }
+
+    async loadData() {
+        // load data from server
+        // overwrite this function
+        var items = [
+            new CatalogItem(0, "PC", CATEGORIES.Hardware, 1000, 0, "A PC", 10),
+            new CatalogItem(1, "laptop", CATEGORIES.Hardware, 2000, 0, "A laptop", 5),
+            new CatalogItem(2, "VR headset", CATEGORIES.Hardware, 500, 0, "A VR headset", 2),
+            new CatalogItem(3, "monitor", CATEGORIES.Hardware, 200, 0, "A monitor", 20),
+            new CatalogItem(4, "keyboard", CATEGORIES.Hardware, 50, 0, "A keyboard", 50),
+            new CatalogItem(5, "mouse", CATEGORIES.Hardware, 20, 0, "A mouse", 100),
+            new CatalogItem(6, "headphones", CATEGORIES.Hardware, 100, 0, "A headphones", 20),
+            new CatalogItem(7, "3D printer", CATEGORIES.Hardware, 1000, 0, "A 3D printer", 1),
+            new CatalogItem(8, "3D scanner", CATEGORIES.Hardware, 500, 0, "A 3D scanner", 1),
+            new CatalogItem(9, "camera", CATEGORIES.Hardware, 500, 0, "A camera", 1),
+            new CatalogItem(10, "Adobe Photoshop", CATEGORIES.Software, 100, 0, "A Adobe Photoshop", 10),
+            new CatalogItem(11, "Adobe Illustrator", CATEGORIES.Software, 100, 0, "A Adobe Illustrator", 10),
+            new CatalogItem(12, "Adobe Premiere", CATEGORIES.Software, 100, 0, "A Adobe Premiere", 10),
+            new CatalogItem(13, "Adobe After Effects", CATEGORIES.Software, 100, 0, "A Adobe After Effects", 10),
+            new CatalogItem(14, "Betreuung", CATEGORIES.Service, 100, 0, "A Betreuung", 10),
+            new CatalogItem(15, "Beratung", CATEGORIES.Service, 100, 0, "A Beratung", 10),
+            new CatalogItem(16, "Other 1", CATEGORIES.Other, 100, 0, "A Other 1", 10),
+            new CatalogItem(17, "Other 2", CATEGORIES.Other, 100, 0, "A Other 2", 10),
+            new CatalogItem(18, "Other 3", CATEGORIES.Other, 100, 0, "A Other 3", 10),
+            new CatalogItem(19, "Other 4", CATEGORIES.Other, 100, 0, "A Other 4", 10)
+        ];
+
+
+        this.setState({
+            data: items
+        });
+    }
+
+    getItemFromId(id) {
+        // get item from id
+
+        for (var i = 0; i < this.state.data.length; i++) {
+            if (this.state.data[i].id === id) {
+                return this.state.data[i];
+            }
+        }
+
+        return null;
+    }
+
+    itemAsArray(item) {
+        // convert item to array
+        // overwrite this function
+        return ["OVERWRITE THIS FUNCTION"];
     }
 
     convertData() {
         // convert data from server to data for ResourceView
         // array of arrays
-        return this.state.data;
+
+        var data = [];
+        for (var i = 0; i < this.state.data.length; i++) {
+            data.push(this.itemAsArray(this.state.data[i]));
+        }
+
+        return data;
     }
+}
+
+class InventoryView extends BaseView {
+    constructor(props) {
+        super(props);
+    }
+
+    itemAsArray(item) {
+        return [
+            item.id,
+            item.name,
+            item.category,
+            item.monthlyCost,
+            item.amount
+        ];
+    }
+
+
 
     render() {
 
@@ -426,23 +595,22 @@ class InventoryView extends React.Component {
     }
 }
 
-class PlannedView extends React.Component {
+class PlannedView extends BaseView {
     constructor(props) {
         super(props);
-        this.state = {
-            data: []
-        };
     }
 
-    async componentDidMount() {
-        // load data from server
+    itemAsArray(item) {
+        return [
+            item.id,
+            item.name,
+            item.category,
+            item.cost,
+            item.monthlyCost,
+            item.amount
+        ];
     }
 
-    convertData() {
-        // convert data from server to data for ResourceView
-        // array of arrays
-        return this.state.data;
-    }
 
     render() {
         return (
@@ -467,27 +635,38 @@ class PlannedView extends React.Component {
     }
 }
 
-class CatalogView extends React.Component {
+class CatalogView extends BaseView {
     constructor(props) {
         super(props);
-        this.state = {
-            data: []
-        };
 
         this.view = React.createRef();
+
+        this.state.data = [
+            new CatalogItem(1, "laptop", CATEGORIES.Hardware, 2000, 0, "A laptop", 5),
+            new CatalogItem(2, "VR headset", CATEGORIES.Hardware, 500, 0, "A VR headset", 2)
+        ];
     }
 
-    async componentDidMount() {
-        // load data from server
+
+    itemAsArray(item) {
+        return [item.id, item.name, item.category, item.cost, item.monthlyCost, item.amount];
     }
 
-    convertData() {
-        // convert data from server to data for ResourceView
-        // array of arrays
-        return this.state.data;
+    planItem(item) {
+        // api call for planning item
+        console.log("plan item");
+        console.log(item);
     }
+
+    addItem(item) {
+        // api call for adding item
+        console.log("add item");
+        console.log(item);
+    }
+
 
     render() {
+
         return (
             <ResourceView
                 ref={this.view}
@@ -497,7 +676,19 @@ class CatalogView extends React.Component {
                     {
                         text: "Hinzufügen",
                         onClick: (item) => {
-                            this.view.current.showDialog();
+                            this.view.current.showDialog(<EditItemPanel 
+                            item={item}
+                            getItem={this.getItemFromId.bind(this)}
+                            buttons={[
+                                { text: "Abbrechen", 
+                                onClick: (item) => { this.view.current.hideDialog(); } 
+                            },
+                                { text: "Bestätigen",
+                                onClick: (item) => { 
+                                    this.addItem(item);
+                                    this.view.current.hideDialog(); }
+                            }
+                            ]} />);
                             console.log(item);
                         }
                     },
