@@ -7,6 +7,7 @@ import ResourceChecker from "./ResourceChecker";
 import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import Header from "./Header";
 import logo2 from './logos/logo2.png';
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
@@ -46,6 +47,8 @@ class App extends React.Component {
             <Route path="/network" element={<NetworkAnalysis app={this} />} />
             <Route path="/resources" element={<ResourceChecker app={this} />} />
             <Route path="/login" element={<Login app={this} />} />
+            <Route path="/header" element={<Header app={this} />} />
+
           </Routes>
           <Footer app={this} />
         </BrowserRouter>
