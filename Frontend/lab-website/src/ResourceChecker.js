@@ -253,7 +253,7 @@ class ResourceView extends React.Component {
         if (this.state.search !== null && this.state.search !== "") {
             data = data.filter((item) => {
                 for (let i = 0; i < item.length; i++) {
-                    if (item[i].toLowerCase().includes(this.state.search.toLowerCase())) {
+                    if (item[i].toString().toLowerCase().includes(this.state.search.toLowerCase())) {
                         return true;
                     }
                 }
@@ -801,6 +801,28 @@ class CatalogView extends BaseView {
     }
 }
 
+class ProgressBar extends React.Component {
+    constructor(props) {
+        super(props);
+    
+    }
+
+    render() {
+        let colorStart = "#aaaa00";
+        let colorEnd = "#4422dd";
+
+        // mix color based on progress
+        let color = colorEnd;
+
+
+        return (
+            <div className="progressBar">
+                <div className="progressBarFill" style={{ width: this.props.progress + "%" , backgroundColor: color}}></div>
+            </div>
+        );
+    }
+}
+
 class OverviewView extends React.Component {
 
     constructor(props) {
@@ -812,6 +834,9 @@ class OverviewView extends React.Component {
     render() {
         return (
             <div className="overviewView">
+                <div className="mainProgress">
+                    <ProgressBar progress={50} />
+                </div>
                 <h1>TODO: overview</h1>
                 <div>
                     <h2>Hardware progress</h2>
