@@ -20,22 +20,54 @@ class TabView extends React.Component {
     }
 
     render() {
-        console.log(this.tabs);
         return (
             <div className="tabView">
                 <div className="tabViewHeader">
-                    
-                    {this.tabs.map((tab, index) => 
-                        (
-                            
-                            <Link className={"tabViewHeaderItem" + (this.state.activeTab === index ? " tabViewHeaderItemActive" : "")} to={this.links[index]} onClick={() => this.clickHandler(index)}>
-                                {tab}
-                            </Link>
-                        )
+
+                    {this.tabs.map((tab, index) =>
+                    (
+
+                        <Link key={index} className={"tabViewHeaderItem" + (this.state.activeTab === index ? " tabViewHeaderItemActive" : "")} to={this.links[index]} onClick={() => this.clickHandler(index)}>
+                            {tab}
+                        </Link>
+                    )
                     )}
                 </div>
                 <div className="tabViewContent">
                     <Outlet />
+                </div>
+            </div>
+        );
+    }
+}
+
+
+// a dialog for the resource view
+// can be used to add, edit or delete resources
+class ResourceDialog extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.title = "Title";
+        if(this.props.title){
+            this.title = this.props.title;
+        }
+    }
+
+    render() {
+        return (
+            <div className="resourceDialog">
+                <div className="resourceDialogTop">
+                    <div className="resourceDialogTopLeft">
+                        <h3>{this.title}</h3>
+
+                    </div>
+                    <div className="resourceDialogTopRight">
+                        <button className="resourceDialogTopRightButton" onClick={this.props.onClose}>X</button>
+                    </div>
+                </div>
+                <div className="resourceDialogContent">
+                    {this.props.children}
                 </div>
             </div>
         );
@@ -56,7 +88,8 @@ class ResourceView extends React.Component {
             data: [],
             sortRow: 0,
             sortDirection: 1,
-            filter: null
+            filter: null,
+            search: ""
         };
 
         if (this.props.header) {
@@ -76,6 +109,8 @@ class ResourceView extends React.Component {
         } else {
             this.ignoreFirstColumn = false;
         }
+
+        this.dialog = React.createRef();
 
 
 
@@ -154,10 +189,50 @@ class ResourceView extends React.Component {
         return data;
     }
 
-    filter(data) {
-        if (this.state.filter === null) {
-            return data;
+    getCategoryIndex() {
+        // returns the index of the category column
+        var categoryIndex = -1;
+        for (let i = 0; i < this.state.header.length; i++) {
+            let v = this.state.header[i];
+            v = v.toLowerCase();
+            if (v === "kategorie" || v === "category") {
+                categoryIndex = i;
+                break;
+            }
         }
+        if (categoryIndex === -1) {
+            return -1;
+        }
+        if (this.props.ignoreFirstColumn) {
+            categoryIndex++;
+        }
+        return categoryIndex;
+    }
+
+
+    filter(data) {
+        if (this.state.filter !== null) {
+
+            var categoryIndex = this.getCategoryIndex();
+            if (categoryIndex !== -1) {
+                data = data.filter((item) => {
+                    return item[categoryIndex] === this.state.filter;
+                });
+            }
+
+        }
+
+        if (this.state.search !== null && this.state.search !== "") {
+            data = data.filter((item) => {
+                for (let i = 0; i < item.length; i++) {
+                    if (item[i].toLowerCase().includes(this.state.search.toLowerCase())) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+
         return data;
     }
 
@@ -195,6 +270,53 @@ class ResourceView extends React.Component {
         );
     }
 
+    generateFilterButtons() {
+        var buttons = [];
+        var categories = [];
+        var categoryIndex = this.getCategoryIndex();
+        if (categoryIndex === -1) {
+            return null;
+        }
+
+        for (let i = 0; i < this.state.data.length; i++) {
+            let v = this.state.data[i][categoryIndex];
+            if (categories.indexOf(v) === -1) {
+                categories.push(v);
+            }
+        }
+
+        // sort categories
+        categories.sort((a, b) => { return a.localeCompare(b); });
+
+        for (let i = 0; i < categories.length; i++) {
+            let cName = "filterButton";
+            if (this.state.filter === categories[i]) {
+                cName = cName + " activeFilter";
+            }
+            buttons.push(<button className={cName} key={i} onClick={() => this.setFilter(categories[i])}>{categories[i]}</button>);
+        }
+
+        return buttons;
+
+    }
+
+    setFilter(filter) {
+        this.setState({ filter: filter });
+    }
+
+    setSearch(e) {
+        let search = e.target.value;
+        this.setState({ search: search });
+    }
+
+    showDialog() {
+        this.dialog.current.showModal();
+    }
+
+    hideDialog() {
+        this.dialog.current.close();
+    }
+
     render() {
         var data = this.state.data;
         data = this.filter(data);
@@ -202,7 +324,21 @@ class ResourceView extends React.Component {
 
         return (
             <div className="resourceView">
-                <h1>TODO: filter and search</h1>
+                <dialog ref={this.dialog} className="resourceViewDialog">
+                    <ResourceDialog view={this} onClose={() => { this.hideDialog(); }} />
+                </dialog>
+
+                <div className="filterBar">
+                    <div className="filterButtons">
+
+                        {this.generateFilterButtons()}
+
+                        <button key={999} className="filterButton" onClick={() => { this.setFilter(null); }}>Reset</button>
+                    </div>
+                    <div className="filterInput">
+                        <input className="filterInputField" value={this.props.search} type="text" placeholder="Filter" onChange={(e) => { this.setSearch(e); }} />
+                    </div>
+                </div>
                 <table>
                     <thead>
                         {this.generateHeader()}
@@ -213,6 +349,40 @@ class ResourceView extends React.Component {
                         ))}
                     </tbody>
                 </table>
+            </div>
+        );
+    }
+}
+
+class EditItemPanel extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            item: null
+        };
+
+        if(this.props.item) {
+            this.state.item = this.props.item;
+        }
+    }
+
+    render() {
+        if(this.state.item === null) {
+            return null;
+        }
+
+        return (
+            <div className="editItemPanel">
+                <div className="editItemPanelFields">
+                    <input type="text" placeholder="Name" className="editItemPanelInput"></input>
+                    <input type="text" placeholder="Kategorie" className="editItemPanelInput"></input>
+                    <input type="text" placeholder="Kosten/Monat" className="editItemPanelInput"></input>
+                    <input type="text" placeholder="Kosten" className="editItemPanelInput"></input>
+                    <input type="text" placeholder="Anzahl" className="editItemPanelInput"></input>
+                </div>
+                <div className="editItemPanelControls">
+                    {this.props.children}
+                </div>
             </div>
         );
     }
@@ -237,6 +407,8 @@ class InventoryView extends React.Component {
     }
 
     render() {
+
+
         return (
             <ResourceView
                 header={["Name", "Kategorie", "Kosten/Monat", "Anzahl"]}
@@ -301,6 +473,8 @@ class CatalogView extends React.Component {
         this.state = {
             data: []
         };
+
+        this.view = React.createRef();
     }
 
     async componentDidMount() {
@@ -316,12 +490,16 @@ class CatalogView extends React.Component {
     render() {
         return (
             <ResourceView
+                ref={this.view}
                 header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
                 data={this.convertData()}
                 buttons={[
                     {
                         text: "Hinzufügen",
-                        onClick: (item) => { console.log(item); }
+                        onClick: (item) => {
+                            this.view.current.showDialog();
+                            console.log(item);
+                        }
                     },
                     {
                         text: "Planen",
