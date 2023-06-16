@@ -1,16 +1,15 @@
 package com.projecttools.Web;
 
-import com.projecttools.models.Category;
 import com.projecttools.request.CategoryRequest;
 import com.projecttools.request.NetworkRequest;
 import com.projecttools.request.ResourceRequest;
+import com.projecttools.request.UserCredentials;
 import com.projecttools.service.AdminService;
 import com.projecttools.service.implementation.CategoryService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/admin")
@@ -42,6 +41,14 @@ public class AdminController {
     public void addNetworks(@RequestBody List<NetworkRequest> networkRequest){
         adminService.addNetworks(networkRequest);
     }
+
+    @PostMapping("/addAdmin")
+    public void addNetworks(@RequestBody UserCredentials userCredentials){
+        userCredentials.setAdmin(true);
+        adminService.addAdmin(userCredentials);
+    }
+
+
 
     @GetMapping
     public String test() {

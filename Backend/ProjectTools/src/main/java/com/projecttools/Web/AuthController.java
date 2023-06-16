@@ -1,12 +1,9 @@
 package com.projecttools.Web;
 
-import com.projecttools.request.UserCrediting;
+import com.projecttools.request.UserCredentials;
 import com.projecttools.service.AuthService;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -26,7 +23,8 @@ public class AuthController {
     }
 
     @PostMapping("/regis")
-    public void register(@RequestBody UserCrediting userCrediting){
-        authService.registerUser(userCrediting);
+    public void register(@RequestBody UserCredentials userCredentials){
+        userCredentials.setAdmin(false);
+        authService.registerUser(userCredentials);
     }
 }
