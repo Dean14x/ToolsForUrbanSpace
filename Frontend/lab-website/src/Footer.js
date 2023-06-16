@@ -10,17 +10,15 @@ class Footer extends React.Component {
       loggedIn: false,
     };
   }
-
   render() {
     return (
       <div className="footer">
         <div className="footer-item">
-          {/*<Link className="footer-link" to="/">Home</Link>*/}
-          Some footer text Imprint
+          <Link className="footer-link" to="/impressum">Impressum</Link>
         </div>
       </div>
     );
-  }
+   }
 }
 
 export default Footer;
