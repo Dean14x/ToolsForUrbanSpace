@@ -3,6 +3,7 @@ import Homepage from "./Homepage";
 import Login from "./Login";
 import NetworkAnalysis from "./NetworkAnalysis";
 import NetworkMap from "./NetworkMap";
+import NetworkTable from "./NetworkTable";
 import Overview from "./Overview";
 import ResourceChecker from "./ResourceChecker";
 import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
@@ -41,7 +42,7 @@ class App extends React.Component {
             <Route path="/network" element={<NetworkAnalysis app={this} />} />
             <Route path="/resources" element={<ResourceChecker app={this} />} />
             <Route path="/login" element={<Login app={this} />} />
-
+            <Route path="/networkTable" element={<NetworkTable app={this} />} />
             <Route path="/networkMap" element={<NetworkMap app={this} />} />
           </Routes>
           <Footer app={this} />

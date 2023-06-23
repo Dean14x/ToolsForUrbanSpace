@@ -3,9 +3,8 @@ import "./homepage.css";
 import Vektor1 from "./images/Vector1.png";
 import Vektor2 from "./images/Vector2.png";
 import Ellipse1 from "./images/Ellipse1.png";
-import logo2 from "./logos/logo2.png";
-import NetworkMap from "./NetworkMap";
 import Login from "./Login";
+import {Link} from "react-router-dom";
 
 // Homepage component
 // This is the homepage of the website
@@ -42,9 +41,9 @@ class Homepage extends React.Component {
                 <img className={"deko"} src= {Vektor1} alt="vektor"/>
                 <img className={"deko2"} src= {Vektor2} alt="vektor"/>
                 <img className={"deko3"} src= {Ellipse1} alt="vektor"/>
-                <div className={"buttonLogin"}>
-                    <button onClick={() => this.setPage("login")}>Create your Lab now</button>
-                </div>
+                <button >
+                    <Link to="/login">Get started</Link>
+                </button>
             </div>
 
 

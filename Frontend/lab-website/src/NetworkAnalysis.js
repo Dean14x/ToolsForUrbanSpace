@@ -1,6 +1,7 @@
-import React, { NetworkMap } from "react";
+import React, { NetworkMap, Networktable } from "react";
 import "./infopage_style.css";
 import "./NetworkAnalysisDesign.css";
+
 import { Link } from "react-router-dom";
 
 // Homepage component
@@ -15,18 +16,8 @@ class NetworkAnalysis extends React.Component {
       session: "",
     };
   }
-
-  // setPage(page) {
-  //     this.setState({ pages: page });
-  // }
-
   render() {
-    let page;
-    switch (this.state.page) {
-      case "networkMap":
-        page = <NetworkMap app={this} />;
-        break;
-    }
+
     return (
       <div>
         <div className="ManageNetwork">
@@ -46,7 +37,7 @@ class NetworkAnalysis extends React.Component {
             </div>
 
             <button className={"manageB"}>
-              <Link to="/networkMap">Start</Link>
+              <Link to="/networkTable">Start</Link>
             </button>
           </div>
         </div>
@@ -69,11 +60,8 @@ class NetworkAnalysis extends React.Component {
             </div>
           </div>
 
-          <button
-            className={"showB"}
-            onClick={() => this.setPage("networkMap")}
-          >
-            Start
+          <button className={"showB"}>
+            <Link to="/networkMap">Start</Link>
           </button>
         </div>
       </div>
