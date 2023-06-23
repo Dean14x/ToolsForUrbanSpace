@@ -4,11 +4,11 @@ import './searchstyle.css';
 // Homepage component
 // This is the homepage of the website
 // It is the first page that the user sees
-class NetworkAnalysis extends React.Component {
+class NetworkMap extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            display: 0
+            
         };
     }
 
@@ -31,4 +31,4 @@ class NetworkAnalysis extends React.Component {
     }
 }
 
-export default NetworkAnalysis;
+export default NetworkMap;

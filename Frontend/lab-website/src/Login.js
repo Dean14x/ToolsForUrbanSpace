@@ -43,18 +43,27 @@ class FeedbackField extends React.Component {
         let placeholder = "";
         if (this.props.placeholder)
             placeholder = this.props.placeholder;
+        let lgIcon = "";
+        if(this.props.placeholder === "Username") {
+            lgIcon = "./static/images/login/email-icon.png";
+        } else if(this.props.placeholder === "Password" || this.props.placeholder === "Confirm Password") {
+            lgIcon = "./static/images/login/lg-lock.png";
+        } else if(this.props.placeholder === "Email") {
+            lgIcon = "./static/images/login/lg-mail.png";
+        }
 
         // set feedback for current input
         let feedbackVal = this.getFeedback();
         let feedback = <div className="feedbackValue">
             {feedbackVal}
         </div>;
+        let feedbackIcon = <img className="lg-Icon" src={lgIcon}></img>
 
         return (
             <div className="feedbackField">
                 <div className="feedback-input-container">
                     <div className="feedback-input-icon">
-                        Q
+                        {feedbackIcon}
                     </div>
                     <input type={type} onChange={(event) => { this.setVal(event.target.value); }} placeholder={placeholder} />
                 </div>
@@ -331,7 +340,6 @@ class SignupPanel extends React.Component {
                 <PasswordMatchFeedbackField ref={this.passwordMatchField} getOtherVal={get} type="password" placeholder="Confirm Password" />
                 <div className="signup-feedback">{this.state.signupFeedback}</div>
                 <div className="loginButton" onClick={() => { this.signUp(); }}><div>Sign up</div></div>
-
             </div>
         );
     }
@@ -381,6 +389,9 @@ class Login extends React.Component {
                 {panel}
 
             <div className="login-bg">
+                <div>
+                    <a className="login-text">SmartCommune</a>
+                </div>
                 <img src="/static/images/login/Vector3.png" alt="login-vec3"/>
                 <img src="/static/images/login/Vector4.png" alt="login-vec4"/>
                 <img src="/static/images/login/Ellipse2.png" alt="login-ellipse"/>
