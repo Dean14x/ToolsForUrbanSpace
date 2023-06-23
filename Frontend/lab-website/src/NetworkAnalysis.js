@@ -25,7 +25,7 @@ class NetworkAnalysis extends React.Component {
       case "manage":
         page = <ManageNetwork app={this} />;
         break;
-      }
+    }
     return (
       <div>
         <div className="ManageNetwork">
@@ -42,17 +42,13 @@ class NetworkAnalysis extends React.Component {
                 </td>
               </table>
             </div>
-      
+
             <button className={"manageB"}>
               <Link to="/networkTable">Start</Link>
             </button>
-
           </div>
         </div>
-
-
         <div className="linie"></div>
-
         <div className="ShowNetwork">
           <div className="rect2">
             <div className="text1">
@@ -67,16 +63,13 @@ class NetworkAnalysis extends React.Component {
                   <p>- less text</p>
                 </td>
               </table>
-                    </div>
-                    {page}
-                </div>
             </div>
+            {/* {page} */}
           </div>
-
-          <button className={"showB"}>
-            <Link to="/networkMap">Start</Link>
-          </button>
         </div>
+        <button className={"showB"}>
+          <Link to="/networkMap">Start</Link>
+        </button>
         <div className="infopage-bg">
           <img src="/static/images/Vector5.png" alt="network-vec5"></img>
         </div>
@@ -86,27 +79,26 @@ class NetworkAnalysis extends React.Component {
 }
 
 class ManageNetwork extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: "React",
-            username: "",
-            session: ""
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "React",
+      username: "",
+      session: "",
+    };
+  }
 
-    setPage(page) {
-        this.setState({ page: page });
-    }
+  setPage(page) {
+    this.setState({ page: page });
+  }
 
-    render() {
-       return (
-        <div>
-            <h1>Test</h1>
-        </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <h1>Test</h1>
+      </div>
+    );
+  }
 }
-
 
 export default NetworkAnalysis;
