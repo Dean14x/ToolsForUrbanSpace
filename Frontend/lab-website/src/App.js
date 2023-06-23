@@ -2,13 +2,14 @@ import React from "react";
 import Homepage from "./Homepage";
 import Login from "./Login";
 import NetworkAnalysis from "./NetworkAnalysis";
+import NetworkMap from "./NetworkMap";
 import Overview from "./Overview";
 import ResourceChecker from "./ResourceChecker";
 import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import logo2 from './logos/logo2.png';
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import logo2 from "./logos/logo2.png";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
@@ -18,7 +19,6 @@ class App extends React.Component {
       session: "",
       count: 0,
     };
-
   }
 
   getUsername() {
@@ -29,15 +29,10 @@ class App extends React.Component {
     this.setState({ username: username, session: session });
   }
 
-
-
   render() {
-
     return (
       <div className="appRoot">
-
         <BrowserRouter>
-
           <Navbar app={this} />
 
           <Routes>
@@ -46,11 +41,12 @@ class App extends React.Component {
             <Route path="/network" element={<NetworkAnalysis app={this} />} />
             <Route path="/resources" element={<ResourceChecker app={this} />} />
             <Route path="/login" element={<Login app={this} />} />
+
+            <Route path="/networkMap" element={<NetworkMap app={this} />} />
           </Routes>
           <Footer app={this} />
         </BrowserRouter>
       </div>
-
     );
   }
 }
