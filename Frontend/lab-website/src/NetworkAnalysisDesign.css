@@ -4,10 +4,10 @@
 
 .rect{
     position: absolute;
-    width: 350px;
-    height: 350px;
+    width: 27vw;
+    height: 27vw;
     left: 17vw;
-    top: 200px;
+    top: 16vw;
     background: #EEEEEE;
     border-radius: 40px;
 }
@@ -61,7 +61,6 @@
     top: 390px;
     left: 50%;
     transform: translate(-50%, -50%);
-
     background: rgba(206, 229, 246, 1);
     border-radius: 40px;
 }
@@ -69,16 +68,12 @@
 
 .rect2{
     position: absolute;
-    width: 350px;
-    height: 350px;
+    width: 27vw;
+    height: 27vw;
     right: 17vw;
-    top: 200px;
-
+    top: 16vw;
     background: #EEEEEE;
     border-radius: 40px;
-
-
-
 }
 
 
@@ -93,7 +88,6 @@
     align-items: center;
     text-align: center;
     color: #103754;
-
 }
 
 #table2{
@@ -103,7 +97,6 @@
     font-weight: 600;
     font-size: 18px;
     color: #103754;
-
 }
 
 

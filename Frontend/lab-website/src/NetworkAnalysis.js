@@ -2,7 +2,7 @@ import React from "react";
 import NetworkMap from "./NetworkMap";
 import './infopage_style.css';
 import './NetworkAnalysisDesign.css';
-import networkMap from "./NetworkMap";
+
 
 
 // Homepage component
