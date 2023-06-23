@@ -1,4 +1,5 @@
 import React from "react";
+
 import NetworkMap from "./NetworkMap";
 import './infopage_style.css';
 import './NetworkAnalysisDesign.css';
@@ -22,6 +23,9 @@ class NetworkAnalysis extends React.Component {
         this.setState({ pages: page });
     }
 
+
+
+
     render() {
         let page;
         switch (this.state.page) {
@@ -30,54 +34,56 @@ class NetworkAnalysis extends React.Component {
                 break;
         }
         return (
-            <div>
-                <div className="ManageNetwork">
-                    <div className="rect">
-                        <div className="text1">
-                            <h1>Manage Network</h1>
-                        </div>
-
-                        <div >
-                            <table id="table1">
-                                <td >
-                                    <p>- some text</p>
-                                    <p>- more text</p>
-                                    <p>- less text</p>
-                                </td>
-                            </table>
-                        </div>
-
-                        <button className={"manageB"} onClick={() => this.setPage("networkMap")}>Start</button>
-                    </div>
 
 
-                </div>
-
-
-
-                <div className = "linie"></div>
-
-
-                <div className="ShowNetwork">
-                    <div className="rect2">
-                        <div className="text1">
-                            <h1>Show Network</h1>
-                        </div>
-
-                        <div >
-                            <table id ="table1">
-                                <td >
-                                    <p>- some text</p>
-                                    <p>- more text</p>
-                                    <p>- less text</p>
-                                </td>
-                            </table>
-                        </div>
-                    </div>
-                     <button className={"showB"} onClick={() => this.setPage("networkMap")}>Start</button>
-                </div>
-
+<div>
+    <div className="ManageNetwork">
+        <div className="rect">
+            <div className="text1">
+                <h1>Manage Network</h1>
             </div>
+
+            <div >
+                <table id="table1">
+                    <td >
+                        <p>- some text</p>
+                        <p>- more text</p>
+                        <p>- less text</p>
+                    </td>
+                </table>
+            </div>
+
+            <button className={"manageB"} onClick={() => this.setPage("networkMap")}>Start</button>
+        </div>
+
+    </div>
+
+        <div className = "linie"></div>
+
+
+        <div className="ShowNetwork">
+            <div className="rect2">
+                <div className="text1">
+                    <h1>Show Network</h1>
+                </div>
+
+                <div >
+                    <table id ="table1">
+                        <td >
+                            <p>- some text</p>
+                            <p>- more text</p>
+                            <p>- less text</p>
+                        </td>
+                    </table>
+                </div>
+
+            <button className={"showB"} onClick={() => this.setPage("networkMap")}>Start</button>
+            </div>
+        </div>
+
+
+</div>
+
         );
     }
 }
