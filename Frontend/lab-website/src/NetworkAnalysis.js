@@ -26,9 +26,9 @@ class NetworkAnalysis extends React.Component {
               <h1>Manage Network</h1>
             </div>
 
-            <div>
+            <div >
               <table id="table1">
-                <td>
+                <td >
                   <p>- some text</p>
                   <p>- more text</p>
                   <p>- less text</p>
@@ -39,18 +39,20 @@ class NetworkAnalysis extends React.Component {
             <button className={"manageB"}>
               <Link to="/networkTable">Start</Link>
             </button>
+
           </div>
         </div>
+
         <div className="linie"></div>
 
         <div className="ShowNetwork">
           <div className="rect2">
-            <div className="text2">
+            <div className="text1">
               <h1>Show Network</h1>
             </div>
 
             <div>
-              <table id="table2">
+              <table id="table1">
                 <td>
                   <p>- some text</p>
                   <p>- more text</p>
