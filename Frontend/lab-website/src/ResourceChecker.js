@@ -58,7 +58,7 @@ class ResourceDialog extends React.Component {
         super(props);
 
         this.title = "Title";
-        if(this.props.title){
+        if (this.props.title) {
             this.title = this.props.title;
         }
     }
@@ -337,10 +337,10 @@ class ResourceView extends React.Component {
         this.setState({ search: search });
     }
 
-    showDialog(element=null) {
+    showDialog(element = null) {
 
-        this.setState({dialogElement: element});
-        
+        this.setState({ dialogElement: element });
+
         this.dialog.current.showModal();
     }
 
@@ -396,16 +396,16 @@ class EditItemPanel extends React.Component {
         };
 
         // gets the actual item object from the list
-        if(this.props.item && this.props.getItem) {
+        if (this.props.item && this.props.getItem) {
             this.baseItem = this.props.getItem(this.props.item[0]);
         }
 
         this.buttons = [];
-        if(this.props.buttons) {
+        if (this.props.buttons) {
             this.buttons = this.props.buttons;
         }
 
-        
+
 
     }
 
@@ -415,9 +415,9 @@ class EditItemPanel extends React.Component {
             item = this.baseItem;
         }
 
-        if (field==="cost" || field==="monthlyCost") {
+        if (field === "cost" || field === "monthlyCost") {
             newVal = parseFloat(newVal);
-            if(isNaN(newVal)) {
+            if (isNaN(newVal)) {
                 newVal = 0;
             }
         }
@@ -431,7 +431,7 @@ class EditItemPanel extends React.Component {
 
         item[field] = newVal;
 
-        if(item.name != this.baseItem.name || item.category != this.baseItem.category || item.cost != this.baseItem.cost || item.monthlyCost != this.baseItem.monthlyCost) {
+        if (item.name != this.baseItem.name || item.category != this.baseItem.category || item.cost != this.baseItem.cost || item.monthlyCost != this.baseItem.monthlyCost) {
             item.id = -1;
         }
 
@@ -440,14 +440,14 @@ class EditItemPanel extends React.Component {
 
     render() {
 
-        if(this.props.item[0] !== this.baseItem.id) {
+        if (this.props.item[0] !== this.baseItem.id) {
             this.baseItem = this.props.getItem(this.props.item[0]);
-            this.setState({item: this.baseItem});
+            this.setState({ item: this.baseItem });
         }
 
         let item = this.baseItem;
 
-        if(this.state.item) {
+        if (this.state.item) {
             item = this.state.item;
         }
 
@@ -455,23 +455,23 @@ class EditItemPanel extends React.Component {
             <div className="editItemPanel">
                 <div className="editItemPanelFields">
                     <div className="editItemPanelRow">
-                    <input onChange={(e) => this.changeItem(e.target.value, "name")}
-                        type="text" placeholder="Name" className="editItemPanelInput editItemPanelInputName" value={item.name}></input>
-                    <select defaultValue={item.category} onChange={(e) => this.changeItem(e.target.value, "category")}
-                        className="editItemPanelInput">
-                        {Object.keys(CATEGORIES).map((citem, index) => (
-                            <option  key={index}>{citem}</option>
-                        ))}
-                    </select>
+                        <input onChange={(e) => this.changeItem(e.target.value, "name")}
+                            type="text" placeholder="Name" className="editItemPanelInput editItemPanelInputName" value={item.name}></input>
+                        <select defaultValue={item.category} onChange={(e) => this.changeItem(e.target.value, "category")}
+                            className="editItemPanelInput">
+                            {Object.keys(CATEGORIES).map((citem, index) => (
+                                <option key={index}>{citem}</option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className="editItemPanelRow">
-                    <input onChange={(e) => this.changeItem(e.target.value, "monthlyCost")}
-                        type="text" placeholder="Kosten/Monat" className="editItemPanelInput" value={item.monthlyCost}></input>
-                    <input onChange={(e) => this.changeItem(e.target.value, "cost")}
-                        type="text" placeholder="Kosten" className="editItemPanelInput" value={item.cost}></input>
-                    <input onChange={(e) => this.changeItem(e.target.value, "amount")}
-                        type="text" placeholder="Anzahl" className="editItemPanelInput" value={item.amount}></input>
+                        <input onChange={(e) => this.changeItem(e.target.value, "monthlyCost")}
+                            type="text" placeholder="Kosten/Monat" className="editItemPanelInput" value={item.monthlyCost}></input>
+                        <input onChange={(e) => this.changeItem(e.target.value, "cost")}
+                            type="text" placeholder="Kosten" className="editItemPanelInput" value={item.cost}></input>
+                        <input onChange={(e) => this.changeItem(e.target.value, "amount")}
+                            type="text" placeholder="Anzahl" className="editItemPanelInput" value={item.amount}></input>
                     </div>
                 </div>
                 <div className="editItemPanelControls editItemPanelRow">
@@ -592,36 +592,71 @@ class InventoryView extends BaseView {
 
     render() {
 
+        let costMonthly = 0;
+        let costTotal = 0;
+
+        let budgetMonthly = 1000;
+
+
+        for (let i = 0; i < this.state.data.length; i++) {
+            costMonthly += this.state.data[i].monthlyCost * this.state.data[i].amount;
+            costTotal += this.state.data[i].cost * this.state.data[i].amount;
+        }
+
+        // background color, 0%: green, 100%: red
+        let hueStart = 120;
+        let hueEnd = 0;
+        let hue = hueStart + (hueEnd - hueStart) * Math.min(costMonthly / budgetMonthly, 1.0);
+        let color = "hsl(" + hue + ", 80%, 60%, 0.6)";
 
         return (
-            <ResourceView
-                ref={this.view}
-                header={["Name", "Kategorie", "Kosten/Monat", "Anzahl"]}
-                data={this.convertData()}
-                buttons={[{
-                    text: "Bearbeiten",
-                    onClick: (item) => {
-                        this.view.current.showDialog(<EditItemPanel 
-                        title="Bearbeiten"
-                        item={item}
-                        getItem={this.getItemFromId.bind(this)}
-                        buttons={[
-                            { text: "Abbrechen", 
-                            onClick: (item) => { this.view.current.hideDialog(); } 
-                        },
-                            { text: "Bestätigen",
-                            onClick: (item) => { 
-                                this.editItem(item);
-                                this.view.current.hideDialog(); }
-                        }
-                        ]} />);
+            <div className="resourceContainer">
+                <div className="resourceViewHeader">
+                    {budgetMonthly > 0 ?
+                        <div className="costMonthly" style={{ backgroundColor: color }}>
+                            {costMonthly}€ von {budgetMonthly}€ / Monat
+                        </div>
+                        :
+                        <div className="costMonthly">
+                            {costMonthly}€ / Monat
+                        </div>
                     }
-                },
-                {
-                    text: "Entfernen",
-                    onClick: (item) => { this.removeItem(this.getItemFromId(item[0])); }
-                }
-                ]} />
+                    <div className="costTotal">
+                        {costTotal}€ Inventar
+                    </div>
+                </div>
+                <ResourceView
+                    ref={this.view}
+                    header={["Name", "Kategorie", "Kosten/Monat", "Anzahl"]}
+                    data={this.convertData()}
+                    buttons={[{
+                        text: "Bearbeiten",
+                        onClick: (item) => {
+                            this.view.current.showDialog(<EditItemPanel
+                                title="Bearbeiten"
+                                item={item}
+                                getItem={this.getItemFromId.bind(this)}
+                                buttons={[
+                                    {
+                                        text: "Abbrechen",
+                                        onClick: (item) => { this.view.current.hideDialog(); }
+                                    },
+                                    {
+                                        text: "Bestätigen",
+                                        onClick: (item) => {
+                                            this.editItem(item);
+                                            this.view.current.hideDialog();
+                                        }
+                                    }
+                                ]} />);
+                        }
+                    },
+                    {
+                        text: "Entfernen",
+                        onClick: (item) => { this.removeItem(this.getItemFromId(item[0])); }
+                    }
+                    ]} />
+            </div>
         );
     }
 }
@@ -665,55 +700,105 @@ class PlannedView extends BaseView {
 
 
     render() {
+
+        let costMonthly = 0;
+        let costTotal = 0;
+
+        let budgetMonthly = 1000;
+        let budgetItems = 10000;
+
+
+        for (let i = 0; i < this.state.data.length; i++) {
+            costMonthly += this.state.data[i].monthlyCost * this.state.data[i].amount;
+            costTotal += this.state.data[i].cost * this.state.data[i].amount;
+        }
+
+        budgetMonthly -= costMonthly;
+        if (budgetMonthly < 0) {
+            budgetMonthly = 0;
+        }
+
+        // background color, 0%: green, 100%: red
+        let hueStart = 120;
+        let hueEnd = 0;
+        let hue = hueStart + (hueEnd - hueStart) * Math.min(budgetMonthly > 0 ? (costMonthly / budgetMonthly) : 1.0, 1.0);
+        let color = "hsl(" + hue + ", 80%, 60%, 0.6)";
+
+        let hue2 = hueStart + (hueEnd - hueStart) * Math.min(costTotal / budgetItems, 1.0);
+        let color2 = "hsl(" + hue2 + ", 80%, 60%, 0.6)";
+
+
         return (
-            <ResourceView
-                ref={this.view}
-                header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
-                data={this.convertData()}
-                buttons={[
-                    {
-                        text: "Hinzufügen",
-                        onClick: (item) => {
-                            this.view.current.showDialog(<EditItemPanel 
-                            title="Hinzufügen"
-                            item={item}
-                            getItem={this.getItemFromId.bind(this)}
-                            buttons={[
-                                { text: "Abbrechen", 
-                                onClick: (item) => { this.view.current.hideDialog(); } 
-                            },
-                                { text: "Bestätigen",
-                                onClick: (item) => { 
-                                    this.addItem(item);
-                                    this.view.current.hideDialog(); }
-                            }
-                            ]} />);
-                        }
-                    },
-                    {
-                        text: "Bearbeiten",
-                        onClick: (item) => {
-                            this.view.current.showDialog(<EditItemPanel 
-                            title="Bearbeiten"
-                            item={item}
-                            getItem={this.getItemFromId.bind(this)}
-                            buttons={[
-                                { text: "Abbrechen", 
-                                onClick: (item) => { this.view.current.hideDialog(); } 
-                            },
-                                { text: "Bestätigen",
-                                onClick: (item) => { 
-                                    this.editItem(item);
-                                    this.view.current.hideDialog(); }
-                            }
-                            ]} />);
-                        }
-                    },
-                    {
-                        text: "Entfernen",
-                        onClick: (item) => { this.removeItem(this.getItemFromId(item[0])); }
+            <div className="resourceContainer">
+                <div className="resourceViewHeader">
+                {budgetMonthly > 0 ?
+                        <div className="costMonthly" style={{ backgroundColor: color }}>
+                            {costMonthly}€ von {budgetMonthly}€ / Monat
+                        </div>
+                        :
+                        <div className="costMonthly">
+                            {costMonthly}€ / Monat
+                        </div>
                     }
-                ]} />
+                    <div className="costTotal" style={{ backgroundColor: color2 }}>
+                        {costTotal}€ von {budgetItems}€ geplant
+                    </div>
+                </div>
+                <ResourceView
+                    ref={this.view}
+                    header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
+                    data={this.convertData()}
+                    buttons={[
+                        {
+                            text: "Hinzufügen",
+                            onClick: (item) => {
+                                this.view.current.showDialog(<EditItemPanel
+                                    title="Hinzufügen"
+                                    item={item}
+                                    getItem={this.getItemFromId.bind(this)}
+                                    buttons={[
+                                        {
+                                            text: "Abbrechen",
+                                            onClick: (item) => { this.view.current.hideDialog(); }
+                                        },
+                                        {
+                                            text: "Bestätigen",
+                                            onClick: (item) => {
+                                                this.addItem(item);
+                                                this.view.current.hideDialog();
+                                            }
+                                        }
+                                    ]} />);
+                            }
+                        },
+                        {
+                            text: "Bearbeiten",
+                            onClick: (item) => {
+                                this.view.current.showDialog(<EditItemPanel
+                                    title="Bearbeiten"
+                                    item={item}
+                                    getItem={this.getItemFromId.bind(this)}
+                                    buttons={[
+                                        {
+                                            text: "Abbrechen",
+                                            onClick: (item) => { this.view.current.hideDialog(); }
+                                        },
+                                        {
+                                            text: "Bestätigen",
+                                            onClick: (item) => {
+                                                this.editItem(item);
+                                                this.view.current.hideDialog();
+                                            }
+                                        }
+                                    ]} />);
+                            }
+                        },
+                        {
+                            text: "Entfernen",
+                            onClick: (item) => { this.removeItem(this.getItemFromId(item[0])); }
+                        }
+                    ]} />
+            </div>
         );
     }
 }
@@ -751,52 +836,58 @@ class CatalogView extends BaseView {
     render() {
 
         return (
-            <ResourceView
-                ref={this.view}
-                header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
-                data={this.convertData()}
-                buttons={[
-                    {
-                        text: "Hinzufügen",
-                        onClick: (item) => {
-                            this.view.current.showDialog(<EditItemPanel 
-                            title="Hinzufügen"
-                            item={item}
-                            getItem={this.getItemFromId.bind(this)}
-                            buttons={[
-                                { text: "Abbrechen", 
-                                onClick: (item) => { this.view.current.hideDialog(); } 
-                            },
-                                { text: "Bestätigen",
-                                onClick: (item) => { 
-                                    this.addItem(item);
-                                    this.view.current.hideDialog(); }
-                            }
-                            ]} />);
-                        }
-                    },
-                    {
-                        text: "Planen",
-                        onClick: (item) => {
-                            this.view.current.showDialog(<EditItemPanel
-                                title="Planen"
-                                item={item}
-                                getItem={this.getItemFromId.bind(this)}
-                                buttons={[
-                                    {
-                                        text: "Abbrechen",
-                                        onClick: (item) => { this.view.current.hideDialog(); }
-                                    },
-                                    {
-                                        text: "Bestätigen",
-                                        onClick: (item) => {
-                                            this.planItem(item);
-                                            this.view.current.hideDialog();
+            <div className="resourceContainer">
+                <ResourceView
+                    ref={this.view}
+                    header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
+                    data={this.convertData()}
+                    buttons={[
+                        {
+                            text: "Hinzufügen",
+                            onClick: (item) => {
+                                this.view.current.showDialog(<EditItemPanel
+                                    title="Hinzufügen"
+                                    item={item}
+                                    getItem={this.getItemFromId.bind(this)}
+                                    buttons={[
+                                        {
+                                            text: "Abbrechen",
+                                            onClick: (item) => { this.view.current.hideDialog(); }
+                                        },
+                                        {
+                                            text: "Bestätigen",
+                                            onClick: (item) => {
+                                                this.addItem(item);
+                                                this.view.current.hideDialog();
+                                            }
                                         }
-                                    }]}/>);
-                    }}
+                                    ]} />);
+                            }
+                        },
+                        {
+                            text: "Planen",
+                            onClick: (item) => {
+                                this.view.current.showDialog(<EditItemPanel
+                                    title="Planen"
+                                    item={item}
+                                    getItem={this.getItemFromId.bind(this)}
+                                    buttons={[
+                                        {
+                                            text: "Abbrechen",
+                                            onClick: (item) => { this.view.current.hideDialog(); }
+                                        },
+                                        {
+                                            text: "Bestätigen",
+                                            onClick: (item) => {
+                                                this.planItem(item);
+                                                this.view.current.hideDialog();
+                                            }
+                                        }]} />);
+                            }
+                        }
 
-                ]} />
+                    ]} />
+            </div>
         );
     }
 }
@@ -804,7 +895,7 @@ class CatalogView extends BaseView {
 class ProgressBar extends React.Component {
     constructor(props) {
         super(props);
-    
+
     }
 
     render() {
@@ -817,7 +908,7 @@ class ProgressBar extends React.Component {
 
         return (
             <div className="progressBar">
-                <div className="progressBarFill" style={{ width: this.props.progress + "%" , backgroundColor: color}}></div>
+                <div className="progressBarFill" style={{ width: this.props.progress + "%", backgroundColor: color }}></div>
             </div>
         );
     }
