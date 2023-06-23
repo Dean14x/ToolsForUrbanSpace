@@ -7,6 +7,7 @@ import HomepageBackground from "./images/HomepageBackground.png";
 import logo2 from "./logos/logo2.png";
 import NetworkMap from "./NetworkMap";
 import Login from "./Login";
+import {Link} from "react-router-dom";
 
 // Homepage component
 // This is the homepage of the website
@@ -23,6 +24,7 @@ class Homepage extends React.Component {
   setPage(page) {
     this.setState({ page: page });
   }
+
 
   render() {
     let page;
@@ -48,9 +50,9 @@ class Homepage extends React.Component {
             </div>
 
             <div className={"buttonLogin"}>
-              <button onClick={() => this.setPage("login")}>
-                Create your Lab now
-              </button>
+              <button>
+                    <Link to="/login">Create your Lab now</Link>
+                </button>
             </div>
           </div>
         </div>

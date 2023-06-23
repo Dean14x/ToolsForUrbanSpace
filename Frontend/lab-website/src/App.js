@@ -2,14 +2,16 @@ import React from "react";
 import Homepage from "./Homepage";
 import Login from "./Login";
 import NetworkAnalysis from "./NetworkAnalysis";
+import NetworkMap from "./NetworkMap";
+import NetworkTable from "./NetworkTable";
 import Overview from "./Overview";
 import { ResourceChecker, OverviewView, InventoryView, PlannedView, CatalogView } from "./ResourceChecker";
 import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import logo2 from "./logos/logo2.png";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Impressum from "./Impressum";
-import logo2 from './logos/logo2.png';
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 class App extends React.Component {
   constructor(props) {
@@ -19,7 +21,6 @@ class App extends React.Component {
       session: "",
       count: 0,
     };
-
   }
 
   getUsername() {
@@ -30,15 +31,10 @@ class App extends React.Component {
     this.setState({ username: username, session: session });
   }
 
-
-
   render() {
-
     return (
       <div className="appRoot">
-
         <BrowserRouter>
-
           <Navbar app={this} />
 
           <Routes>
@@ -52,12 +48,14 @@ class App extends React.Component {
               <Route path="/resources/catalog" element={<CatalogView app={this} />} />
             </Route>
             <Route path="/login" element={<Login app={this} />} />
+
+            <Route path="/networkTable" element={<NetworkTable app={this} />} />
+            <Route path="/networkMap" element={<NetworkMap app={this} />} />
             <Route path="/impressum" element={<Impressum app={this} />} />
           </Routes>
           <Footer app={this} />
         </BrowserRouter>
       </div>
-
     );
   }
 }
