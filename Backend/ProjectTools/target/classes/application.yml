@@ -1,9 +1,10 @@
 spring:
 
   datasource:
-    url: jdbc:mysql://localhost:3306/projekt_tool
-    username: root
-    password: user
+    url: jdbc:postgresql://dpg-ci1enhe7avjfjamllik0-a.frankfurt-postgres.render.com/dbprojecttools
+    username: toastman
+    password: 0DsMh2DCWfrZUe11sAVtQbFaJ6pRMH1t
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:

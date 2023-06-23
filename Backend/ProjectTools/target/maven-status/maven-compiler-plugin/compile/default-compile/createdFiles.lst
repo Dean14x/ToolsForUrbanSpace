@@ -26,7 +26,9 @@ com\projecttools\service\IResourceService.class
 com\projecttools\exception\NotFoundException.class
 com\projecttools\request\NetworkRequest.class
 com\projecttools\filter\JWTTokenValidatorFilter$Authorities.class
+com\projecttools\request\UserCredentials.class
 com\projecttools\Web\UserController.class
+com\projecttools\config\ApiDoc.class
 com\projecttools\service\AdminService.class
 com\projecttools\Web\AuthController.class
 com\projecttools\repository\ResourceRepository.class
