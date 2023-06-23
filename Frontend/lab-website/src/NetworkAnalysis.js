@@ -1,10 +1,9 @@
 import React from "react";
 import NetworkMap from "./NetworkMap";
 import './infopage_style.css';
-import Homepage from "./Homepage";
-import Login from "./Login";
-import Overview from "./Overview";
-import ResourceChecker from "./ResourceChecker";
+import './NetworkAnalysisDesign.css';
+import networkMap from "./NetworkMap";
+
 
 // Homepage component
 // This is the homepage of the website
@@ -16,16 +15,12 @@ class NetworkAnalysis extends React.Component {
             name: "React",
             username: "",
             session: ""
-
         };
-
     }
 
     setPage(page) {
-        this.setState({ page: page });
+        this.setState({ pages: page });
     }
-
-
 
     render() {
         let page;
@@ -36,40 +31,52 @@ class NetworkAnalysis extends React.Component {
         }
         return (
             <div>
-                <div className={"info_text"}>
-                    <h2>Info Text</h2>
-                <p>
-                    This is a website for the Tools For Urban Space project.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam id nunc vitae magna aliquam aliquet. Donec euismod
-                    This is a website for the Tools For Urban Space project.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam id nunc vitae magna aliquam aliquet. Donec euismod
-                </p></div>
+                <div className="ManageNetwork">
+                    <div className="rect">
+                        <div className="text1">
+                            <h1>Manage Network</h1>
+                        </div>
 
-                <div>
-                    <div>
-                        <form action="/" method="get">
-                            <label htmlFor="header-search">
-                            </label>
-                            <input
-                                type="text"
-                                id="header-search"
-                                placeholder="Search"
-                                name="s"
-                            />
-                            <button type="submit">Search</button>
-                        </form>
-                        <iframe src="https://www.google.com/maps/d/embed?mid=1WmSbee3PO_N043CDlwHYUcd4LOvNcS8&ehbc=2E312F" width="1500" height="480"></iframe>
-                        <div className={"networkMap"}>
-                            <button onClick={() => this.setPage("networkMap")}>Network table</button>
+                        <div >
+                            <table id="table1">
+                                <td >
+                                    <p>- some text</p>
+                                    <p>- more text</p>
+                                    <p>- less text</p>
+                                </td>
+                            </table>
+                        </div>
+
+                        <button className={"manageB"} onClick={() => this.setPage("networkMap")}>Start</button>
+                    </div>
+                </div>
+                <div className = "linie"></div>
+
+
+                <div className="ShowNetwork">
+                    <div className="rect2">
+                        <div className="text2">
+                            <h1>Show Network</h1>
+                        </div>
+
+                        <div >
+                            <table id ="table2">
+                                <td >
+                                    <p>- some text</p>
+                                    <p>- more text</p>
+                                    <p>- less text</p>
+                                </td>
+                            </table>
                         </div>
                     </div>
-                    {page}
+
+                    <button className={"showB"} onClick={() => this.setPage("networkMap")}>Start</button>
                 </div>
+
             </div>
         );
     }
 }
+
 export default NetworkAnalysis;
 
