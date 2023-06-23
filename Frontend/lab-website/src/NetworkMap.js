@@ -8,9 +8,7 @@ class NetworkMap extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "React",
-            username: "",
-            session: ""
+            display: 0
         };
     }
 

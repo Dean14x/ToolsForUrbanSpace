@@ -17,7 +17,15 @@ class NetworkAnalysis extends React.Component {
     };
   }
   render() {
-
+    let page;
+    switch (this.state.page) {
+      case "networkmap":
+        page = <NetworkMap app={this} />;
+        break;
+      case "manage":
+        page = <ManageNetwork app={this} />;
+        break;
+      }
     return (
       <div>
         <div className="ManageNetwork">
@@ -25,23 +33,23 @@ class NetworkAnalysis extends React.Component {
             <div className="text1">
               <h1>Manage Network</h1>
             </div>
-
-            <div >
+            <div>
               <table id="table1">
-                <td >
+                <td>
                   <p>- some text</p>
                   <p>- more text</p>
                   <p>- less text</p>
                 </td>
               </table>
             </div>
-
+      
             <button className={"manageB"}>
               <Link to="/networkTable">Start</Link>
             </button>
 
           </div>
         </div>
+
 
         <div className="linie"></div>
 
@@ -59,6 +67,9 @@ class NetworkAnalysis extends React.Component {
                   <p>- less text</p>
                 </td>
               </table>
+                    </div>
+                    {page}
+                </div>
             </div>
           </div>
 
@@ -66,9 +77,36 @@ class NetworkAnalysis extends React.Component {
             <Link to="/networkMap">Start</Link>
           </button>
         </div>
+        <div className="infopage-bg">
+          <img src="/static/images/Vector5.png" alt="network-vec5"></img>
+        </div>
       </div>
     );
   }
 }
+
+class ManageNetwork extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: "React",
+            username: "",
+            session: ""
+        };
+    }
+
+    setPage(page) {
+        this.setState({ page: page });
+    }
+
+    render() {
+       return (
+        <div>
+            <h1>Test</h1>
+        </div>
+        );
+    }
+}
+
 
 export default NetworkAnalysis;

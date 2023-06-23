@@ -4,25 +4,21 @@ import "./general.css";
 import "./footer.css";
 
 class Footer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loggedIn: false
-        };
-
-    }
-
-    render() {
-        return (
-            <div className="footer">
-                <div className="footer-item">
-                    {/*<Link className="footer-link" to="/">Home</Link>*/}
-                    Some footer text
-                    
-                </div>
-            </div>
-        );
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: false,
+    };
+  }
+  render() {
+    return (
+      <div className="footer">
+        <div className="footer-item">
+          <Link className="footer-link" to="/impressum">Impressum</Link>
+        </div>
+      </div>
+    );
+   }
 }
 
 export default Footer;
