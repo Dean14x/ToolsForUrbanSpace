@@ -32,22 +32,24 @@ class NetworkAnalysis extends React.Component {
         return (
             <div>
                 <div className="ManageNetwork">
-                    <div className="rect"></div>
-                    <div className="text1">
-                        <h1>Manage Network</h1>
-                    </div>
+                    <div className="rect">
+                        <div className="text1">
+                            <h1>Manage Network</h1>
+                        </div>
 
-                    <div >
-                        <table id="table1">
-                            <td >
-                                <p>- some text</p>
-                                <p>- more text</p>
-                                <p>- less text</p>
-                            </td>
-                        </table>
-                    </div>
+                        <div >
+                            <table id="table1">
+                                <td >
+                                    <p>- some text</p>
+                                    <p>- more text</p>
+                                    <p>- less text</p>
+                                </td>
+                            </table>
+                        </div>
 
                         <button className={"manageB"} onClick={() => this.setPage("networkMap")}>Start</button>
+                    </div>
+
 
                 </div>
 
@@ -57,23 +59,25 @@ class NetworkAnalysis extends React.Component {
 
 
                 <div className="ShowNetwork">
-                    <div className="rect2"></div>
-                    <div className="text2">
-                        <h1>Show Network</h1>
+                    <div className="rect2">
+                        <div className="text2">
+                            <h1>Show Network</h1>
+                        </div>
+
+                        <div >
+                            <table id ="table2">
+                                <td >
+                                    <p>- some text</p>
+                                    <p>- more text</p>
+                                    <p>- less text</p>
+                                </td>
+                            </table>
+                        </div>
                     </div>
 
-                    <div >
-                         <table id ="table2">
-                            <td >
-                                <p>- some text</p>
-                                <p>- more text</p>
-                                <p>- less text</p>
-                            </td>
-                        </table>
+                    <button className={"showB"} onClick={() => this.setPage("networkMap")}>Start</button>
                     </div>
-                </div>
 
-                <button className={"showB"} onClick={() => this.setPage("networkMap")}>Start</button>
             </div>
         );
     }
