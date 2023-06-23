@@ -731,7 +731,7 @@ class PlannedView extends BaseView {
         return (
             <div className="resourceContainer">
                 <div className="resourceViewHeader">
-                {budgetMonthly > 0 ?
+                    {budgetMonthly > 0 ?
                         <div className="costMonthly" style={{ backgroundColor: color }}>
                             {costMonthly}€ von {budgetMonthly}€ / Monat
                         </div>
@@ -914,6 +914,69 @@ class ProgressBar extends React.Component {
     }
 }
 
+class ProgressCircle extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+    render() {
+        let levels = this.props.levels;
+        let level = 0;
+        for (let i = 0; i < levels.length; i++) {
+            if (this.props.progress >= levels[i]) {
+                level = i + 1;
+            }
+        }
+        // progress from current to next level
+        let prog = this.props.progress;
+        if (level > 0) {
+            prog = (this.props.progress - levels[level - 1]) / (levels[level] - levels[level - 1]) * 100.0;
+        } else {
+            prog = this.props.progress / levels[level] * 100.0;
+        }
+        if (level >= levels.length) {
+            prog = 100;
+        }
+
+        // color from red to blue
+        let startHue = 0;
+        let endHue = 240;
+
+        let hue = startHue + (endHue - startHue) * prog / 100.0;
+
+        let color = "hsl(" + hue + ", 80%, 60%, 1.0)";
+        let bgColor = "hsl(" + hue + ", 30%, 60%, 0.2)";
+
+        let glowColor = "hsl( 63, 98%, 37%)";
+        let glowStrength = level / levels.length * 100;
+
+        // create svg path of hollow circle
+        const thickness = 4;
+
+        return (
+            <div className="progressCircle">
+                <svg viewBox="0 0 36 36" >
+                    <path className="progressCircleFill" d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" strokeWidth={thickness} stroke={color} strokeDasharray={prog + " " + (100 - prog)} />
+                    
+                    <circle className="progressCircleBackground" cx="18" cy="18" r="15.9155" fill="none" strokeWidth={thickness} stroke={bgColor} />
+                    
+
+                </svg>
+                <div className="progressCircleInnerText">
+                    Level {level}
+                </div>
+                <div className="progressCircleText">
+                    {this.props.name}
+                </div>
+            </div>
+        );
+    }
+}
+
+
 class OverviewView extends React.Component {
 
     constructor(props) {
@@ -923,12 +986,39 @@ class OverviewView extends React.Component {
     }
 
     render() {
+
+        const hardwareLevels = [ 10, 25, 50, 100];
+        const softwareLevels = [ 10, 25, 50, 100];
+        const serviceLevels = [ 10, 25, 50, 100];
+
+        let hardwareCount = 27;
+        let softwareCount = 3;
+        let serviceCount = 12;
+
         return (
             <div className="overviewView">
                 <div className="mainProgress">
                     <ProgressBar progress={50} />
                 </div>
-                <h1>TODO: overview</h1>
+                <div className="overviewRow">
+                    <div className="costOverview">
+                        1000€ / Monat
+                    </div>
+                    <div className="costOverview">
+                        10000€ Inventar
+                    </div>
+                    <div className="costOverview">
+                        2000€ Geplant
+                    </div>
+                    <div className="costOverview">
+                        -1000€ Budget
+                    </div>
+                </div>
+                <div className="overviewRow">
+                    <ProgressCircle progress={hardwareCount} name={"Hardware"} levels={hardwareLevels} />
+                    <ProgressCircle progress={softwareCount} name={"Software"} levels={softwareLevels} />
+                    <ProgressCircle progress={serviceCount} name={"Service"} levels={serviceLevels} />
+                </div>
                 <div>
                     <h2>Hardware progress</h2>
                     <h2>Software progress</h2>

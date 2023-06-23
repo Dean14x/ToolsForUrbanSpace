@@ -341,7 +341,7 @@ dialog:has(.resourceDialog)::backdrop {
 }
 
 .mainProgress {
-    width: 80vw;
+    width: 100%;
     height: 50px;
 }
 
@@ -371,4 +371,78 @@ dialog:has(.resourceDialog)::backdrop {
         min-width: 800px;
     }
 }
-    
+
+.overviewView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1200px;
+    max-width: 90vw;
+    min-width: 800px;
+    margin: 30px;
+}
+
+.overviewRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    margin: 30px;
+}
+
+.costOverview {
+    font-size: 30px;
+    font-weight: 500;
+    border: 2px solid #707070;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.costOverview:hover {
+    background-color: #ddd;
+}
+
+.overviewRow div {
+    margin: 5px;
+    padding: 10px;
+}
+
+.progressCircle {
+    min-width: 300px;
+    min-height: 300px;
+    /* stack child elements on top of each other */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.progressCircleInnerText {
+    position: absolute;
+    font-size: 50px;
+    font-weight: 500;
+    color: black;
+    z-index: 1;
+    top: 29%;
+}
+
+.progressCircleText {
+    font-size: 36px;
+    font-weight: 500;
+    color: black;
+}
+
+.progressCircle svg {
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    transition: 0.6s;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.5));
+}
+
+
