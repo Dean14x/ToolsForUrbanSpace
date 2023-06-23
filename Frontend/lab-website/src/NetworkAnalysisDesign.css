@@ -9,15 +9,15 @@
     left: 17vw;
     top: 16vw;
     background: #EEEEEE;
-    border-radius: 40px;
+    border-radius: 4vw;
 }
 
 .text1{
     position: absolute;
-    width: 400px;
-    height: 10px;
-    left: 50px;
-    top: 40px;
+    width: 20vw;
+    height: 1vw;
+    left: 4vw;
+    top: 3vw;
     font-family: 'Arial';
     display: flex;
     align-items: center;
@@ -73,22 +73,22 @@
     right: 17vw;
     top: 16vw;
     background: #EEEEEE;
-    border-radius: 40px;
+    border-radius: 4vw;
 }
 
 
-.text2{
+{/*.text2{
     position: absolute;
-    width: 400px;
-    height: 10px;
-    right: -110px;
-    top: 40px;
+    width: 20vw;
+    height: 1vw;
+    left: 6vw;
+    top: 3vw;
     font-family: 'Arial';
     display: flex;
     align-items: center;
     text-align: center;
     color: #103754;
-}
+}*/}
 
 #table2{
     position: absolute;

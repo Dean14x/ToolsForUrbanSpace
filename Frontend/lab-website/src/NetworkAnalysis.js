@@ -60,12 +60,12 @@ class NetworkAnalysis extends React.Component {
 
                 <div className="ShowNetwork">
                     <div className="rect2">
-                        <div className="text2">
+                        <div className="text1">
                             <h1>Show Network</h1>
                         </div>
 
                         <div >
-                            <table id ="table2">
+                            <table id ="table1">
                                 <td >
                                     <p>- some text</p>
                                     <p>- more text</p>
@@ -74,9 +74,8 @@ class NetworkAnalysis extends React.Component {
                             </table>
                         </div>
                     </div>
-
-                    <button className={"showB"} onClick={() => this.setPage("networkMap")}>Start</button>
-                    </div>
+                     <button className={"showB"} onClick={() => this.setPage("networkMap")}>Start</button>
+                </div>
 
             </div>
         );
