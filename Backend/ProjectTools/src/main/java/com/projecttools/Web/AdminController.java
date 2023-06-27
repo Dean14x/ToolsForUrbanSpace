@@ -1,15 +1,15 @@
 package com.projecttools.Web;
 
-import com.projecttools.models.Category;
 import com.projecttools.request.CategoryRequest;
+import com.projecttools.request.NetworkRequest;
 import com.projecttools.request.ResourceRequest;
+import com.projecttools.request.UserCredentials;
 import com.projecttools.service.AdminService;
 import com.projecttools.service.implementation.CategoryService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/admin")
@@ -23,13 +23,6 @@ public class AdminController {
         categoryService = categoryService1;
         this.adminService =adminService;
     }
-    // /home/test
-
-    @GetMapping("/cx")
-    public Category getHome() {
-        Category category = categoryService.FindCategoryById(UUID.fromString("8bb748d9-22c5-4f8e-872a-9d6b3c167001"));
-        return category;
-    }
 
     @PostMapping("/addResource")
     public void addResource(@RequestBody List<ResourceRequest> resource) {
@@ -41,6 +34,21 @@ public class AdminController {
     public void addgategorie(@RequestBody List<CategoryRequest> categoryRequests) {
         adminService.addCategory(categoryRequests);
     }
+
+
+
+    @PostMapping("/addNetwork")
+    public void addNetworks(@RequestBody List<NetworkRequest> networkRequest){
+        adminService.addNetworks(networkRequest);
+    }
+
+    @PostMapping("/addAdmin")
+    public void addNetworks(@RequestBody UserCredentials userCredentials){
+        userCredentials.setAdmin(true);
+        adminService.addAdmin(userCredentials);
+    }
+
+
 
     @GetMapping
     public String test() {

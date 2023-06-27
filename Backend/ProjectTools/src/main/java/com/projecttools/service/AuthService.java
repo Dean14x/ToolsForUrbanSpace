@@ -4,7 +4,7 @@ package com.projecttools.service;
 import com.projecttools.exception.NotFoundException;
 import com.projecttools.models.User;
 import com.projecttools.repository.UserRepository;
-import com.projecttools.request.UserCrediting;
+import com.projecttools.request.UserCredentials;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +46,8 @@ public class AuthService {
     }
 
 
-    public void registerUser(UserCrediting userCrediting) {
-        userCrediting.setPassword(bCryptPasswordEncoder.encode( userCrediting.getPassword()));
-        useRepository.save(UserCrediting.userCreditingToUser(userCrediting));
+    public void registerUser(UserCredentials userCredentials) {
+        userCredentials.setPassword(bCryptPasswordEncoder.encode( userCredentials.getPassword()));
+        useRepository.save(UserCredentials.userCreditingToUser(userCredentials));
     }
 }

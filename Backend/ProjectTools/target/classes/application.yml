@@ -1,0 +1,23 @@
+spring:
+
+  datasource:
+    url: jdbc:postgresql://dpg-ci1enhe7avjfjamllik0-a.frankfurt-postgres.render.com/dbprojecttools
+    username: toastman
+    password: 0DsMh2DCWfrZUe11sAVtQbFaJ6pRMH1t
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: true
+
+
+
+
+

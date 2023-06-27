@@ -1,8 +1,9 @@
 package com.projecttools.Web;
 
-import com.projecttools.request.UserCrediting;
+import com.projecttools.request.UserCredentials;
 import com.projecttools.service.AuthService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -16,13 +17,14 @@ public class AuthController {
         this.authService=authService;
     }
     @PostMapping("/login")
+    @Operation(summary = "login user",description = "try to login")
     public String logIn(@RequestParam Map<String,String> authentication) {
        return authService.getToken(authentication);
     }
 
     @PostMapping("/regis")
-    public void register(@RequestBody UserCrediting userCrediting){
-        authService.registerUser(userCrediting);
-
+    public void register(@RequestBody UserCredentials userCredentials){
+        userCredentials.setAdmin(false);
+        authService.registerUser(userCredentials);
     }
 }
