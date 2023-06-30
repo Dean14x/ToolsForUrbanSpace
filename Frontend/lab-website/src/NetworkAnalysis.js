@@ -42,44 +42,45 @@ class NetworkAnalysis extends React.Component {
             <div>
               <table id="table1">
                 <td>
-                  <p>- some text</p>
-                  <p>- more text</p>
-                  <p>- less text</p>
+                  <p> - Actor Overview</p>
+                  <p> - Building a network</p>
+                  <p> </p>
                 </td>
               </table>
             </div>
 
             <button className={"manageB"}>
-              <Link to="/networkTable">Start</Link>
+              <Link  className={"buttonLink"} to="/networkTable">Start</Link>
             </button>
           </div>
         </div>
+
         <div className="linie"></div>
         <div className="ShowNetwork">
           <div className="rect2">
             <div className="text1">
               <h1>Show Network</h1>
             </div>
-
             <div>
               <table id="table1">
                 <td>
-                  <p>- some text</p>
-                  <p>- more text</p>
-                  <p>- less text</p>
+                  <p> - Map with Actors Overview</p>
+                  <p> - Actor overview with locations</p>
+                  <p> </p>
                 </td>
               </table>
-            </div>
-            {/* {page} */}
-          </div>
         </div>
         <button className={"showB"}>
-          <Link to="/networkMap">Start</Link>
+          <Link className={"buttonLink"} to="/networkMap">Start</Link>
         </button>
+          </div>
+        </div>
         <div className="infopage-bg">
           <img src="/static/images/Vector5.png" alt="network-vec5"></img>
         </div>
-      </div>
+          </div>
+
+
     );
   }
 }

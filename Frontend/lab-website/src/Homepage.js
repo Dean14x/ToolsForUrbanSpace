@@ -21,18 +21,18 @@ class Homepage extends React.Component {
       session: "",
     };
   }
-  setPage(page) {
-    this.setState({ page: page });
-  }
+  //setPage(page) {
+  //  this.setState({ page: page });
+ // }
 
 
   render() {
-    let page;
-    switch (this.state.page) {
-      case "login":
-        page = <Login app={this} />;
-        break;
-    }
+    //let page;
+    //switch (this.state.page) {
+    //  case "login":
+    //   page = <Login app={this} />;
+    //    break;
+    // }
     return (
       <div>
         <div className={"homepage"}>
@@ -51,7 +51,7 @@ class Homepage extends React.Component {
 
             <div className={"buttonLogin"}>
               <button>
-                    <Link to="/login">Create your Lab now</Link>
+                    <Link className={"buttonLink"} to="/login">Create your Lab now</Link>
                 </button>
             </div>
           </div>
