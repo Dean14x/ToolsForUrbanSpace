@@ -1,6 +1,6 @@
 import React, { NetworkMap, Networktable } from "react";
 import "./infopage_style.css";
-import "./NetworkAnalysisDesign.css";
+import "./NetworkAnalysis.css";
 
 import { Link } from "react-router-dom";
 
@@ -20,7 +20,7 @@ class NetworkAnalysis extends React.Component {
   setPage(page) {
     this.setState({ page: page });
   }
-  
+
   render() {
     let page;
     switch (this.state.page) {
@@ -40,17 +40,19 @@ class NetworkAnalysis extends React.Component {
               <h1>Manage Network</h1>
             </div>
             <div>
-              <table id="table1">
-                <td>
+              <div id="table1">
+                <div>
                   <p> - Actor Overview</p>
                   <p> - Building a network</p>
                   <p> </p>
-                </td>
-              </table>
+                </div>
+              </div>
             </div>
 
             <button className={"manageB"}>
-              <Link  className={"buttonLink"} to="/networkTable">Start</Link>
+              <Link className={"buttonLink"} to="/networkTable">
+                Start
+              </Link>
             </button>
           </div>
         </div>
@@ -62,25 +64,25 @@ class NetworkAnalysis extends React.Component {
               <h1>Show Network</h1>
             </div>
             <div>
-              <table id="table1">
-                <td>
+              <div id="table1">
+                <div>
                   <p> - Map with Actors Overview</p>
                   <p> - Actor overview with locations</p>
                   <p> </p>
-                </td>
-              </table>
-        </div>
-        <button className={"showB"}>
-          <Link className={"buttonLink"} to="/networkMap">Start</Link>
-        </button>
+                </div>
+              </div>
+            </div>
+            <button className={"showB"}>
+              <Link className={"buttonLink"} to="/networkMap">
+                Start
+              </Link>
+            </button>
           </div>
         </div>
         <div className="infopage-bg">
           <img src="/static/images/Vector5.png" alt="network-vec5"></img>
         </div>
-          </div>
-
-
+      </div>
     );
   }
 }
