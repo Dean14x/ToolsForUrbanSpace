@@ -42,9 +42,9 @@ class NetworkAnalysis extends React.Component {
             <div>
               <table id="table1">
                 <td>
-                  <p>- some text</p>
-                  <p>- more text</p>
-                  <p>- less text</p>
+                  <p> - Actor Overview</p>
+                  <p> - Building a network</p>
+                  <p> </p>
                 </td>
               </table>
             </div>
@@ -64,9 +64,9 @@ class NetworkAnalysis extends React.Component {
             <div>
               <table id="table1">
                 <td>
-                  <p>- some text</p>
-                  <p>- more text</p>
-                  <p>- less text</p>
+                  <p> - Map with Actors Overview</p>
+                  <p> - Actor overview with locations</p>
+                  <p> </p>
                 </td>
               </table>
         </div>

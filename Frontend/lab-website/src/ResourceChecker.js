@@ -19,7 +19,7 @@ class TabView extends React.Component {
             activeTab: 0
         };
 
-        this.tabs = ["Übersicht", "Inventar", "Geplant", "Katalog"];
+        this.tabs = ["Übersicht", "Bestand", "Investitionsplan", "Katalog"];
         this.links = ["/resources", "/resources/inventory", "/resources/planned", "/resources/catalog"];
 
     }
@@ -954,8 +954,10 @@ class ProgressCircle extends React.Component {
         // create svg path of hollow circle
         const thickness = 4;
 
+        let desc = "Nächstes Level: noch " + (levels[level] - this.props.progress) + " Elemente";
+
         return (
-            <div className="progressCircle">
+            <div className="progressCircle" title={desc}>
                 <svg viewBox="0 0 36 36" >
                     <path className="progressCircleFill" d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
@@ -995,38 +997,64 @@ class OverviewView extends React.Component {
         let softwareCount = 3;
         let serviceCount = 12;
 
+        let formatEuro = (value) => {
+            let euro = Math.floor(value);
+            let cent = Math.floor((value - euro) * 100);
+            
+            let euroStr = euro.toString();
+            let centStr = cent.toString();
+            if (cent < 10) {
+                centStr = "0" + centStr;
+            }
+            // add thousands seperator
+            let euroStrNew = "";
+            for (let i = 0; i < euroStr.length; i++) {
+                if (i > 0 && (euroStr.length - i) % 3 == 0) {
+                    euroStrNew += ".";
+                }
+                euroStrNew += euroStr[i];
+            }
+            
+            if (cent === 0) {
+                return euroStrNew + "€";
+            } else {
+                return euroStrNew + "," + centStr + "€";
+            }
+        };
+
         return (
             <div className="overviewView">
-                <div className="mainProgress">
+                {/*<div className="mainProgress">
                     <ProgressBar progress={50} />
-                </div>
+        </div>*/}
                 <div className="overviewRow">
-                    <div className="costOverview">
-                        1000€ / Monat
+                    <div className="costOverview" title="Monatliche Kosten durch Bestand und monatliches Budged">
+                        <div className="costOverviewText">
+                            Monatliche Kosten
+                        </div>
+                        <div className="costOverviewValue">
+                            {formatEuro(1000)} / {formatEuro(2000)}
+                        </div>
+                        <div className="costOverviewInfo">
+                            Mtl. Kosten / Mtl. Budget
+                        </div>
                     </div>
-                    <div className="costOverview">
-                        10000€ Inventar
-                    </div>
-                    <div className="costOverview">
-                        2000€ Geplant
-                    </div>
-                    <div className="costOverview">
-                        -1000€ Budget
+                    <div className="costOverview" title="Investitionskosten von geplanten Elementen und Investitionsbudget">
+                        <div className="costOverviewText">
+                            Investitionskosten
+                        </div>
+                        <div className="costOverviewValue">
+                            {formatEuro(1500)} / {formatEuro(2000)}
+                        </div>
+                        <div className="costOverviewInfo">
+                            Inv. Kosten / Inv. Budget
+                        </div>
                     </div>
                 </div>
                 <div className="overviewRow">
                     <ProgressCircle progress={hardwareCount} name={"Hardware"} levels={hardwareLevels} />
                     <ProgressCircle progress={softwareCount} name={"Software"} levels={softwareLevels} />
                     <ProgressCircle progress={serviceCount} name={"Service"} levels={serviceLevels} />
-                </div>
-                <div>
-                    <h2>Hardware progress</h2>
-                    <h2>Software progress</h2>
-                    <h2>Service progress</h2>
-                    <h2>Costs per month</h2>
-                    <h2>Remaining budget</h2>
-                    <h2>Planned cost</h2>
-
                 </div>
 
 
