@@ -4,7 +4,7 @@ import Login from "./Login";
 import NetworkAnalysis from "./NetworkAnalysis";
 import NetworkMap from "./NetworkMap";
 import NetworkTable from "./NetworkTable";
-import Overview from "./Overview";
+
 import { ResourceChecker, OverviewView, InventoryView, PlannedView, CatalogView } from "./ResourceChecker";
 import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 import Navbar from "./Navbar";
@@ -39,7 +39,7 @@ class App extends React.Component {
 
           <Routes>
             <Route path="/" element={<Homepage app={this} />} />
-            <Route path="/overview" element={<Overview app={this} />} />
+
             <Route path="/network" element={<NetworkAnalysis app={this} />} />
             <Route path="/resources" element={<ResourceChecker app={this} />}>
               <Route path="/resources" element={<OverviewView app={this} />} />
