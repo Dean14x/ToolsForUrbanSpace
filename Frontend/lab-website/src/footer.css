@@ -18,6 +18,8 @@
     border-radius: 28px;
     min-width: 40px;
     margin: 0px 15px;
+    margin-left: 2rem;
+    margin-right: 2rem;
 }
 
 #links {
@@ -34,6 +36,7 @@
 .footer-link {
     color: black;
     text-decoration: none;
+    margin: 0em 1em 0em 1em;
 }
 
 .m2c img {
@@ -49,6 +52,7 @@
 .logoTxt {
     font-size: 12px;
     font-weight: 600;
+    padding-top: .25em;
 }
 
 

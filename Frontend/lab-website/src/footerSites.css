@@ -1,0 +1,36 @@
+.impressum {
+    margin: 30px auto;
+    width: 90%;
+    max-width: 700px;
+    padding: 10px;
+    background-color: #fff;
+}
+
+h4 {
+    text-align: center;
+}
+
+#logos2{
+    display: flex;
+    justify-content: space-around;
+
+}
+
+
+.m2c2 img {
+    height: 5rem;
+}
+
+.bmbf2 img {
+    height: 5rem;
+}
+
+.lab2 img{
+    height: 5rem;
+}   
+
+.logoTxt2 {
+    font-size: 12px;
+    font-weight: 600;
+}
+
