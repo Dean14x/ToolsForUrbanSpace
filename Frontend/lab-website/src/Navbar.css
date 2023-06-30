@@ -30,6 +30,7 @@
     border-radius: 28px;
     min-width: 40px;
     margin: 0px 15px;
+    /* margin-top: 150px; */
 }
 
 .navbar-item:hover {
@@ -39,4 +40,5 @@
 .logo{
     width: 100px;
     height: 100px;
+    align-self: center;
 }
