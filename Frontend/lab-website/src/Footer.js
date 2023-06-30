@@ -19,6 +19,8 @@ class Footer extends React.Component {
             <a id="links" className="logoTxt">gefördert durch</a>
             <a className="m2c" id="links" href="https://m2c-bremen.de" target="_blank"><img src="./static/images/logo_m2c.jpg"></img></a>
             <a className="bmbf" id="links" href="https://www.bmbf.de/bmbf/de/home/home_node.html" target="_blank"><img src="./static/images/347px-BMBF_Logo.svg_.png"></img></a>
+            <a className="lab" id = "links" href = "https://impact-lab.eu/" target="_blank"><img src="./static/images/DIL_logo_6cm.jpg"></img></a>
+
           </div>
         </div>
       </div>
