@@ -73,13 +73,14 @@ class NetworkAnalysis extends React.Component {
         <button className={"showB"}>
           <Link to="/networkMap">Start</Link>
         </button>
+          </div>
+        </div>
         <div className="infopage-bg">
           <img src="/static/images/Vector5.png" alt="network-vec5"></img>
         </div>
           </div>
 
-        </div>
-      </div>
+
     );
   }
 }
