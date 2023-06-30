@@ -11,6 +11,31 @@ const CATEGORIES = {
     Other: "Other"
 };
 
+const formatEuro = (value) => {
+    let euro = Math.floor(value);
+    let cent = Math.floor((value - euro) * 100);
+
+    let euroStr = euro.toString();
+    let centStr = cent.toString();
+    if (cent < 10) {
+        centStr = "0" + centStr;
+    }
+    // add thousands seperator
+    let euroStrNew = "";
+    for (let i = 0; i < euroStr.length; i++) {
+        if (i > 0 && (euroStr.length - i) % 3 === 0) {
+            euroStrNew += ".";
+        }
+        euroStrNew += euroStr[i];
+    }
+
+    if (cent === 0) {
+        return euroStrNew + "€";
+    } else {
+        return euroStrNew + "," + centStr + "€";
+    }
+};
+
 
 class TabView extends React.Component {
     constructor(props) {
@@ -57,18 +82,18 @@ class ResourceDialog extends React.Component {
     constructor(props) {
         super(props);
 
-        this.title = "Title";
-        if (this.props.title) {
-            this.title = this.props.title;
-        }
     }
 
     render() {
+        let title = "";
+        if (this.props.title) {
+            title = this.props.title;
+        }
         return (
             <div className="resourceDialog">
                 <div className="resourceDialogTop">
                     <div className="resourceDialogTopLeft">
-                        <h3>{this.title}</h3>
+                        <h3>{title}</h3>
 
                     </div>
                     <div className="resourceDialogTopRight">
@@ -431,7 +456,7 @@ class EditItemPanel extends React.Component {
 
         item[field] = newVal;
 
-        if (item.name != this.baseItem.name || item.category != this.baseItem.category || item.cost != this.baseItem.cost || item.monthlyCost != this.baseItem.monthlyCost) {
+        if (item.name !== this.baseItem.name || item.category !== this.baseItem.category || item.cost !== this.baseItem.cost || item.monthlyCost !== this.baseItem.monthlyCost) {
             item.id = -1;
         }
 
@@ -455,10 +480,14 @@ class EditItemPanel extends React.Component {
             <div className="editItemPanel">
                 <div className="editItemPanelFields">
                     <div className="editItemPanelRow">
+                        <p>Name</p>
                         <input onChange={(e) => this.changeItem(e.target.value, "name")}
                             type="text" placeholder="Name" className="editItemPanelInput editItemPanelInputName" value={item.name}></input>
+                    </div>
+                    <div className="editItemPanelRow">
+                        <p>Kategorie</p>
                         <select defaultValue={item.category} onChange={(e) => this.changeItem(e.target.value, "category")}
-                            className="editItemPanelInput">
+                            className="editItemPanelSelect editItemPanelInput">
                             {Object.keys(CATEGORIES).map((citem, index) => (
                                 <option key={index}>{citem}</option>
                             ))}
@@ -466,10 +495,17 @@ class EditItemPanel extends React.Component {
                     </div>
 
                     <div className="editItemPanelRow">
+                        <p>mtl. Kosten</p>
                         <input onChange={(e) => this.changeItem(e.target.value, "monthlyCost")}
                             type="text" placeholder="Kosten/Monat" className="editItemPanelInput" value={item.monthlyCost}></input>
+                    </div>
+                    <div className="editItemPanelRow">
+                        <p>Kosten</p>
                         <input onChange={(e) => this.changeItem(e.target.value, "cost")}
                             type="text" placeholder="Kosten" className="editItemPanelInput" value={item.cost}></input>
+                    </div>
+                    <div className="editItemPanelRow">
+                        <p>Anzahl</p>
                         <input onChange={(e) => this.changeItem(e.target.value, "amount")}
                             type="text" placeholder="Anzahl" className="editItemPanelInput" value={item.amount}></input>
                     </div>
@@ -614,15 +650,15 @@ class InventoryView extends BaseView {
                 <div className="resourceViewHeader">
                     {budgetMonthly > 0 ?
                         <div className="costMonthly" style={{ backgroundColor: color }}>
-                            {costMonthly}€ von {budgetMonthly}€ / Monat
+                            {formatEuro(costMonthly)} von {formatEuro(budgetMonthly)} mtl.
                         </div>
                         :
                         <div className="costMonthly">
-                            {costMonthly}€ / Monat
+                            {formatEuro(costMonthly)} mtl.
                         </div>
                     }
                     <div className="costTotal">
-                        {costTotal}€ Inventar
+                        {formatEuro(costTotal)} Bestand
                     </div>
                 </div>
                 <ResourceView
@@ -733,15 +769,15 @@ class PlannedView extends BaseView {
                 <div className="resourceViewHeader">
                     {budgetMonthly > 0 ?
                         <div className="costMonthly" style={{ backgroundColor: color }}>
-                            {costMonthly}€ von {budgetMonthly}€ / Monat
+                            {formatEuro(costMonthly)} von {formatEuro(budgetMonthly)} mtl.
                         </div>
                         :
                         <div className="costMonthly">
-                            {costMonthly}€ / Monat
+                            {formatEuro(costMonthly)} / Monat
                         </div>
                     }
                     <div className="costTotal" style={{ backgroundColor: color2 }}>
-                        {costTotal}€ von {budgetItems}€ geplant
+                        {formatEuro(costTotal)} von {formatEuro(budgetItems)} geplant
                     </div>
                 </div>
                 <ResourceView
@@ -915,10 +951,6 @@ class ProgressBar extends React.Component {
 }
 
 class ProgressCircle extends React.Component {
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         let levels = this.props.levels;
@@ -948,8 +980,6 @@ class ProgressCircle extends React.Component {
         let color = "hsl(" + hue + ", 80%, 60%, 1.0)";
         let bgColor = "hsl(" + hue + ", 30%, 60%, 0.2)";
 
-        let glowColor = "hsl( 63, 98%, 37%)";
-        let glowStrength = level / levels.length * 100;
 
         // create svg path of hollow circle
         const thickness = 4;
@@ -962,9 +992,9 @@ class ProgressCircle extends React.Component {
                     <path className="progressCircleFill" d="M18 2.0845
                     a 15.9155 15.9155 0 0 1 0 31.831
                     a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" strokeWidth={thickness} stroke={color} strokeDasharray={prog + " " + (100 - prog)} />
-                    
+
                     <circle className="progressCircleBackground" cx="18" cy="18" r="15.9155" fill="none" strokeWidth={thickness} stroke={bgColor} />
-                    
+
 
                 </svg>
                 <div className="progressCircleInnerText">
@@ -989,38 +1019,14 @@ class OverviewView extends React.Component {
 
     render() {
 
-        const hardwareLevels = [ 10, 25, 50, 100];
-        const softwareLevels = [ 10, 25, 50, 100];
-        const serviceLevels = [ 10, 25, 50, 100];
+        const hardwareLevels = [10, 25, 50, 100];
+        const softwareLevels = [10, 25, 50, 100];
+        const serviceLevels = [10, 25, 50, 100];
 
         let hardwareCount = 27;
         let softwareCount = 3;
         let serviceCount = 12;
 
-        let formatEuro = (value) => {
-            let euro = Math.floor(value);
-            let cent = Math.floor((value - euro) * 100);
-            
-            let euroStr = euro.toString();
-            let centStr = cent.toString();
-            if (cent < 10) {
-                centStr = "0" + centStr;
-            }
-            // add thousands seperator
-            let euroStrNew = "";
-            for (let i = 0; i < euroStr.length; i++) {
-                if (i > 0 && (euroStr.length - i) % 3 == 0) {
-                    euroStrNew += ".";
-                }
-                euroStrNew += euroStr[i];
-            }
-            
-            if (cent === 0) {
-                return euroStrNew + "€";
-            } else {
-                return euroStrNew + "," + centStr + "€";
-            }
-        };
 
         return (
             <div className="overviewView">
