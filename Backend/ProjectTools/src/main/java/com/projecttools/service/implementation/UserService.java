@@ -101,18 +101,5 @@ public class UserService implements IUserService {
         return null;
     }
 
-    @Override
-    public List<Network> getAllNetworke() {
-        return null;
-    }
 
-    @Override
-    public List<Resource> getAllresource() {
-        return null;
-    }
-
-    @Override
-    public List<Category> getCategorie() {
-        return null;
-    }
 }

@@ -9,7 +9,9 @@ import com.projecttools.request.ResourceRequest;
 import com.projecttools.request.UserCredentials;
 import com.projecttools.service.AdminService;
 import com.projecttools.service.implementation.CategoryService;
+import com.projecttools.utils.Untis;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -60,12 +62,15 @@ public class AdminController {
     public List<Resource> getAllResource(){
         return adminService.getAllresource();
     }
+
     @GetMapping("getcategorie")
     public List<Category> getAllCat(){
         return adminService.getCategorie();
     }
+
     @GetMapping
     public String test() {
+        Untis.getUserName();
         return "admin";
     }
 }
