@@ -1,26 +1,34 @@
 package com.projecttools.service.implementation;
 
 import com.projecttools.models.*;
+import com.projecttools.repository.ResourceRepo;
 import com.projecttools.repository.UserRepository;
+import com.projecttools.request.UserResourceRequest;
 import com.projecttools.service.IUserService;
+import com.projecttools.utils.Untis;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 @Service
 public class UserService implements IUserService {
     private final UserRepository _userRepo;
-    public UserService(UserRepository _userRepo){
+    private ResourceRepo resourceRepo;
+
+    public UserService(UserRepository _userRepo, ResourceRepo resourceRepo) {
         this._userRepo = _userRepo;
+        this.resourceRepo = resourceRepo;
     }
+
     @Override
     public User Login(String email, String password) {
-        return _userRepo.findUserByEmailAndPassword(email,password).get();
+        return _userRepo.findUserByEmailAndPassword(email, password).get();
     }
 
     @Override
     public User Register(String name, String email, String password, double budget) {
-        User user = new User(name,email,password,budget,false,null,null,null,null);
+        User user = new User(name, email, password, budget, false, null, null, null, null);
         return _userRepo.save(user);
     }
 
@@ -70,19 +78,33 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User AddResourcesAvailable(String email, List<UserResources> resourceAvailable) {
-        User user = _userRepo.findUserByEmail(email);
-        if(user != null){
-            user.setResourcesAvailable(resourceAvailable);
+    public User AddResourcesAvailable(List<UserResourceRequest> resourceAvailable) {
+        User user = _userRepo.findUserByEmail(Untis.getUserName());
+        if (user != null) {
+            List<UserResources> resourcesAvailble=new ArrayList<>();
+            resourceAvailable.forEach(userResourceRequest -> {
+                Resource resource = resourceRepo.findById(userResourceRequest.getResourceId()).get();
+                resourcesAvailble.add(UserResourceRequest.UserResourceRequestToResource(userResourceRequest, user, resource));
+
+            });
+            user.setResourcesAvailable(resourcesAvailble);
+            _userRepo.save(user);
         }
         return null;
     }
 
     @Override
-    public User AddResourcesNeeded(String email, List<UserResources> resourcesNeeded) {
-        User user = _userRepo.findUserByEmail(email);
-        if(user != null){
-            user.setResourcesNeeded(resourcesNeeded);
+    public User AddResourcesNeeded(List<UserResourceRequest> resourcesNeeded) {
+        User user = _userRepo.findUserByEmail(Untis.getUserName());
+        if (user != null) {
+            List<UserResources> resourcesNedded=new ArrayList<>();
+            resourcesNeeded.forEach(userResourceRequest -> {
+                Resource resource = resourceRepo.findById(userResourceRequest.getResourceId()).get();
+                resourcesNedded.add(UserResourceRequest.UserResourceRequestToResource(userResourceRequest, user, resource));
+
+            });
+            user.setResourcesNeeded(resourcesNedded);
+            _userRepo.save(user);
         }
         return null;
     }
@@ -90,7 +112,7 @@ public class UserService implements IUserService {
     @Override
     public User AddNetworksNeeded(String email, List<Network> networksNeeded) {
         User user = _userRepo.findUserByEmail(email);
-        if(user != null){
+        if (user != null) {
             user.setNetworksNeeded(networksNeeded);
         }
         return null;
@@ -99,7 +121,7 @@ public class UserService implements IUserService {
     @Override
     public User AddNetworksAvailable(String email, List<Network> networksAvailable) {
         User user = _userRepo.findUserByEmail(email);
-        if(user != null){
+        if (user != null) {
             user.setNetworksAvailable(networksAvailable);
         }
         return null;

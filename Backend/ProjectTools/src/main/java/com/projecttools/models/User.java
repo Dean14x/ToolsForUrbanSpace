@@ -44,9 +44,9 @@ public class User {
         this.is_Admin = is_Admin;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     List<UserResources> resourcesNeeded;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     List<UserResources> resourcesAvailable;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_network_needed",

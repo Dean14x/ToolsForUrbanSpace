@@ -1,6 +1,7 @@
 package com.projecttools.service;
 
 import com.projecttools.models.*;
+import com.projecttools.request.UserResourceRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,8 +16,8 @@ public interface IUserService {
     public void DeleteUser(String email);
     public User EditUser(String name, String email, String password, double budget, boolean isAdmin, List<UserResources> resourceNeeded, List<UserResources> resourceAvailable, List<Network> networksNeeded,List<Network> networksAvailable);
 
-    public User AddResourcesAvailable(String email,List<UserResources> resourceAvailable);
-    public User AddResourcesNeeded(String email,List<UserResources> resourcesNeeded);
+    public User AddResourcesAvailable(List<UserResourceRequest> resourceAvailable);
+    public User AddResourcesNeeded(List<UserResourceRequest> resourcesNeeded);
 
     public User AddNetworksNeeded(String email,List<Network> networksNeeded);
     public User AddNetworksAvailable(String email,List<Network> networksAvailable);

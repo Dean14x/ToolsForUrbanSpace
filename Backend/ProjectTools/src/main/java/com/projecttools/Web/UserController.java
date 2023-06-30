@@ -1,6 +1,7 @@
 package com.projecttools.Web;
 
 import com.projecttools.models.*;
+import com.projecttools.request.UserResourceRequest;
 import com.projecttools.service.ICategoryService;
 import com.projecttools.service.INetworkService;
 import com.projecttools.service.IResourceService;
@@ -44,25 +45,23 @@ public class UserController {
     }
 
     @PostMapping("/addResourcesAvailable")
-    public User addResourcesAvailable(@RequestParam List<UserResources> resourcesAvailable) {
-        String email = Untis.getUserName();
-        return this._userService.AddResourcesAvailable(email,resourcesAvailable);
+    public User addResourcesAvailable(@RequestBody List<UserResourceRequest> resourcesAvailable) {
+        return this._userService.AddResourcesAvailable(resourcesAvailable);
     }
 
     @PostMapping("/addResourcesNeeded")
-    public User addResourcesNeeded(@RequestParam List<UserResources> resourcesNeeded) {
-        String email = Untis.getUserName();
-        return this._userService.AddResourcesNeeded(email, resourcesNeeded);
+    public User addResourcesNeeded(@RequestBody List<UserResourceRequest> resourcesNeeded) {
+        return this._userService.AddResourcesNeeded(resourcesNeeded);
     }
 
     @PostMapping("/addNetworksNeeded")
-    public User addNetworksNeeded(@RequestParam List<Network> networksNeeded) {
+    public User addNetworksNeeded(@RequestBody List<Network> networksNeeded) {
         String email = Untis.getUserName();
         return this._userService.AddNetworksNeeded(email, networksNeeded);
     }
 
     @PostMapping("/addNetworksAvailable")
-    public User addNetworksAvailable(@RequestParam List<Network> networksAvailable) {
+    public User addNetworksAvailable(@RequestBody List<Network> networksAvailable) {
         String email = Untis.getUserName();
         return this._userService.AddNetworksAvailable(email, networksAvailable);
     }

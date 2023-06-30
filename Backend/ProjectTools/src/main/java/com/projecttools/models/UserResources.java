@@ -24,6 +24,7 @@ public class UserResources {
     public UserResources(){}
 
     public UserResources(int amount, boolean available, User user, Resource resource) {
+        this.id=UUID.randomUUID();
         this.amount = amount;
         this.available = available;
         this.user = user;
