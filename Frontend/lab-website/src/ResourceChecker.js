@@ -468,7 +468,7 @@ class EditItemPanel extends React.Component {
 
         if (this.props.item[0] !== this.baseItem.id) {
             this.baseItem = this.props.getItem(this.props.item[0]);
-            this.setState({ item: this.baseItem });
+            this.state.item = this.baseItem;
         }
 
         let item = this.baseItem;
