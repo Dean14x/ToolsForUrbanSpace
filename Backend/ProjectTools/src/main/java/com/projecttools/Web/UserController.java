@@ -32,8 +32,8 @@ public class UserController {
     }
 
     @PostMapping("/deleteUser")
-    public void deleteUser(@RequestParam UUID id){
-        _userService.DeleteUser(id);
+    public void deleteUser(@RequestParam String email){
+        _userService.DeleteUser(email);
     }
 
     @PostMapping("/edit")
@@ -58,7 +58,7 @@ public class UserController {
         return this._userService.AddNetworksAvailable(id,networksAvailable);
     }
 
-    @GetMapping("networke")
+    /*@GetMapping("networke")
     public List<Network> getAllNetworke(){
         return _networkService.getAllNetworke();
     }
@@ -71,5 +71,5 @@ public class UserController {
     @GetMapping("getcategorie")
     public List<Category> getAllCat(){
         return categoryService.getCategorie();
-    }
+    }*/
 }

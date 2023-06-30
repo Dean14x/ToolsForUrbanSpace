@@ -25,28 +25,32 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User GetUserResources(UUID id) {
-        return null;
+    public User GetUserResourcesAvailable(String email) {
+        User user = _userRepo.findUserByEmail(email);
+        return _userRepo.findByIdWithresourcesAvailable(user.getId());
     }
 
     @Override
-    public User GetResourcesNeeded(UUID id) {
-        return null;
+    public User GetResourcesNeeded(String email) {
+        User user = _userRepo.findUserByEmail(email);
+        return _userRepo.findByIdWithresourcesNeeded(user.getId());
     }
 
     @Override
-    public User GetNetworksAvailable(UUID id) {
-        return null;
+    public User GetNetworksAvailable(String email) {
+        User user = _userRepo.findUserByEmail(email);
+        return _userRepo.findByIdWithnetworksAvailable(user.getId());
     }
 
     @Override
-    public User GetNetworksNeeded(UUID id) {
-        return null;
+    public User GetNetworksNeeded(String email) {
+        User user = _userRepo.findUserByEmail(email);
+        return _userRepo.findByIdWithnetworksNeeded(user.getId());
     }
 
     @Override
-    public void DeleteUser(UUID id) {
-        User user = _userRepo.findUserById(id);
+    public void DeleteUser(String email) {
+        User user = _userRepo.findUserByEmail(email);
         _userRepo.delete(user);
     }
 
@@ -98,21 +102,6 @@ public class UserService implements IUserService {
         if(user != null){
             user.setNetworksAvailable(networksAvailable);
         }
-        return null;
-    }
-
-    @Override
-    public List<Network> getAllNetworke() {
-        return null;
-    }
-
-    @Override
-    public List<Resource> getAllresource() {
-        return null;
-    }
-
-    @Override
-    public List<Category> getCategorie() {
         return null;
     }
 }
