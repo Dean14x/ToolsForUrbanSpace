@@ -55,8 +55,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User EditUser(UUID id, String name, String email, String password, double budget, boolean isAdmin, List<UserResources> resourceNeeded, List<UserResources> resourceAvailable, List<Network> networksNeeded, List<Network> networksAvailable) {
-        User user = _userRepo.findUserById(id);
+    public User EditUser(String name, String email, String password, double budget, boolean isAdmin, List<UserResources> resourceNeeded, List<UserResources> resourceAvailable, List<Network> networksNeeded, List<Network> networksAvailable) {
+        User user = _userRepo.findUserByEmail(email);
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
@@ -70,8 +70,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User AddResourcesAvailable(UUID id, List<UserResources> resourceAvailable) {
-        User user = _userRepo.findUserById(id);
+    public User AddResourcesAvailable(String email, List<UserResources> resourceAvailable) {
+        User user = _userRepo.findUserByEmail(email);
         if(user != null){
             user.setResourcesAvailable(resourceAvailable);
         }
@@ -79,8 +79,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User AddResourcesNeeded(UUID id, List<UserResources> resourcesNeeded) {
-        User user = _userRepo.findUserById(id);
+    public User AddResourcesNeeded(String email, List<UserResources> resourcesNeeded) {
+        User user = _userRepo.findUserByEmail(email);
         if(user != null){
             user.setResourcesNeeded(resourcesNeeded);
         }
@@ -88,8 +88,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User AddNetworksNeeded(UUID id, List<Network> networksNeeded) {
-        User user = _userRepo.findUserById(id);
+    public User AddNetworksNeeded(String email, List<Network> networksNeeded) {
+        User user = _userRepo.findUserByEmail(email);
         if(user != null){
             user.setNetworksNeeded(networksNeeded);
         }
@@ -97,11 +97,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User AddNetworksAvailable(UUID id, List<Network> networksAvailable) {
-        User user = _userRepo.findUserById(id);
+    public User AddNetworksAvailable(String email, List<Network> networksAvailable) {
+        User user = _userRepo.findUserByEmail(email);
         if(user != null){
             user.setNetworksAvailable(networksAvailable);
         }
         return null;
     }
+
 }

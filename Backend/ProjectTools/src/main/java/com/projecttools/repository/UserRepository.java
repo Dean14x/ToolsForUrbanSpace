@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
     public Optional<User> findUserByEmailAndPassword(String email, String password);//returns user with all list items !! bad pefrormance
     public User findUserById(UUID id);
-
+    public Optional<User> findByEmail(String email);
     public User findUserByEmail(String email);
     @Query("SELECT u FROM User u JOIN FETCH u.resourcesNeeded WHERE u.id = :user_id")
     public User findByIdWithresourcesNeeded(@Param("user_id") UUID user_id);
