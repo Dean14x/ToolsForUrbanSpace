@@ -51,10 +51,10 @@ public class UserController {
         return this._userService.AddResourcesNeeded(id, resourcesNeeded);
     }
 
-//    @PostMapping("/addResourcesAvailable")
-//    public User addNetworksAvailable(@RequestParam UUID id, @RequestParam List<Network> networksNeeded) {
-//        return this._userService.AddNetworksNeeded(id, networksNeeded);
-//    }
+    @PostMapping("/addNetworksNeeded")
+    public User addNetworksNeeded(@RequestParam UUID id, @RequestParam List<Network> networksNeeded) {
+        return this._userService.AddNetworksNeeded(id, networksNeeded);
+    }
 
     @PostMapping("/addNetworksAvailable")
     public User addNetworksAvailable(@RequestParam UUID id, @RequestParam List<Network> networksAvailable) {
