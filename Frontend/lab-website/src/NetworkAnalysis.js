@@ -50,7 +50,7 @@ class NetworkAnalysis extends React.Component {
             </div>
 
             <button className={"manageB"}>
-              <Link to="/networkTable">Start</Link>
+              <Link  className={"buttonLink"} to="/networkTable">Start</Link>
             </button>
           </div>
         </div>
@@ -71,7 +71,7 @@ class NetworkAnalysis extends React.Component {
               </table>
         </div>
         <button className={"showB"}>
-          <Link to="/networkMap">Start</Link>
+          <Link className={"buttonLink"} to="/networkMap">Start</Link>
         </button>
           </div>
         </div>
