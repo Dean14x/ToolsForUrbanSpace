@@ -15,6 +15,7 @@ import com.projecttools.request.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class AdminService {
         this.resourceRepository = resourceRepository;
         this.categoryRepo = categoryRepo;
         this._networkRepo = _networkRepo;
-        this.userRepo =userRepo;
+        this.userRepo = userRepo;
     }
 
     public void addResource(List<ResourceRequest> resource) {
@@ -85,7 +86,21 @@ public class AdminService {
     }
 
     public void addAdmin(UserCredentials userCredentials) {
-        userCredentials.setPassword(bCryptPasswordEncoder.encode( userCredentials.getPassword()));
+        userCredentials.setPassword(bCryptPasswordEncoder.encode(userCredentials.getPassword()));
         userRepo.save(UserCredentials.userCreditingToUser(userCredentials));
+    }
+
+    public List<Network> getAllNetworke() {
+        return _networkRepo.findAll();
+    }
+
+
+    public List<Resource> getAllresource() {
+        return resourceRepository.findAll();
+    }
+
+
+    public List<Category> getCategorie() {
+        return categoryRepo.findAll();
     }
 }

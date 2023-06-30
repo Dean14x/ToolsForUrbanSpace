@@ -1,5 +1,8 @@
 package com.projecttools.Web;
 
+import com.projecttools.models.Category;
+import com.projecttools.models.Network;
+import com.projecttools.models.Resource;
 import com.projecttools.request.CategoryRequest;
 import com.projecttools.request.NetworkRequest;
 import com.projecttools.request.ResourceRequest;
@@ -48,8 +51,19 @@ public class AdminController {
         adminService.addAdmin(userCredentials);
     }
 
+    @GetMapping("networke")
+    public List<Network> getAllNetworke(){
+        return adminService.getAllNetworke();
+    }
 
-
+    @GetMapping("resource")
+    public List<Resource> getAllResource(){
+        return adminService.getAllresource();
+    }
+    @GetMapping("getcategorie")
+    public List<Category> getAllCat(){
+        return adminService.getCategorie();
+    }
     @GetMapping
     public String test() {
         return "admin";

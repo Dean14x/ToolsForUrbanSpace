@@ -5,10 +5,11 @@ import com.projecttools.models.Resource;
 import com.projecttools.repository.CategoryRepository;
 import com.projecttools.repository.ResourceRepository;
 import com.projecttools.service.IResourceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-
+@Service
 public class ResourceService implements IResourceService {
     private final ResourceRepository _resourceRepo;
     private final CategoryRepository _categoryRepo;

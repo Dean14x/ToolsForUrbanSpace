@@ -1,8 +1,6 @@
 package com.projecttools.service.implementation;
 
-import com.projecttools.models.Network;
-import com.projecttools.models.User;
-import com.projecttools.models.UserResources;
+import com.projecttools.models.*;
 import com.projecttools.repository.UserRepository;
 import com.projecttools.service.IUserService;
 import org.springframework.stereotype.Service;
@@ -100,6 +98,21 @@ public class UserService implements IUserService {
         if(user != null){
             user.setNetworksAvailable(networksAvailable);
         }
+        return null;
+    }
+
+    @Override
+    public List<Network> getAllNetworke() {
+        return null;
+    }
+
+    @Override
+    public List<Resource> getAllresource() {
+        return null;
+    }
+
+    @Override
+    public List<Category> getCategorie() {
         return null;
     }
 }

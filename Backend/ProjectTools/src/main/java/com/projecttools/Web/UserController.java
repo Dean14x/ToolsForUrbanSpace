@@ -1,9 +1,12 @@
 package com.projecttools.Web;
 
-import com.projecttools.models.Network;
-import com.projecttools.models.User;
-import com.projecttools.models.UserResources;
+import com.projecttools.models.*;
+import com.projecttools.service.ICategoryService;
+import com.projecttools.service.INetworkService;
+import com.projecttools.service.IResourceService;
 import com.projecttools.service.IUserService;
+import com.projecttools.service.implementation.NetworkService;
+import com.projecttools.service.implementation.ResourceService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +19,16 @@ import java.util.UUID;
 public class UserController {
 
     private final IUserService _userService;
+    private INetworkService _networkService;
+    private IResourceService _resourceService;
 
-    public UserController(IUserService userService) {
+    private ICategoryService categoryService;
+
+    public UserController(IUserService userService, INetworkService networkService, IResourceService resourceService,ICategoryService categoryService) {
         _userService = userService;
+        _networkService=networkService;
+        _resourceService=resourceService;
+        this.categoryService=categoryService;
     }
 
     @PostMapping("/deleteUser")
@@ -48,4 +58,18 @@ public class UserController {
         return this._userService.AddNetworksAvailable(id,networksAvailable);
     }
 
+    @GetMapping("networke")
+    public List<Network> getAllNetworke(){
+        return _networkService.getAllNetworke();
+    }
+
+    @GetMapping("resource")
+    public List<Resource> getAllResource(){
+        return _resourceService.getAllresource();
+    }
+
+    @GetMapping("getcategorie")
+    public List<Category> getAllCat(){
+        return categoryService.getCategorie();
+    }
 }

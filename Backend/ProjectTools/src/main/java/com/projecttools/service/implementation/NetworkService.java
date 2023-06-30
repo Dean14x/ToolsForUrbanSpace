@@ -5,10 +5,11 @@ import com.projecttools.models.Network;
 import com.projecttools.repository.CategoryRepository;
 import com.projecttools.repository.NetworkRepository;
 import com.projecttools.service.INetworkService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-
+@Service
 public class NetworkService implements INetworkService {
     private final NetworkRepository _networkRepo;
     private final CategoryRepository _categoryRepo;

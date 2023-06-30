@@ -1,8 +1,6 @@
 package com.projecttools.service;
 
-import com.projecttools.models.Network;
-import com.projecttools.models.User;
-import com.projecttools.models.UserResources;
+import com.projecttools.models.*;
 
 import java.util.List;
 import java.util.UUID;
