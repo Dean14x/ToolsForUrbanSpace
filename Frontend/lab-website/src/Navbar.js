@@ -18,9 +18,6 @@ class Navbar extends React.Component {
           <img className={"logo"} src={logo2} alt="logo" />
         </Link>
         <div>
-          <Link className="navbar-item" to="/overview">
-            Overview
-          </Link>
           <Link className="navbar-item" to="/network">
             Network Analysis
           </Link>
