@@ -220,7 +220,8 @@ class ResourceView extends React.Component {
     setSort(index) {
         // ignore if button header is clicked
         let min = this.ignoreFirstColumn ? 1 : 0;
-        if (index < min || index >= this.props.header.length + min) {
+        index += min;
+        if (index < 0 || index >= this.props.header.length + min) {
             return;
         }
 
@@ -508,6 +509,10 @@ class EditItemPanel extends React.Component {
                         <p>Anzahl</p>
                         <input onChange={(e) => this.changeItem(e.target.value, "amount")}
                             type="text" placeholder="Anzahl" className="editItemPanelInput" value={item.amount}></input>
+                    </div>
+                    <div className="editItemPanelRow">
+                        <p>Beschreibung</p>
+                        <textarea onChange={(e) => this.changeItem(e.target.value, "description")} className="editItemPanelTextArea editItemPanelInput" value={item.description}></textarea>
                     </div>
                 </div>
                 <div className="editItemPanelControls editItemPanelRow">
@@ -868,61 +873,150 @@ class CatalogView extends BaseView {
         console.log(item);
     }
 
+    createItem(item) {
+        // api call for creating item
+        console.log("create item");
+        console.log(item);
+    }
+
+    updateItem(item) {
+        // api call for updating item
+        console.log("update item");
+        console.log(item);
+    }
+
+    deleteItem(item) {
+        // api call for deleting item
+        console.log("delete item");
+        console.log(item);
+    }
+
+    getCreateItemButton() {
+        return (
+            <button className="createItemButton resourceViewButton" onClick={(e)=>{this.view.current.showDialog(
+                <EditItemPanel
+                    title="Neues Item erstellen"
+                    item={[-1,0,0,0,0,0,0]}
+                    getItem={(id) => { return new CatalogItem(-1, "", CATEGORIES.Hardware, 0, 0, "", 0);}}
+                    buttons={[
+                        {
+                            text: "Abbrechen",
+                            onClick: (item) => { this.view.current.hideDialog(); }
+                        },
+                        {
+                            text: "Bestätigen",
+                            onClick: (item) => {
+                                this.createItem(item);
+                                this.view.current.hideDialog();
+                            }
+                        }
+                    ]} />
+            )}}>Create New Item</button>
+        );
+    }
+
+    getTableButtons(isAdmin) {
+
+        let buttons = [
+            {
+                text: "Hinzufügen",
+                onClick: (item) => {
+                    this.view.current.showDialog(<EditItemPanel
+                        title="Hinzufügen"
+                        item={item}
+                        getItem={this.getItemFromId.bind(this)}
+                        buttons={[
+                            {
+                                text: "Abbrechen",
+                                onClick: (item) => { this.view.current.hideDialog(); }
+                            },
+                            {
+                                text: "Bestätigen",
+                                onClick: (item) => {
+                                    this.addItem(item);
+                                    this.view.current.hideDialog();
+                                }
+                            }
+                        ]} />);
+                }
+            },
+            {
+                text: "Planen",
+                onClick: (item) => {
+                    this.view.current.showDialog(<EditItemPanel
+                        title="Planen"
+                        item={item}
+                        getItem={this.getItemFromId.bind(this)}
+                        buttons={[
+                            {
+                                text: "Abbrechen",
+                                onClick: (item) => { this.view.current.hideDialog(); }
+                            },
+                            {
+                                text: "Bestätigen",
+                                onClick: (item) => {
+                                    this.planItem(item);
+                                    this.view.current.hideDialog();
+                                }
+                            }]} />);
+                }
+            }
+
+        ];
+
+        if (isAdmin) {
+            buttons.push({
+                text: "Bearbeiten",
+                onClick: (item) => {
+                    this.view.current.showDialog(<EditItemPanel
+                        title="Bearbeiten"
+                        item={item}
+                        getItem={this.getItemFromId.bind(this)}
+                        buttons={[
+                            {
+                                text: "Abbrechen",
+                                onClick: (item) => { this.view.current.hideDialog(); }
+                            },
+                            {
+                                text: "Aktualisieren",
+                                onClick: (item) => {
+                                    this.updateItem(item);
+                                    this.view.current.hideDialog();
+                                }
+                            },
+                            {
+                                text: "Löschen",
+                                onClick: (item) => {
+                                    this.deleteItem(this.getItemFromId(item[0]));
+                                    this.view.current.hideDialog();
+                                }
+                            }
+                        ]} />);
+                }
+            }
+            );
+        }
+
+        return buttons;
+    }
+
+
+
 
     render() {
 
+        let isAdmin = true;
+
         return (
             <div className="resourceContainer">
+                <div className="resourceViewHeader">
+                    {isAdmin ? this.getCreateItemButton() : null}
+                </div>
                 <ResourceView
                     ref={this.view}
                     header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
                     data={this.convertData()}
-                    buttons={[
-                        {
-                            text: "Hinzufügen",
-                            onClick: (item) => {
-                                this.view.current.showDialog(<EditItemPanel
-                                    title="Hinzufügen"
-                                    item={item}
-                                    getItem={this.getItemFromId.bind(this)}
-                                    buttons={[
-                                        {
-                                            text: "Abbrechen",
-                                            onClick: (item) => { this.view.current.hideDialog(); }
-                                        },
-                                        {
-                                            text: "Bestätigen",
-                                            onClick: (item) => {
-                                                this.addItem(item);
-                                                this.view.current.hideDialog();
-                                            }
-                                        }
-                                    ]} />);
-                            }
-                        },
-                        {
-                            text: "Planen",
-                            onClick: (item) => {
-                                this.view.current.showDialog(<EditItemPanel
-                                    title="Planen"
-                                    item={item}
-                                    getItem={this.getItemFromId.bind(this)}
-                                    buttons={[
-                                        {
-                                            text: "Abbrechen",
-                                            onClick: (item) => { this.view.current.hideDialog(); }
-                                        },
-                                        {
-                                            text: "Bestätigen",
-                                            onClick: (item) => {
-                                                this.planItem(item);
-                                                this.view.current.hideDialog();
-                                            }
-                                        }]} />);
-                            }
-                        }
-
-                    ]} />
+                    buttons={this.getTableButtons(isAdmin)} />
             </div>
         );
     }
@@ -1047,13 +1141,13 @@ class OverviewView extends React.Component {
                     </div>
                     <div className="costOverview" title="Investitionskosten von geplanten Elementen und Investitionsbudget">
                         <div className="costOverviewText">
-                            Investitionskosten
+                            Einmalige Kosten
                         </div>
                         <div className="costOverviewValue">
                             {formatEuro(1500)} / {formatEuro(2000)}
                         </div>
                         <div className="costOverviewInfo">
-                            Inv. Kosten / Inv. Budget
+                            Einm. Kosten / Einm. Budget
                         </div>
                     </div>
                 </div>

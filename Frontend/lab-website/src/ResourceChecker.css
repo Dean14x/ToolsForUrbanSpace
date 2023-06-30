@@ -184,10 +184,10 @@
     height: 40px;
     width: 350px;
     margin: 5px;
-    padding: 10px;
-    background-color: #ccc;
+    padding: 5px;
+    padding-left: 15px;
     border-radius: 25px;
-    border: none;
+    border: 2px solid #ccc;
     font-size: 22px;
 }
 
@@ -282,7 +282,7 @@ dialog:has(.resourceDialog)::backdrop {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin: 10px;
+    margin: 5px;
     box-sizing: border-box;
 }
 
@@ -358,6 +358,7 @@ dialog:has(.resourceDialog)::backdrop {
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+    margin-top: 20px;
 }
 
 .resourceViewHeader div {
@@ -467,4 +468,27 @@ dialog:has(.resourceDialog)::backdrop {
     filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.5));
 }
 
+.resourceViewHeader:has(.createItemButton) {
+    justify-content: right;
+}
+
+.createItemButton {
+    width: 200px;
+    height: 70px;
+    font-size: 20px;
+    background-color: rgb(134, 165, 237);
+    right: 0;
+}
+
+
+.editItemPanelTextArea {
+    width: 400px;
+    height: 150px;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    font-size: 20px;
+    justify-content: space-evenly;
+}
 
