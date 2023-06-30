@@ -9,9 +9,10 @@
 }
 
 .footer-item {
-
+    display: flex;
     color: black;
     text-align: center;
+    justify-content: center;
     padding: 14px 16px;
     text-decoration: none;
     border-radius: 28px;
@@ -19,7 +20,33 @@
     margin: 0px 15px;
 }
 
+#links {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#logos {
+    position: absolute;
+    display: flex;
+    right: 50px;
+}
+
 .footer-link {
     color: black;
     text-decoration: none;
+}
+
+.m2c img {
+    height: 20px;
+    width: 45px;
+}
+
+.bmbf img {
+    height: 20px;
+    width: 45px; 
+}
+
+.logoTxt {
+    font-size: 12px;
+    font-weight: 600;
 }
