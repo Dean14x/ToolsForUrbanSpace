@@ -54,13 +54,13 @@ class NetworkAnalysis extends React.Component {
             </button>
           </div>
         </div>
+
         <div className="linie"></div>
         <div className="ShowNetwork">
           <div className="rect2">
             <div className="text1">
               <h1>Show Network</h1>
             </div>
-
             <div>
               <table id="table1">
                 <td>
@@ -69,15 +69,15 @@ class NetworkAnalysis extends React.Component {
                   <p>- less text</p>
                 </td>
               </table>
-            </div>
-            {/* {page} */}
-          </div>
         </div>
         <button className={"showB"}>
           <Link to="/networkMap">Start</Link>
         </button>
         <div className="infopage-bg">
           <img src="/static/images/Vector5.png" alt="network-vec5"></img>
+        </div>
+          </div>
+
         </div>
       </div>
     );
