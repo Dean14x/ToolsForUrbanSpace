@@ -89,6 +89,7 @@
 .resourceView table tr {
     background-color: #f1f1f1;
     padding: 5px;
+
 }
 
 .resourceView table tr:hover:has(td) {
@@ -114,6 +115,7 @@
     
     cursor: pointer;
     transition: 0.3s;
+    user-select: none;
 
 }
 
@@ -137,4 +139,310 @@
 .resourceViewButton:hover {
     background-color: #ddd;
 }
+
+.filterBar {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    background-color: none;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.filterButtons {
+    margin: 5px;
+}
+
+.filterButton {
+    height: 50px;
+    width: 120px;
+    margin: 5px;
+    padding: 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+    color: black;
+    font-size: 22px;
+}
+
+.filterButton:hover {
+    background-color: #ddd;
+}
+
+.filterButton.activeFilter {
+    background-color: #edd46d;
+}
+
+.filterInput {
+    border: none;
+}
+
+.filterInputField {
+    height: 40px;
+    width: 350px;
+    margin: 5px;
+    padding: 10px;
+    background-color: #ccc;
+    border-radius: 25px;
+    border: none;
+    font-size: 22px;
+}
+
+.resourceDialog {
+    max-width: 80vw;
+    width: 800px;
+    height: 100%;
+    min-height: 300px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+}
+
+.resourceDialogTop {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    background-color: #ccc;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.resourceDialogTopLeft {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+.resourceDialogTopRight {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.resourceDialogTopRight button {
+    height: 40px;
+    width: 40px;
+    margin: 5px;
+    padding: 10px;
+    background-color: #ccc;
+    border-radius: 20px;
+    color: black;
+    font-size: 22px;
+    font-style: bold;
+    font-weight: 500;
+    /* not selectable */
+    user-select: none;
+}
+
+.resourceDialogTopRight button:hover {
+    background-color: #ddd;
+}
+
+dialog:has(.resourceDialog) {
+    padding: 0;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+dialog:has(.resourceDialog)::backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.editItemPanel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.editItemPanelRow {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+.editItemPanelFields {
+    margin-bottom: 30px;
+}
+
+.editItemPanelInput {
+    height: 30px;
+    width: 200px;
+    margin: 5px;
+    padding: 5px;
+    background-color: #ccc;
+    border-radius: 5px;
+    border: none;
+    font-size: 20px;
+    justify-content: space-evenly;
+}
+
+.editItemPanelInputName {
+    width: 440px;
+}
+
+.editItemPanelButton {
+    height: 40px;
+    width: 120px;
+    margin: 5px;
+    padding: 10px;
+    background-color: #ccc;
+    border-radius: 5px;
+    color: black;
+    font-size: 22px;
+}
+
+.editItemPanelButton:hover {
+    background-color: #ddd;
+}
+
+.progressBar {
+    width: 100%;
+    height: 100%;
+    margin: 5px;
+    background-color: #ccc;
+    border-radius: 20px;
+    border: none;
+    font-size: 20px;
+    justify-content: space-evenly;
+}
+
+.progressBarFill {
+    height: 100%;
+    border-radius: 20px;
+    transition: 0.3s;
+    /* light reflection effect */
+    box-shadow: inset 0 0 10px 0 rgba(255, 255, 255, 0.5);
+}
+
+.mainProgress {
+    width: 100%;
+    height: 50px;
+}
+
+.resourceViewHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.resourceViewHeader div {
+    margin: 5px;
+    padding: 10px;
+    border: 2px solid #707070;
+    border-radius: 5px;
+    color: black;
+    font-size: 26px;
+}
+
+.resourceContainer {
+    min-width: 1200px;
+    max-width: 90vw;
+}
+
+@media screen and (max-width: 1200px) {
+    .resourceContainer {
+        min-width: 800px;
+    }
+}
+
+.overviewView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1200px;
+    max-width: 90vw;
+    min-width: 800px;
+    margin: 30px;
+}
+
+.overviewRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    margin: 30px;
+}
+
+.costOverview {
+    font-size: 30px;
+    font-weight: 500;
+    border: 2px solid #707070;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.costOverview:hover {
+    background-color: #ddd;
+}
+
+.overviewRow div {
+    margin: 5px;
+    padding: 10px;
+}
+
+.progressCircle {
+    min-width: 300px;
+    min-height: 300px;
+    /* stack child elements on top of each other */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.progressCircleInnerText {
+    position: absolute;
+    font-size: 50px;
+    font-weight: 500;
+    color: black;
+    z-index: 1;
+    top: 29%;
+}
+
+.progressCircleText {
+    font-size: 36px;
+    font-weight: 500;
+    color: black;
+}
+
+.progressCircle svg {
+    width: 100%;
+    height: 100%;
+    transform-origin: center;
+    transition: 0.6s;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.5));
+}
+
 

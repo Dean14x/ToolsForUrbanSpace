@@ -1,6 +1,15 @@
 import React from "react";
 import "./ResourceChecker.css";
 import { Link, Outlet } from "react-router-dom";
+import CatalogItem from "./catalogItem";
+
+// enum for categories
+const CATEGORIES = {
+    Hardware: "Hardware",
+    Software: "Software",
+    Service: "Service",
+    Other: "Other"
+};
 
 
 class TabView extends React.Component {
@@ -20,22 +29,54 @@ class TabView extends React.Component {
     }
 
     render() {
-        console.log(this.tabs);
         return (
             <div className="tabView">
                 <div className="tabViewHeader">
-                    
-                    {this.tabs.map((tab, index) => 
-                        (
-                            
-                            <Link className={"tabViewHeaderItem" + (this.state.activeTab === index ? " tabViewHeaderItemActive" : "")} to={this.links[index]} onClick={() => this.clickHandler(index)}>
-                                {tab}
-                            </Link>
-                        )
+
+                    {this.tabs.map((tab, index) =>
+                    (
+
+                        <Link key={index} className={"tabViewHeaderItem" + (this.state.activeTab === index ? " tabViewHeaderItemActive" : "")} to={this.links[index]} onClick={() => this.clickHandler(index)}>
+                            {tab}
+                        </Link>
+                    )
                     )}
                 </div>
                 <div className="tabViewContent">
                     <Outlet />
+                </div>
+            </div>
+        );
+    }
+}
+
+
+// a dialog for the resource view
+// can be used to add, edit or delete resources
+class ResourceDialog extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.title = "Title";
+        if (this.props.title) {
+            this.title = this.props.title;
+        }
+    }
+
+    render() {
+        return (
+            <div className="resourceDialog">
+                <div className="resourceDialogTop">
+                    <div className="resourceDialogTopLeft">
+                        <h3>{this.title}</h3>
+
+                    </div>
+                    <div className="resourceDialogTopRight">
+                        <button className="resourceDialogTopRightButton" onClick={this.props.onClose}>X</button>
+                    </div>
+                </div>
+                <div className="resourceDialogContent">
+                    {this.props.children}
                 </div>
             </div>
         );
@@ -56,15 +97,12 @@ class ResourceView extends React.Component {
             data: [],
             sortRow: 0,
             sortDirection: 1,
-            filter: null
+            filter: null,
+            search: "",
+            dialogElement: null
         };
 
-        if (this.props.header) {
-            this.state.header = this.props.header;
-        }
-        if (this.props.data) {
-            this.state.data = this.props.data;
-        }
+
         if (!this.props.buttons) {
             this.buttons = [];
         } else {
@@ -74,15 +112,17 @@ class ResourceView extends React.Component {
         if (this.props.ignoreFirstColumn) {
             this.ignoreFirstColumn = true;
         } else {
-            this.ignoreFirstColumn = false;
+            this.ignoreFirstColumn = true;
         }
+
+        this.dialog = React.createRef();
 
 
 
     }
 
     componentDidMount() {
-        this.setTestData();
+        //this.setTestData();
     }
 
     setTestData() {
@@ -111,6 +151,29 @@ class ResourceView extends React.Component {
             ["Other 4", "Other", "100", "10"]
         ];
 
+        var asItems = [
+            new CatalogItem(0, "PC", CATEGORIES.Hardware, 1000, 0, "A PC", 10),
+            new CatalogItem(1, "laptop", CATEGORIES.Hardware, 2000, 0, "A laptop", 5),
+            new CatalogItem(2, "VR headset", CATEGORIES.Hardware, 500, 0, "A VR headset", 2),
+            new CatalogItem(3, "monitor", CATEGORIES.Hardware, 200, 0, "A monitor", 20),
+            new CatalogItem(4, "keyboard", CATEGORIES.Hardware, 50, 0, "A keyboard", 50),
+            new CatalogItem(5, "mouse", CATEGORIES.Hardware, 20, 0, "A mouse", 100),
+            new CatalogItem(6, "headphones", CATEGORIES.Hardware, 100, 0, "A headphones", 20),
+            new CatalogItem(7, "3D printer", CATEGORIES.Hardware, 1000, 0, "A 3D printer", 1),
+            new CatalogItem(8, "3D scanner", CATEGORIES.Hardware, 500, 0, "A 3D scanner", 1),
+            new CatalogItem(9, "camera", CATEGORIES.Hardware, 500, 0, "A camera", 1),
+            new CatalogItem(10, "Adobe Photoshop", CATEGORIES.Software, 100, 0, "A Adobe Photoshop", 10),
+            new CatalogItem(11, "Adobe Illustrator", CATEGORIES.Software, 100, 0, "A Adobe Illustrator", 10),
+            new CatalogItem(12, "Adobe Premiere", CATEGORIES.Software, 100, 0, "A Adobe Premiere", 10),
+            new CatalogItem(13, "Adobe After Effects", CATEGORIES.Software, 100, 0, "A Adobe After Effects", 10),
+            new CatalogItem(14, "Betreuung", CATEGORIES.Service, 100, 0, "A Betreuung", 10),
+            new CatalogItem(15, "Beratung", CATEGORIES.Service, 100, 0, "A Beratung", 10),
+            new CatalogItem(16, "Other 1", CATEGORIES.Other, 100, 0, "A Other 1", 10),
+            new CatalogItem(17, "Other 2", CATEGORIES.Other, 100, 0, "A Other 2", 10),
+            new CatalogItem(18, "Other 3", CATEGORIES.Other, 100, 0, "A Other 3", 10),
+            new CatalogItem(19, "Other 4", CATEGORIES.Other, 100, 0, "A Other 4", 10)
+        ];
+
 
         this.setState({ header: headerNew, data: dataNew });
 
@@ -132,7 +195,7 @@ class ResourceView extends React.Component {
     setSort(index) {
         // ignore if button header is clicked
         let min = this.ignoreFirstColumn ? 1 : 0;
-        if (index < min || index >= this.state.header.length + min) {
+        if (index < min || index >= this.props.header.length + min) {
             return;
         }
 
@@ -154,10 +217,50 @@ class ResourceView extends React.Component {
         return data;
     }
 
-    filter(data) {
-        if (this.state.filter === null) {
-            return data;
+    getCategoryIndex() {
+        // returns the index of the category column
+        var categoryIndex = -1;
+        for (let i = 0; i < this.props.header.length; i++) {
+            let v = this.props.header[i];
+            v = v.toLowerCase();
+            if (v === "kategorie" || v === "category") {
+                categoryIndex = i;
+                break;
+            }
         }
+        if (categoryIndex === -1) {
+            return -1;
+        }
+        if (this.ignoreFirstColumn) {
+            categoryIndex++;
+        }
+        return categoryIndex;
+    }
+
+
+    filter(data) {
+        if (this.state.filter !== null) {
+
+            var categoryIndex = this.getCategoryIndex();
+            if (categoryIndex !== -1) {
+                data = data.filter((item) => {
+                    return item[categoryIndex] === this.state.filter;
+                });
+            }
+
+        }
+
+        if (this.state.search !== null && this.state.search !== "") {
+            data = data.filter((item) => {
+                for (let i = 0; i < item.length; i++) {
+                    if (item[i].toString().toLowerCase().includes(this.state.search.toLowerCase())) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+
         return data;
     }
 
@@ -187,7 +290,7 @@ class ResourceView extends React.Component {
     generateHeader() {
         return (
             <tr>
-                {this.state.header.map((item, index) => (
+                {this.props.header.map((item, index) => (
                     <th key={index} onClick={() => this.setSort(index)}>{item}</th>
                 ))}
                 {this.buttons.length > 0 ? <th></th> : null}
@@ -195,14 +298,81 @@ class ResourceView extends React.Component {
         );
     }
 
+    generateFilterButtons() {
+        var buttons = [];
+        var categories = [];
+        var categoryIndex = this.getCategoryIndex();
+        if (categoryIndex === -1) {
+            return null;
+        }
+
+        for (let i = 0; i < this.props.data.length; i++) {
+            let v = this.props.data[i][categoryIndex];
+            if (categories.indexOf(v) === -1) {
+                categories.push(v);
+            }
+        }
+
+        // sort categories
+        categories.sort((a, b) => { return a.localeCompare(b); });
+
+        for (let i = 0; i < categories.length; i++) {
+            let cName = "filterButton";
+            if (this.state.filter === categories[i]) {
+                cName = cName + " activeFilter";
+            }
+            buttons.push(<button className={cName} key={i} onClick={() => this.setFilter(categories[i])}>{categories[i]}</button>);
+        }
+
+        return buttons;
+
+    }
+
+    setFilter(filter) {
+        this.setState({ filter: filter });
+    }
+
+    setSearch(e) {
+        let search = e.target.value;
+        this.setState({ search: search });
+    }
+
+    showDialog(element = null) {
+
+        this.setState({ dialogElement: element });
+
+        this.dialog.current.showModal();
+    }
+
+    hideDialog() {
+        this.dialog.current.close();
+    }
+
     render() {
-        var data = this.state.data;
+        var data = this.props.data;
         data = this.filter(data);
         data = this.sort(data);
 
+
         return (
             <div className="resourceView">
-                <h1>TODO: filter and search</h1>
+                <dialog ref={this.dialog} className="resourceViewDialog">
+                    <ResourceDialog view={this} onClose={() => { this.hideDialog(); }}>
+                        {this.state.dialogElement}
+                    </ResourceDialog>
+                </dialog>
+
+                <div className="filterBar">
+                    <div className="filterButtons">
+
+                        {this.generateFilterButtons()}
+
+                        <button key={999} className="filterButton" onClick={() => { this.setFilter(null); }}>Reset</button>
+                    </div>
+                    <div className="filterInput">
+                        <input className="filterInputField" value={this.props.search} type="text" placeholder="Filter" onChange={(e) => { this.setSearch(e); }} />
+                    </div>
+                </div>
                 <table>
                     <thead>
                         {this.generateHeader()}
@@ -218,43 +388,103 @@ class ResourceView extends React.Component {
     }
 }
 
-class InventoryView extends React.Component {
+class EditItemPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            item: null
         };
+
+        // gets the actual item object from the list
+        if (this.props.item && this.props.getItem) {
+            this.baseItem = this.props.getItem(this.props.item[0]);
+        }
+
+        this.buttons = [];
+        if (this.props.buttons) {
+            this.buttons = this.props.buttons;
+        }
+
+
+
     }
 
-    async componentDidMount() {
-        // load data from server
-    }
+    changeItem(newVal, field) {
+        let item = this.state.item;
+        if (!item) {
+            item = this.baseItem;
+        }
 
-    convertData() {
-        // convert data from server to data for ResourceView
-        // array of arrays
-        return this.state.data;
+        if (field === "cost" || field === "monthlyCost") {
+            newVal = parseFloat(newVal);
+            if (isNaN(newVal)) {
+                newVal = 0;
+            }
+        }
+
+        if (field === "amount") {
+            newVal = parseInt(newVal);
+            if (isNaN(newVal)) {
+                newVal = 0;
+            }
+        }
+
+        item[field] = newVal;
+
+        if (item.name != this.baseItem.name || item.category != this.baseItem.category || item.cost != this.baseItem.cost || item.monthlyCost != this.baseItem.monthlyCost) {
+            item.id = -1;
+        }
+
+        this.setState({ item: item });
     }
 
     render() {
+
+        if (this.props.item[0] !== this.baseItem.id) {
+            this.baseItem = this.props.getItem(this.props.item[0]);
+            this.setState({ item: this.baseItem });
+        }
+
+        let item = this.baseItem;
+
+        if (this.state.item) {
+            item = this.state.item;
+        }
+
         return (
-            <ResourceView
-                header={["Name", "Kategorie", "Kosten/Monat", "Anzahl"]}
-                data={this.convertData()}
-                buttons={[{
-                    text: "Bearbeiten",
-                    onClick: (item) => { console.log(item); }
-                },
-                {
-                    text: "Entfernen",
-                    onClick: (item) => { console.log(item); }
-                }
-                ]} />
+            <div className="editItemPanel">
+                <div className="editItemPanelFields">
+                    <div className="editItemPanelRow">
+                        <input onChange={(e) => this.changeItem(e.target.value, "name")}
+                            type="text" placeholder="Name" className="editItemPanelInput editItemPanelInputName" value={item.name}></input>
+                        <select defaultValue={item.category} onChange={(e) => this.changeItem(e.target.value, "category")}
+                            className="editItemPanelInput">
+                            {Object.keys(CATEGORIES).map((citem, index) => (
+                                <option key={index}>{citem}</option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div className="editItemPanelRow">
+                        <input onChange={(e) => this.changeItem(e.target.value, "monthlyCost")}
+                            type="text" placeholder="Kosten/Monat" className="editItemPanelInput" value={item.monthlyCost}></input>
+                        <input onChange={(e) => this.changeItem(e.target.value, "cost")}
+                            type="text" placeholder="Kosten" className="editItemPanelInput" value={item.cost}></input>
+                        <input onChange={(e) => this.changeItem(e.target.value, "amount")}
+                            type="text" placeholder="Anzahl" className="editItemPanelInput" value={item.amount}></input>
+                    </div>
+                </div>
+                <div className="editItemPanelControls editItemPanelRow">
+                    {this.buttons.map((v, index) => (
+                        <button key={index} className="editItemPanelButton" onClick={() => { v.onClick(item) }}>{v.text}</button>
+                    ))}
+                </div>
+            </div>
         );
     }
 }
 
-class PlannedView extends React.Component {
+class BaseView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -264,74 +494,488 @@ class PlannedView extends React.Component {
 
     async componentDidMount() {
         // load data from server
+        await this.loadData();
+    }
+
+    async loadData() {
+        // load data from server
+        // overwrite this function
+        var items = [
+            new CatalogItem(0, "PC", CATEGORIES.Hardware, 1000, 0, "A PC", 10),
+            new CatalogItem(1, "laptop", CATEGORIES.Hardware, 2000, 0, "A laptop", 5),
+            new CatalogItem(2, "VR headset", CATEGORIES.Hardware, 500, 0, "A VR headset", 2),
+            new CatalogItem(3, "monitor", CATEGORIES.Hardware, 200, 0, "A monitor", 20),
+            new CatalogItem(4, "keyboard", CATEGORIES.Hardware, 50, 0, "A keyboard", 50),
+            new CatalogItem(5, "mouse", CATEGORIES.Hardware, 20, 0, "A mouse", 100),
+            new CatalogItem(6, "headphones", CATEGORIES.Hardware, 100, 0, "A headphones", 20),
+            new CatalogItem(7, "3D printer", CATEGORIES.Hardware, 1000, 0, "A 3D printer", 1),
+            new CatalogItem(8, "3D scanner", CATEGORIES.Hardware, 500, 0, "A 3D scanner", 1),
+            new CatalogItem(9, "camera", CATEGORIES.Hardware, 500, 0, "A camera", 1),
+            new CatalogItem(10, "Adobe Photoshop", CATEGORIES.Software, 100, 0, "A Adobe Photoshop", 10),
+            new CatalogItem(11, "Adobe Illustrator", CATEGORIES.Software, 100, 0, "A Adobe Illustrator", 10),
+            new CatalogItem(12, "Adobe Premiere", CATEGORIES.Software, 100, 0, "A Adobe Premiere", 10),
+            new CatalogItem(13, "Adobe After Effects", CATEGORIES.Software, 100, 0, "A Adobe After Effects", 10),
+            new CatalogItem(14, "Betreuung", CATEGORIES.Service, 100, 0, "A Betreuung", 10),
+            new CatalogItem(15, "Beratung", CATEGORIES.Service, 100, 0, "A Beratung", 10),
+            new CatalogItem(16, "Other 1", CATEGORIES.Other, 100, 0, "A Other 1", 10),
+            new CatalogItem(17, "Other 2", CATEGORIES.Other, 100, 0, "A Other 2", 10),
+            new CatalogItem(18, "Other 3", CATEGORIES.Other, 100, 0, "A Other 3", 10),
+            new CatalogItem(19, "Other 4", CATEGORIES.Other, 100, 0, "A Other 4", 10)
+        ];
+
+
+        this.setState({
+            data: items
+        });
+    }
+
+    getItemFromId(id) {
+        // get item from id
+
+        for (var i = 0; i < this.state.data.length; i++) {
+            if (this.state.data[i].id === id) {
+                return this.state.data[i];
+            }
+        }
+
+        return null;
+    }
+
+    itemAsArray(item) {
+        // convert item to array
+        // overwrite this function
+        return ["OVERWRITE THIS FUNCTION"];
     }
 
     convertData() {
         // convert data from server to data for ResourceView
         // array of arrays
-        return this.state.data;
+
+        var data = [];
+        for (var i = 0; i < this.state.data.length; i++) {
+            data.push(this.itemAsArray(this.state.data[i]));
+        }
+
+        return data;
+    }
+}
+
+class InventoryView extends BaseView {
+    constructor(props) {
+        super(props);
+
+        this.view = React.createRef();
     }
 
+    itemAsArray(item) {
+        return [
+            item.id,
+            item.name,
+            item.category,
+            item.monthlyCost,
+            item.amount
+        ];
+    }
+
+    editItem(item) {
+        // edit item
+        // overwrite this function
+        console.log("Edit item " + item);
+    }
+
+    removeItem(item) {
+        // remove item
+        // overwrite this function
+        console.log("Remove item: " + item);
+    }
+
+
     render() {
+
+        let costMonthly = 0;
+        let costTotal = 0;
+
+        let budgetMonthly = 1000;
+
+
+        for (let i = 0; i < this.state.data.length; i++) {
+            costMonthly += this.state.data[i].monthlyCost * this.state.data[i].amount;
+            costTotal += this.state.data[i].cost * this.state.data[i].amount;
+        }
+
+        // background color, 0%: green, 100%: red
+        let hueStart = 120;
+        let hueEnd = 0;
+        let hue = hueStart + (hueEnd - hueStart) * Math.min(costMonthly / budgetMonthly, 1.0);
+        let color = "hsl(" + hue + ", 80%, 60%, 0.6)";
+
         return (
-            <ResourceView
-                header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
-                data={this.convertData()}
-                buttons={[
-                    {
-                        text: "Hinzufügen",
-                        onClick: (item) => { console.log(item); }
-                    },
-                    {
+            <div className="resourceContainer">
+                <div className="resourceViewHeader">
+                    {budgetMonthly > 0 ?
+                        <div className="costMonthly" style={{ backgroundColor: color }}>
+                            {costMonthly}€ von {budgetMonthly}€ / Monat
+                        </div>
+                        :
+                        <div className="costMonthly">
+                            {costMonthly}€ / Monat
+                        </div>
+                    }
+                    <div className="costTotal">
+                        {costTotal}€ Inventar
+                    </div>
+                </div>
+                <ResourceView
+                    ref={this.view}
+                    header={["Name", "Kategorie", "Kosten/Monat", "Anzahl"]}
+                    data={this.convertData()}
+                    buttons={[{
                         text: "Bearbeiten",
-                        onClick: (item) => { console.log(item); }
+                        onClick: (item) => {
+                            this.view.current.showDialog(<EditItemPanel
+                                title="Bearbeiten"
+                                item={item}
+                                getItem={this.getItemFromId.bind(this)}
+                                buttons={[
+                                    {
+                                        text: "Abbrechen",
+                                        onClick: (item) => { this.view.current.hideDialog(); }
+                                    },
+                                    {
+                                        text: "Bestätigen",
+                                        onClick: (item) => {
+                                            this.editItem(item);
+                                            this.view.current.hideDialog();
+                                        }
+                                    }
+                                ]} />);
+                        }
                     },
                     {
                         text: "Entfernen",
-                        onClick: (item) => { console.log(item); }
+                        onClick: (item) => { this.removeItem(this.getItemFromId(item[0])); }
                     }
-                ]} />
+                    ]} />
+            </div>
         );
     }
 }
 
-class CatalogView extends React.Component {
+class PlannedView extends BaseView {
     constructor(props) {
         super(props);
-        this.state = {
-            data: []
-        };
+
+        this.view = React.createRef();
     }
 
-    async componentDidMount() {
-        // load data from server
+    itemAsArray(item) {
+        return [
+            item.id,
+            item.name,
+            item.category,
+            item.cost,
+            item.monthlyCost,
+            item.amount
+        ];
     }
 
-    convertData() {
-        // convert data from server to data for ResourceView
-        // array of arrays
-        return this.state.data;
+    addItem(item) {
+        // add item to inventory
+        // overwrite this function with api call
+        console.log("add item", item);
+    }
+
+    removeItem(item) {
+        // remove item from planned items
+        // overwrite this function with api call
+        console.log("remove item", item);
+    }
+
+    editItem(item) {
+        // edit item in planned items
+        // overwrite this function with api call
+        console.log("edit item", item);
+    }
+
+
+
+    render() {
+
+        let costMonthly = 0;
+        let costTotal = 0;
+
+        let budgetMonthly = 1000;
+        let budgetItems = 10000;
+
+
+        for (let i = 0; i < this.state.data.length; i++) {
+            costMonthly += this.state.data[i].monthlyCost * this.state.data[i].amount;
+            costTotal += this.state.data[i].cost * this.state.data[i].amount;
+        }
+
+        budgetMonthly -= costMonthly;
+        if (budgetMonthly < 0) {
+            budgetMonthly = 0;
+        }
+
+        // background color, 0%: green, 100%: red
+        let hueStart = 120;
+        let hueEnd = 0;
+        let hue = hueStart + (hueEnd - hueStart) * Math.min(budgetMonthly > 0 ? (costMonthly / budgetMonthly) : 1.0, 1.0);
+        let color = "hsl(" + hue + ", 80%, 60%, 0.6)";
+
+        let hue2 = hueStart + (hueEnd - hueStart) * Math.min(costTotal / budgetItems, 1.0);
+        let color2 = "hsl(" + hue2 + ", 80%, 60%, 0.6)";
+
+
+        return (
+            <div className="resourceContainer">
+                <div className="resourceViewHeader">
+                    {budgetMonthly > 0 ?
+                        <div className="costMonthly" style={{ backgroundColor: color }}>
+                            {costMonthly}€ von {budgetMonthly}€ / Monat
+                        </div>
+                        :
+                        <div className="costMonthly">
+                            {costMonthly}€ / Monat
+                        </div>
+                    }
+                    <div className="costTotal" style={{ backgroundColor: color2 }}>
+                        {costTotal}€ von {budgetItems}€ geplant
+                    </div>
+                </div>
+                <ResourceView
+                    ref={this.view}
+                    header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
+                    data={this.convertData()}
+                    buttons={[
+                        {
+                            text: "Hinzufügen",
+                            onClick: (item) => {
+                                this.view.current.showDialog(<EditItemPanel
+                                    title="Hinzufügen"
+                                    item={item}
+                                    getItem={this.getItemFromId.bind(this)}
+                                    buttons={[
+                                        {
+                                            text: "Abbrechen",
+                                            onClick: (item) => { this.view.current.hideDialog(); }
+                                        },
+                                        {
+                                            text: "Bestätigen",
+                                            onClick: (item) => {
+                                                this.addItem(item);
+                                                this.view.current.hideDialog();
+                                            }
+                                        }
+                                    ]} />);
+                            }
+                        },
+                        {
+                            text: "Bearbeiten",
+                            onClick: (item) => {
+                                this.view.current.showDialog(<EditItemPanel
+                                    title="Bearbeiten"
+                                    item={item}
+                                    getItem={this.getItemFromId.bind(this)}
+                                    buttons={[
+                                        {
+                                            text: "Abbrechen",
+                                            onClick: (item) => { this.view.current.hideDialog(); }
+                                        },
+                                        {
+                                            text: "Bestätigen",
+                                            onClick: (item) => {
+                                                this.editItem(item);
+                                                this.view.current.hideDialog();
+                                            }
+                                        }
+                                    ]} />);
+                            }
+                        },
+                        {
+                            text: "Entfernen",
+                            onClick: (item) => { this.removeItem(this.getItemFromId(item[0])); }
+                        }
+                    ]} />
+            </div>
+        );
+    }
+}
+
+class CatalogView extends BaseView {
+    constructor(props) {
+        super(props);
+
+        this.view = React.createRef();
+
+        this.state.data = [
+            new CatalogItem(1, "laptop", CATEGORIES.Hardware, 2000, 0, "A laptop", 5),
+            new CatalogItem(2, "VR headset", CATEGORIES.Hardware, 500, 0, "A VR headset", 2)
+        ];
+    }
+
+
+    itemAsArray(item) {
+        return [item.id, item.name, item.category, item.cost, item.monthlyCost, item.amount];
+    }
+
+    planItem(item) {
+        // api call for planning item
+        console.log("plan item");
+        console.log(item);
+    }
+
+    addItem(item) {
+        // api call for adding item
+        console.log("add item");
+        console.log(item);
+    }
+
+
+    render() {
+
+        return (
+            <div className="resourceContainer">
+                <ResourceView
+                    ref={this.view}
+                    header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
+                    data={this.convertData()}
+                    buttons={[
+                        {
+                            text: "Hinzufügen",
+                            onClick: (item) => {
+                                this.view.current.showDialog(<EditItemPanel
+                                    title="Hinzufügen"
+                                    item={item}
+                                    getItem={this.getItemFromId.bind(this)}
+                                    buttons={[
+                                        {
+                                            text: "Abbrechen",
+                                            onClick: (item) => { this.view.current.hideDialog(); }
+                                        },
+                                        {
+                                            text: "Bestätigen",
+                                            onClick: (item) => {
+                                                this.addItem(item);
+                                                this.view.current.hideDialog();
+                                            }
+                                        }
+                                    ]} />);
+                            }
+                        },
+                        {
+                            text: "Planen",
+                            onClick: (item) => {
+                                this.view.current.showDialog(<EditItemPanel
+                                    title="Planen"
+                                    item={item}
+                                    getItem={this.getItemFromId.bind(this)}
+                                    buttons={[
+                                        {
+                                            text: "Abbrechen",
+                                            onClick: (item) => { this.view.current.hideDialog(); }
+                                        },
+                                        {
+                                            text: "Bestätigen",
+                                            onClick: (item) => {
+                                                this.planItem(item);
+                                                this.view.current.hideDialog();
+                                            }
+                                        }]} />);
+                            }
+                        }
+
+                    ]} />
+            </div>
+        );
+    }
+}
+
+class ProgressBar extends React.Component {
+    constructor(props) {
+        super(props);
+
     }
 
     render() {
-        return (
-            <ResourceView
-                header={["Name", "Kategorie", "Kosten", "Kosten/Monat", "Anzahl"]}
-                data={this.convertData()}
-                buttons={[
-                    {
-                        text: "Hinzufügen",
-                        onClick: (item) => { console.log(item); }
-                    },
-                    {
-                        text: "Planen",
-                        onClick: (item) => { console.log(item); }
-                    }
+        let colorStart = "#aaaa00";
+        let colorEnd = "#4422dd";
 
-                ]} />
+        // mix color based on progress
+        let color = colorEnd;
+
+
+        return (
+            <div className="progressBar">
+                <div className="progressBarFill" style={{ width: this.props.progress + "%", backgroundColor: color }}></div>
+            </div>
         );
     }
 }
+
+class ProgressCircle extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+    render() {
+        let levels = this.props.levels;
+        let level = 0;
+        for (let i = 0; i < levels.length; i++) {
+            if (this.props.progress >= levels[i]) {
+                level = i + 1;
+            }
+        }
+        // progress from current to next level
+        let prog = this.props.progress;
+        if (level > 0) {
+            prog = (this.props.progress - levels[level - 1]) / (levels[level] - levels[level - 1]) * 100.0;
+        } else {
+            prog = this.props.progress / levels[level] * 100.0;
+        }
+        if (level >= levels.length) {
+            prog = 100;
+        }
+
+        // color from red to blue
+        let startHue = 0;
+        let endHue = 240;
+
+        let hue = startHue + (endHue - startHue) * prog / 100.0;
+
+        let color = "hsl(" + hue + ", 80%, 60%, 1.0)";
+        let bgColor = "hsl(" + hue + ", 30%, 60%, 0.2)";
+
+        let glowColor = "hsl( 63, 98%, 37%)";
+        let glowStrength = level / levels.length * 100;
+
+        // create svg path of hollow circle
+        const thickness = 4;
+
+        return (
+            <div className="progressCircle">
+                <svg viewBox="0 0 36 36" >
+                    <path className="progressCircleFill" d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" strokeWidth={thickness} stroke={color} strokeDasharray={prog + " " + (100 - prog)} />
+                    
+                    <circle className="progressCircleBackground" cx="18" cy="18" r="15.9155" fill="none" strokeWidth={thickness} stroke={bgColor} />
+                    
+
+                </svg>
+                <div className="progressCircleInnerText">
+                    Level {level}
+                </div>
+                <div className="progressCircleText">
+                    {this.props.name}
+                </div>
+            </div>
+        );
+    }
+}
+
 
 class OverviewView extends React.Component {
 
@@ -342,9 +986,39 @@ class OverviewView extends React.Component {
     }
 
     render() {
+
+        const hardwareLevels = [ 10, 25, 50, 100];
+        const softwareLevels = [ 10, 25, 50, 100];
+        const serviceLevels = [ 10, 25, 50, 100];
+
+        let hardwareCount = 27;
+        let softwareCount = 3;
+        let serviceCount = 12;
+
         return (
             <div className="overviewView">
-                <h1>TODO: overview</h1>
+                <div className="mainProgress">
+                    <ProgressBar progress={50} />
+                </div>
+                <div className="overviewRow">
+                    <div className="costOverview">
+                        1000€ / Monat
+                    </div>
+                    <div className="costOverview">
+                        10000€ Inventar
+                    </div>
+                    <div className="costOverview">
+                        2000€ Geplant
+                    </div>
+                    <div className="costOverview">
+                        -1000€ Budget
+                    </div>
+                </div>
+                <div className="overviewRow">
+                    <ProgressCircle progress={hardwareCount} name={"Hardware"} levels={hardwareLevels} />
+                    <ProgressCircle progress={softwareCount} name={"Software"} levels={softwareLevels} />
+                    <ProgressCircle progress={serviceCount} name={"Service"} levels={serviceLevels} />
+                </div>
                 <div>
                     <h2>Hardware progress</h2>
                     <h2>Software progress</h2>
