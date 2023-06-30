@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import "./networkTable.css";
 import { Table } from "./components/Table";
 import { Modal } from "./components/Modal";
 
@@ -41,7 +42,7 @@ function NetworkTable() {
     };
 
     return (
-        <div className="NetworkMap">
+        <div className={"tabelle"}>
             <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
             <button onClick={() => setModalOpen(true)} className="btn">
                 Add
