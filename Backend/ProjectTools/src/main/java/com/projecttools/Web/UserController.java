@@ -1,6 +1,7 @@
 package com.projecttools.Web;
 
 import com.projecttools.models.*;
+import com.projecttools.request.NetworkRequest;
 import com.projecttools.request.UserResourceRequest;
 import com.projecttools.service.ICategoryService;
 import com.projecttools.service.INetworkService;
@@ -55,39 +56,39 @@ public class UserController {
     }
 
     @PostMapping("/addNetworksNeeded")
-    public User addNetworksNeeded(@RequestBody List<Network> networksNeeded) {
+    public User addNetworksNeeded(@RequestBody List<NetworkRequest> networksNeeded) {
         String email = Untis.getUserName();
         return this._userService.AddNetworksNeeded(email, networksNeeded);
     }
 
     @PostMapping("/addNetworksAvailable")
-    public User addNetworksAvailable(@RequestBody List<Network> networksAvailable) {
+    public User addNetworksAvailable(@RequestBody List<NetworkRequest> networksAvailable) {
         String email = Untis.getUserName();
         return this._userService.AddNetworksAvailable(email, networksAvailable);
     }
 
-
     @GetMapping("networksAvailable")
     public List<Network> getUserNetworksAvailable(){
         String email = Untis.getUserName();
-        return _userService.GetNetworksAvailable(email).getNetworksAvailable();
+        return _userService.GetNetworksAvailable(email);
     }
 
-    @GetMapping("networksNeeded")
+    @GetMapping("/networksNeeded")
     public List<Network> getUserNetworksNeeded(){
         String email = Untis.getUserName();
-        return _userService.GetNetworksNeeded(email).getNetworksNeeded();
+        return _userService.GetNetworksNeeded(email);
     }
 
     @GetMapping("resourceAvailable")
     public List<UserResources> getUserResourceAvailable(){
         String email = Untis.getUserName();
-        return _userService.GetUserResourcesAvailable(email).getResourcesAvailable();
+        return _userService.GetUserResourcesAvailable(email);
     }
+
     @GetMapping("resourceNeeded")
     public List<UserResources> getUserResourceNeeded(){
         String email = Untis.getUserName();
-        return _userService.GetUserResourcesAvailable(email).getResourcesNeeded();
+        return _userService.GetUserResourcesAvailable(email);
     }
 
 }

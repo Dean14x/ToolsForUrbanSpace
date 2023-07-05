@@ -2,6 +2,14 @@ version: '3.6'
 
 services:
 
+
+  backend:
+    container_name: ProjectTools
+    build:
+      context: .
+    depends_on:
+      - db
+
   db:
     image: 'mysql:8'
     ports:

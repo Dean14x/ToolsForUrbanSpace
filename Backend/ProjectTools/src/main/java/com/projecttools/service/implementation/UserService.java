@@ -3,6 +3,7 @@ package com.projecttools.service.implementation;
 import com.projecttools.models.*;
 import com.projecttools.repository.ResourceRepo;
 import com.projecttools.repository.UserRepository;
+import com.projecttools.request.NetworkRequest;
 import com.projecttools.request.UserResourceRequest;
 import com.projecttools.service.IUserService;
 import com.projecttools.utils.Untis;
@@ -33,9 +34,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User GetUserResourcesAvailable(String email) {
+    public List<UserResources> GetUserResourcesAvailable(String email) {
         User user = _userRepo.findUserByEmail(email);
-        return _userRepo.findByIdWithresourcesAvailable(user.getId());
+        return user.getResourcesAvailable() == null ? new ArrayList<>() : user.getResourcesAvailable();
     }
 
     @Override
@@ -45,15 +46,16 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User GetNetworksAvailable(String email) {
+    public List<Network> GetNetworksAvailable(String email) {
         User user = _userRepo.findUserByEmail(email);
-        return _userRepo.findByIdWithnetworksAvailable(user.getId());
+        return user.getNetworksAvailable() == null ? new ArrayList<>() : user.getNetworksAvailable();
     }
 
     @Override
-    public User GetNetworksNeeded(String email) {
+    public List<Network> GetNetworksNeeded(String email) {
         User user = _userRepo.findUserByEmail(email);
-        return _userRepo.findByIdWithnetworksNeeded(user.getId());
+        //User user1= _userRepo.findByIdWithnetworksNeeded(user.getId());
+        return user.getNetworksNeeded() == null ? new ArrayList<>() : user.getNetworksNeeded();
     }
 
     @Override
@@ -81,7 +83,7 @@ public class UserService implements IUserService {
     public User AddResourcesAvailable(List<UserResourceRequest> resourceAvailable) {
         User user = _userRepo.findUserByEmail(Untis.getUserName());
         if (user != null) {
-            List<UserResources> resourcesAvailble=new ArrayList<>();
+            List<UserResources> resourcesAvailble = new ArrayList<>();
             resourceAvailable.forEach(userResourceRequest -> {
                 Resource resource = resourceRepo.findById(userResourceRequest.getResourceId()).get();
                 resourcesAvailble.add(UserResourceRequest.UserResourceRequestToResource(userResourceRequest, user, resource));
@@ -97,7 +99,7 @@ public class UserService implements IUserService {
     public User AddResourcesNeeded(List<UserResourceRequest> resourcesNeeded) {
         User user = _userRepo.findUserByEmail(Untis.getUserName());
         if (user != null) {
-            List<UserResources> resourcesNedded=new ArrayList<>();
+            List<UserResources> resourcesNedded = new ArrayList<>();
             resourcesNeeded.forEach(userResourceRequest -> {
                 Resource resource = resourceRepo.findById(userResourceRequest.getResourceId()).get();
                 resourcesNedded.add(UserResourceRequest.UserResourceRequestToResource(userResourceRequest, user, resource));
@@ -110,19 +112,21 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User AddNetworksNeeded(String email, List<Network> networksNeeded) {
+    public User AddNetworksNeeded(String email, List<NetworkRequest> networksNeeded) {
         User user = _userRepo.findUserByEmail(email);
         if (user != null) {
-            user.setNetworksNeeded(networksNeeded);
+            user.setNetworksNeeded(NetworkRequest.networkRequestToNetwork(networksNeeded));
+            _userRepo.save(user);
         }
         return null;
     }
 
     @Override
-    public User AddNetworksAvailable(String email, List<Network> networksAvailable) {
+    public User AddNetworksAvailable(String email, List<NetworkRequest> networksAvailable) {
         User user = _userRepo.findUserByEmail(email);
         if (user != null) {
-            user.setNetworksAvailable(networksAvailable);
+            user.setNetworksAvailable(NetworkRequest.networkRequestToNetwork(networksAvailable));
+            _userRepo.save(user);
         }
         return null;
     }
