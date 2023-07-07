@@ -4,6 +4,7 @@ com\projecttools\models\Resource.class
 com\projecttools\models\User.class
 com\projecttools\request\ResourceRequest.class
 com\projecttools\service\ICategoryService.class
+com\projecttools\utils\Untis.class
 com\projecttools\repository\CategoryRepository.class
 com\projecttools\request\CategoryRequest.class
 com\projecttools\service\implementation\UserService.class
@@ -26,11 +27,13 @@ com\projecttools\service\IResourceService.class
 com\projecttools\exception\NotFoundException.class
 com\projecttools\request\NetworkRequest.class
 com\projecttools\filter\JWTTokenValidatorFilter$Authorities.class
+com\projecttools\repository\ResourceRepo.class
 com\projecttools\request\UserCredentials.class
 com\projecttools\Web\UserController.class
 com\projecttools\config\ApiDoc.class
 com\projecttools\service\AdminService.class
 com\projecttools\Web\AuthController.class
+com\projecttools\request\UserResourceRequest.class
 com\projecttools\repository\ResourceRepository.class
 com\projecttools\config\Security$1.class
 com\projecttools\models\UserResources.class
