@@ -1,12 +1,12 @@
 import React from "react";
 import "./homepage.css";
-import Vektor1 from "./images/Vector1.png";
-import Vektor2 from "./images/Vector2.png";
-import Ellipse1 from "./images/Ellipse1.png";
+// import Vektor1 from "./images/Vector1.png";
+// import Vektor2 from "./images/Vector2.png";
+// import Ellipse1 from "./images/Ellipse1.png";
 import HomepageBackground from "./images/HomepageBackground.png";
-import logo2 from "./logos/logo2.png";
-import NetworkMap from "./NetworkMap";
-import Login from "./Login";
+// import logo2 from "./logos/logo2.png";
+// import NetworkMap from "./NetworkMap";
+// import Login from "./Login";
 import { Link } from "react-router-dom";
 
 // Homepage component
