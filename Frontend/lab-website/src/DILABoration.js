@@ -81,6 +81,8 @@ class DILABoration extends React.Component {
           <br />
           Mihail Petrushevski
           <br />
+          Aref Obaid
+          <br />
           <h4>gefördert durch</h4>
           <div id="logos2">
             <a
