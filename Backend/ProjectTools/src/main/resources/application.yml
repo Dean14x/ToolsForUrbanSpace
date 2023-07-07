@@ -1,15 +1,16 @@
 spring:
 
   datasource:
-    url: jdbc:postgresql://dpg-ci1enhe7avjfjamllik0-a.frankfurt-postgres.render.com/dbprojecttools
-    username: toastman
-    password: 0DsMh2DCWfrZUe11sAVtQbFaJ6pRMH1t
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3309/tool
+    username: root
+    password: db#1234
+
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
 
 server:
   error:

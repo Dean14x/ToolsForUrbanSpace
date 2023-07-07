@@ -8,6 +8,7 @@ D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\jav
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\config\ApiDoc.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\request\ResourceRequest.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\repository\UserRepository.java
+D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\utils\Untis.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\Web\UserController.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\request\UserCredentials.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\service\IUserService.java
@@ -22,6 +23,7 @@ D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\jav
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\repository\CategoryRepository.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\request\NetworkRequest.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\models\User.java
+D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\request\UserResourceRequest.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\ProjectToolsApplication.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\exception\ExceptionsHandler.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\filter\GeneratedTokenFilter.java
@@ -29,6 +31,7 @@ D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\jav
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\repository\ResourceRepository.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\repository\NetworkRepository.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\service\implementation\NetworkService.java
+D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\repository\ResourceRepo.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\request\CategoryRequest.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\Web\TestController.java
 D:\semster 4\Projekt-teil-3\ToolsForUrbanSpace\Backend\ProjectTools\src\main\java\com\projecttools\service\IResourceService.java

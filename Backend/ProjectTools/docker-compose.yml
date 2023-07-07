@@ -8,13 +8,18 @@ services:
     build:
       context: .
     depends_on:
-      - db
+      - db_Mysql
+    ports:
+      - 8081:8080
+    command: tail -f /dev/null
 
-  db:
+  db_Mysql:
+    container_name: ProjectToolsDatabase
     image: 'mysql:8'
     ports:
       - 3309:3306
     environment:
       MYSQL_DATABASE : tool
       MYSQL_ROOT_PASSWORD : db#1234
+      command: tail -f /dev/null
 
