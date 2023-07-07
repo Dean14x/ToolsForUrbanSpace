@@ -79,7 +79,7 @@ class DILABoration extends React.Component {
           <br />
           Vladimir Elistratov
           <br />
-          {/* Michael -_________ */}
+          Mihail Petrushevski
           <br />
           <h4>gefördert durch</h4>
           <div id="logos2">
