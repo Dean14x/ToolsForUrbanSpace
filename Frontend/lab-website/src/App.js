@@ -36,23 +36,21 @@ class App extends React.Component {
     return "https://toolsforurbanspace.onrender.com/";
   }
 
-  async apiRequest(method, endpoint, body, token=null) {
-    if(endpoint.startsWith("/")) endpoint = endpoint.substring(1, endpoint.length);
+  async apiRequest(method, endpoint, body, token = null) {
+    if (endpoint.startsWith("/")) endpoint = endpoint.substring(1, endpoint.length);
     let url = this.getAPIAddress() + endpoint;
     let options = {
       redirect: "follow",
       method: method,
       // CORS Access-Control-Allow-Origin
+
       /*
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-
-      }*/
+        'Content-Type': 'application/json'
+      }
+      */
     };
-    if(token) {
+    if (token) {
       options.headers = {
         'Authorization': 'Bearer ' + token
       };
@@ -81,6 +79,8 @@ class App extends React.Component {
     }
   }
 
+
+
   async login(username, password) {
     let response = await this.apiRequest("POST", "auth/login", {
       username: username,
@@ -98,7 +98,7 @@ class App extends React.Component {
     let token = await response.text();
     //console.log(text);
 
-    
+
 
     // get user
     response = await this.apiRequest("GET", "/auth/getUser", null, token);
@@ -106,7 +106,7 @@ class App extends React.Component {
     console.log(user);
 
     user.token = token;
-    
+
     this.setUser(user);
 
     return {
@@ -121,8 +121,14 @@ class App extends React.Component {
       name: username,
       password: password,
       email: email,
-      budget: 10000
+      budget: 10000.0
     });
+    /*
+    "email": "strihn@g",
+    "password": "string",
+    "budget": "420.0",
+    "name": "strinyog"
+  */
 
     if (response.status !== 200) {
       return {
@@ -163,7 +169,7 @@ class App extends React.Component {
     return (
       <div className="appRoot">
         <BrowserRouter>
-        {redirect ? <Navigate to={redirect} /> : null}
+          {redirect ? <Navigate to={redirect} /> : null}
           <Navbar app={this} user={this.state.user} />
 
           <Routes>
