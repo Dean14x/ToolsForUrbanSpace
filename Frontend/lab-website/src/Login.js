@@ -231,31 +231,12 @@ class LoginPanel extends React.Component {
         // call api to sign up
         let username = this.usernameField.current.getVal();
         let password = this.passwordField.current.getVal();
-        // let res = await fetch("http://localhost:5000/login", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         username: username,
-        //         password: password
-        //     })
-        // });
-        // let data = await res.json();
-        // console.log(data);
+        
+        let response = await this.props.app.login(username, password);
 
-        if (username === "admin" && password === "admin") {
-            this.props.login.setState({ loggedIn: true });
-            this.props.app.setUser("admin", "some session");
-            return;
-        }
-        if (username === "user" && password === "user") {
-            this.props.login.setState({ loggedIn: true });
-            this.props.app.setUser("user", "some session");
-            return;
-        }
+        
         //this.usernameField.current.setFeedback("Invalid username or password");
-        this.passwordField.current.setFeedback("Invalid username or password");
+        this.passwordField.current.setFeedback(response.message);
         return;
 
         // on success, redirect to overview
@@ -314,15 +295,17 @@ class SignupPanel extends React.Component {
         let username = this.usernameField.current.getVal();
         let email = this.emailField.current.getVal();
         let password = this.passwordField.current.getVal();
-        // call api to sign up
-        // let res = await fetch("http://localhost:5000/signup", {
-        // ...
-        // });
+        
+        let response = await this.props.app.signup(username, password, email);
+        if (response.success) {
+            this.setFeedback("Signup successful");
+            this.props.login.setState({ loggedIn: true });
+            this.props.app.setUser(username, "some session");
+        } else {
+            this.setFeedback(response.message);
+        }
 
-        // let data = await res.json();
-
-        this.props.login.setState({ loggedIn: true });
-        this.props.app.setUser(username, "some session");
+        
         return;
 
         // on success, redirect to overview

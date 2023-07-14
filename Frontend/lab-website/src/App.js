@@ -31,6 +31,67 @@ class App extends React.Component {
     };
   }
 
+  getAPIAddress() {
+    return "https://toolsforurbanspace.onrender.com/";
+  }
+
+  async apiRequest(method, endpoint, body) {
+    if(endpoint.startsWith("/")) endpoint = endpoint.substring(1, endpoint.length);
+    let url = this.getAPIAddress() + endpoint;
+    let options = {
+      redirect: "follow",
+      method: method,
+      // CORS Access-Control-Allow-Origin
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+
+      }
+    };
+    if (body) {
+      var formData = new FormData();
+      for (let key in body) {
+        formData.append(key, body[key]);
+      }
+      options.body = formData;
+    }
+    let response = await fetch(url, options);
+    return response;
+  }
+
+  async login(username, password) {
+    let response = await this.apiRequest("POST", "auth/login", {
+      username: username,
+      password: password,
+    });
+    let json = await response.json();
+    console.log(json);
+
+    return {
+      success: response.status === 200,
+      message: "hello"
+    };
+  }
+
+  async register(username, password, email) {
+    let response = await this.apiRequest("POST", "auth/register", {
+      name: username,
+      password: password,
+      email: email,
+      budget: 10000
+    });
+    let json = await response.json();
+    console.log(json);
+
+    return {
+      success: response.status === 200,
+      message: "hello"
+    };
+  }
+
+
   getUsername() {
     return this.state.username;
   }
