@@ -5,9 +5,11 @@ import com.projecttools.exception.NotFoundException;
 import com.projecttools.models.User;
 import com.projecttools.repository.UserRepository;
 import com.projecttools.request.UserCredentials;
+import com.projecttools.utils.Untis;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,5 +51,9 @@ public class AuthService {
     public void registerUser(UserCredentials userCredentials) {
         userCredentials.setPassword(bCryptPasswordEncoder.encode( userCredentials.getPassword()));
         useRepository.save(UserCredentials.userCreditingToUser(userCredentials));
+    }
+
+    public User getUser(Authentication authentication) {
+        return useRepository.findByEmail(Untis.getUserName()).get();
     }
 }

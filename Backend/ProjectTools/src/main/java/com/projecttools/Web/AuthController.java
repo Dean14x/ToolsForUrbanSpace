@@ -1,9 +1,11 @@
 package com.projecttools.Web;
 
+import com.projecttools.models.User;
 import com.projecttools.request.UserCredentials;
 import com.projecttools.service.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -26,5 +28,10 @@ public class AuthController {
     public void register(@RequestBody UserCredentials userCredentials){
         userCredentials.setAdmin(false);
         authService.registerUser(userCredentials);
+    }
+
+    @GetMapping("/getUser")
+    public User getUSer(Authentication authentication) {
+        return authService.getUser(authentication);
     }
 }
