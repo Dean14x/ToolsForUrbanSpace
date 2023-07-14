@@ -139,6 +139,7 @@ class PasswordFeedbackField extends FeedbackField {
     setVal(val) {
         this.props.setMyVal(val);
         super.setVal(val);
+
     }
 
 
@@ -265,6 +266,9 @@ class SignupPanel extends React.Component {
         this.emailField = React.createRef();
         this.passwordField = React.createRef();
         this.passwordMatchField = React.createRef();
+        let { get, set } = createGetterSetterPair();
+        this.pwGetter = get;
+        this.pwSetter = set;
     }
 
     setFeedback(val) {
@@ -296,7 +300,7 @@ class SignupPanel extends React.Component {
         let email = this.emailField.current.getVal();
         let password = this.passwordField.current.getVal();
         
-        let response = await this.props.app.signup(username, password, email);
+        let response = await this.props.app.register(username, password, email);
         if (response.success) {
             this.setFeedback("Signup successful");
             this.props.login.setState({ loggedIn: true });
@@ -313,7 +317,8 @@ class SignupPanel extends React.Component {
 
     render() {
 
-        let { get, set } = createGetterSetterPair();
+        let get = this.pwGetter;
+        let set = this.pwSetter;
 
         return (
             <div className="login-signup-controls-container">

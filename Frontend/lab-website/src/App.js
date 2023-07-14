@@ -25,7 +25,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      user: null,
       session: "",
       count: 0,
     };
@@ -76,7 +76,7 @@ class App extends React.Component {
   }
 
   async register(username, password, email) {
-    let response = await this.apiRequest("POST", "auth/register", {
+    let response = await this.apiRequest("POST", "auth/regis", {
       name: username,
       password: password,
       email: email,
@@ -92,12 +92,12 @@ class App extends React.Component {
   }
 
 
-  getUsername() {
-    return this.state.username;
+  getUser() {
+    return this.state.user;
   }
 
-  setUser(username, session) {
-    this.setState({ username: username, session: session });
+  setUser(user) {
+    this.setState({ user: user });
   }
 
   render() {
