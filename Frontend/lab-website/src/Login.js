@@ -235,13 +235,18 @@ class LoginPanel extends React.Component {
         
         let response = await this.props.app.login(username, password);
 
+        if(response.success) {
+            // return to home page
+            this.props.login.setState({ loggedIn: true });
+        }
+
+
         
         //this.usernameField.current.setFeedback("Invalid username or password");
         this.passwordField.current.setFeedback(response.message);
-        return;
+        
 
-        // on success, redirect to overview
-        this.props.login.setState({ loggedIn: true });
+        
     };
 
     render() {
@@ -361,7 +366,7 @@ class Login extends React.Component {
 
         return (
             <div className="login-container">
-                {this.state.loggedIn ? <Navigate to="/overview" /> : null}
+                {this.state.loggedIn ? <Navigate to="/resources" /> : null}
                 <div className="login-signup-switch-container">
                     <button className={this.state.display===0? "active" : "inactive"} onClick={() => this.setState({ display: 0 })}>
                         Login
