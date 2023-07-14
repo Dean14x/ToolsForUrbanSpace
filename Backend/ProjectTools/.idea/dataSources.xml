@@ -15,5 +15,12 @@
       <jdbc-url>jdbc:mysql://localhost:3309/tool</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="toolsDatabase" uuid="4a2e6a86-52a2-4d2b-b8f9-40d0150176d8">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://gallant-aryabhata.82-165-0-147.plesk.page:3306/toolsDB</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
