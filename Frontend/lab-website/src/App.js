@@ -4,6 +4,7 @@ import Login from "./Login";
 import NetworkAnalysis from "./NetworkAnalysis";
 import NetworkMap from "./NetworkMap";
 import NetworkTable from "./NetworkTable";
+import NetworkRater from "./RateNetworks";
 
 import {
   ResourceChecker,
@@ -198,6 +199,7 @@ class App extends React.Component {
             <Route path="/impressum" element={<Impressum app={this} />} />
             <Route path="/datenschutz" element={<Datenschutz app={this} />} />
             <Route path="/DILAboration" element={<DILABoration app={this} />} />
+            <Route path="/rateNetworks" element={<NetworkRater app={this} />} />
           </Routes>
           <Footer app={this} />
         </BrowserRouter>
