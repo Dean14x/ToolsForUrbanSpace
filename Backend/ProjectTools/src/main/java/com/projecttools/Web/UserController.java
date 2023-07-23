@@ -1,15 +1,10 @@
 package com.projecttools.Web;
 
 import com.projecttools.models.*;
-import com.projecttools.request.NetworkRequest;
 import com.projecttools.request.UserResourceRequest;
-import com.projecttools.service.ICategoryService;
-import com.projecttools.service.INetworkService;
-import com.projecttools.service.IResourceService;
-import com.projecttools.service.IUserService;
-import com.projecttools.service.implementation.NetworkService;
-import com.projecttools.service.implementation.ResourceService;
+import com.projecttools.service.*;
 import com.projecttools.utils.Untis;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +22,14 @@ public class UserController {
 
     private ICategoryService categoryService;
 
-    public UserController(IUserService userService, INetworkService networkService, IResourceService resourceService, ICategoryService categoryService) {
+    private AdminService adminService;
+
+    public UserController(IUserService userService, INetworkService networkService, IResourceService resourceService, ICategoryService categoryService,AdminService adminService) {
         _userService = userService;
         _networkService = networkService;
         _resourceService = resourceService;
         this.categoryService = categoryService;
+        this.adminService=adminService;
     }
 
     @PostMapping("/deleteUser")
@@ -56,18 +54,18 @@ public class UserController {
     }
 
     @PostMapping("/addNetworksNeeded")
-    public User addNetworksNeeded(@RequestBody List<NetworkRequest> networksNeeded) {
+    public User addNetworksNeeded(@RequestParam UUID networksNeededId) {
         String email = Untis.getUserName();
-        return this._userService.AddNetworksNeeded(email, networksNeeded);
+        return this._userService.AddNetworksNeeded(email, networksNeededId);
     }
 
     @PostMapping("/addNetworksAvailable")
-    public User addNetworksAvailable(@RequestBody List<NetworkRequest> networksAvailable) {
+    public User addNetworksAvailable(@RequestParam UUID networksNeededId) {
         String email = Untis.getUserName();
-        return this._userService.AddNetworksAvailable(email, networksAvailable);
+        return this._userService.AddNetworksAvailable(email, networksNeededId);
     }
 
-    @GetMapping("networksAvailable")
+    @GetMapping("/networksAvailable")
     public List<Network> getUserNetworksAvailable(){
         String email = Untis.getUserName();
         return _userService.GetNetworksAvailable(email);
@@ -79,16 +77,29 @@ public class UserController {
         return _userService.GetNetworksNeeded(email);
     }
 
-    @GetMapping("resourceAvailable")
+    @GetMapping("/resourceAvailable")
     public List<UserResources> getUserResourceAvailable(){
         String email = Untis.getUserName();
-        return _userService.GetUserResourcesAvailable(email);
+        return _userService.getUserResourcesAvailable(email);
     }
 
-    @GetMapping("resourceNeeded")
+    @GetMapping("/resourceNeeded")
     public List<UserResources> getUserResourceNeeded(){
         String email = Untis.getUserName();
-        return _userService.GetUserResourcesAvailable(email);
+        return _userService.getResourcesNeeded(email);
+    }
+
+
+    @GetMapping("/resource")
+    @Operation(summary = "getAllResource ",description = "try to get All Resources")
+    public List<Resource> getAllResource(){
+        return adminService.getAllresource();
+    }
+
+    @GetMapping("networke")
+    @Operation(summary = "getAllNetworke ",description = "try to get All Networks")
+    public List<Network> getAllNetworke(){
+        return adminService.getAllNetworke();
     }
 
 }

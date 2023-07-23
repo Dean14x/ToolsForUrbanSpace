@@ -31,6 +31,7 @@ public class AuthService {
     }
 
     public String getToken(Map<String, String> authentication) {
+        String email=authentication.get("username");
         Optional<User> user = useRepository.findByEmail(authentication.get("username"));
         if (user.isPresent()&& bCryptPasswordEncoder.matches(authentication.get("password"),user.get().getPassword())) {
             String role = user.get().is_Admin() ? "admin" : "user";

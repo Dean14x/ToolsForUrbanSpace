@@ -40,8 +40,6 @@ public class AdminController {
         adminService.addCategory(categoryRequests);
     }
 
-
-
     @PostMapping("/addNetwork")
     public void addNetworks(@RequestBody List<NetworkRequest> networkRequest){
         adminService.addNetworks(networkRequest);

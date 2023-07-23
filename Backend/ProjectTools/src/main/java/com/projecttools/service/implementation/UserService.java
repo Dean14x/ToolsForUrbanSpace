@@ -1,6 +1,7 @@
 package com.projecttools.service.implementation;
 
 import com.projecttools.models.*;
+import com.projecttools.repository.NetworkRepository;
 import com.projecttools.repository.ResourceRepo;
 import com.projecttools.repository.UserRepository;
 import com.projecttools.request.NetworkRequest;
@@ -9,17 +10,21 @@ import com.projecttools.service.IUserService;
 import com.projecttools.utils.Untis;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService {
     private final UserRepository _userRepo;
     private ResourceRepo resourceRepo;
 
-    public UserService(UserRepository _userRepo, ResourceRepo resourceRepo) {
+
+    private NetworkRepository networkRepository;
+
+    public UserService(UserRepository _userRepo, ResourceRepo resourceRepo, NetworkRepository networkRepository) {
         this._userRepo = _userRepo;
         this.resourceRepo = resourceRepo;
+        this.networkRepository = networkRepository;
     }
 
     @Override
@@ -34,15 +39,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserResources> GetUserResourcesAvailable(String email) {
+    public List<UserResources> getUserResourcesAvailable(String email) {
         User user = _userRepo.findUserByEmail(email);
-        return user.getResourcesAvailable() == null ? new ArrayList<>() : user.getResourcesAvailable();
+        List<UserResources> resources = user.getResourcesAvailable();
+        return resources ;
     }
 
     @Override
-    public User GetResourcesNeeded(String email) {
+    public List<UserResources> getResourcesNeeded(String email) {
         User user = _userRepo.findUserByEmail(email);
-        return _userRepo.findByIdWithresourcesNeeded(user.getId());
+        List<UserResources> userResources=_userRepo.findByIdWithresourcesNeeded(user.getId()).getResourcesNeeded();
+        return userResources;
     }
 
     @Override
@@ -112,20 +119,26 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User AddNetworksNeeded(String email, List<NetworkRequest> networksNeeded) {
+    public User AddNetworksNeeded(String email, UUID networkId) {
         User user = _userRepo.findUserByEmail(email);
+        Network network = networkRepository.findById(networkId).get();
         if (user != null) {
-            user.setNetworksNeeded(NetworkRequest.networkRequestToNetwork(networksNeeded));
+            ArrayList arrayList = new ArrayList();
+            arrayList.add(network);
+            user.setNetworksNeeded(arrayList);
             _userRepo.save(user);
         }
         return null;
     }
 
     @Override
-    public User AddNetworksAvailable(String email, List<NetworkRequest> networksAvailable) {
+    public User AddNetworksAvailable(String email, UUID networksAvailableId) {
         User user = _userRepo.findUserByEmail(email);
+        Network network = networkRepository.findById(networksAvailableId).get();
         if (user != null) {
-            user.setNetworksAvailable(NetworkRequest.networkRequestToNetwork(networksAvailable));
+            ArrayList arrayList = new ArrayList();
+            arrayList.add(network);
+            user.setNetworksAvailable(arrayList);
             _userRepo.save(user);
         }
         return null;

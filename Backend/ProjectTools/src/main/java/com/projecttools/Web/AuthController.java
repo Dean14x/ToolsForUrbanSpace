@@ -20,13 +20,14 @@ public class AuthController {
     }
     @PostMapping("/login")
     @Operation(summary = "login user",description = "try to login")
-    public String logIn(@RequestParam Map<String,String> authentication) {
+    public String logIn(@RequestBody Map<String,String> authentication) {
        return authService.getToken(authentication);
     }
 
     @PostMapping("/regis")
+    @Operation(summary = "register user",description = "try to register")
     public void register(@RequestBody UserCredentials userCredentials){
-        userCredentials.setAdmin(false);
+        userCredentials.setAdmin(true);
         authService.registerUser(userCredentials);
     }
 
