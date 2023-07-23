@@ -4,7 +4,7 @@ import Login from "./Login";
 import NetworkAnalysis from "./NetworkAnalysis";
 import NetworkMap from "./NetworkMap";
 import NetworkTable from "./NetworkTable";
-import NetworkRater from "./RateNetworks";
+import { NetworkRater, MapView } from "./RateNetworks";
 
 import {
   ResourceChecker,

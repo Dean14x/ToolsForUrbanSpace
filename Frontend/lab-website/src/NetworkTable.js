@@ -3,6 +3,7 @@ import "./App.css";
 import "./networkTable.css";
 import { Table } from "./components/Table";
 import { Modal } from "./components/Modal";
+import { Link } from "react-router-dom";
 
 function NetworkTable() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -11,9 +12,9 @@ function NetworkTable() {
             name: "Name",
             type: "none",
             description: "Address",
-            email:"Email",
-            contact:"Contact",
-            rating:"Rating",
+            email: "Email",
+            contact: "Contact",
+            rating: "Rating",
         },
 
     ]);
@@ -43,10 +44,16 @@ function NetworkTable() {
 
     return (
         <div className={"tabelle"}>
+            <div className="networkTableButtons">
+                <button onClick={() => setModalOpen(true)} className="tableButton">
+                    Add
+                </button>
+                <Link className="tableButton" to="/rateNetworks">
+                    Netzwerk bewerten
+                </Link>
+            </div>
             <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
-            <button onClick={() => setModalOpen(true)} className="btn">
-                Add
-            </button>
+            
             {modalOpen && (
                 <Modal
                     closeModal={() => {
