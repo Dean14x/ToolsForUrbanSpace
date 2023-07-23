@@ -139,6 +139,7 @@ class PasswordFeedbackField extends FeedbackField {
     setVal(val) {
         this.props.setMyVal(val);
         super.setVal(val);
+
     }
 
 
@@ -231,35 +232,21 @@ class LoginPanel extends React.Component {
         // call api to sign up
         let username = this.usernameField.current.getVal();
         let password = this.passwordField.current.getVal();
-        // let res = await fetch("http://localhost:5000/login", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         username: username,
-        //         password: password
-        //     })
-        // });
-        // let data = await res.json();
-        // console.log(data);
+        
+        let response = await this.props.app.login(username, password);
 
-        if (username === "admin" && password === "admin") {
+        if(response.success) {
+            // return to home page
             this.props.login.setState({ loggedIn: true });
-            this.props.app.setUser("admin", "some session");
-            return;
         }
-        if (username === "user" && password === "user") {
-            this.props.login.setState({ loggedIn: true });
-            this.props.app.setUser("user", "some session");
-            return;
-        }
+
+
+        
         //this.usernameField.current.setFeedback("Invalid username or password");
-        this.passwordField.current.setFeedback("Invalid username or password");
-        return;
+        this.passwordField.current.setFeedback(response.message);
+        
 
-        // on success, redirect to overview
-        this.props.login.setState({ loggedIn: true });
+        
     };
 
     render() {
@@ -284,6 +271,9 @@ class SignupPanel extends React.Component {
         this.emailField = React.createRef();
         this.passwordField = React.createRef();
         this.passwordMatchField = React.createRef();
+        let { get, set } = createGetterSetterPair();
+        this.pwGetter = get;
+        this.pwSetter = set;
     }
 
     setFeedback(val) {
@@ -314,15 +304,17 @@ class SignupPanel extends React.Component {
         let username = this.usernameField.current.getVal();
         let email = this.emailField.current.getVal();
         let password = this.passwordField.current.getVal();
-        // call api to sign up
-        // let res = await fetch("http://localhost:5000/signup", {
-        // ...
-        // });
+        
+        let response = await this.props.app.register(username, password, email);
+        if (response.success) {
+            this.setFeedback("Signup successful");
+            this.props.login.setState({ loggedIn: true });
+            this.props.app.setUser(username, "some session");
+        } else {
+            this.setFeedback(response.message);
+        }
 
-        // let data = await res.json();
-
-        this.props.login.setState({ loggedIn: true });
-        this.props.app.setUser(username, "some session");
+        
         return;
 
         // on success, redirect to overview
@@ -330,7 +322,8 @@ class SignupPanel extends React.Component {
 
     render() {
 
-        let { get, set } = createGetterSetterPair();
+        let get = this.pwGetter;
+        let set = this.pwSetter;
 
         return (
             <div className="login-signup-controls-container">
@@ -373,7 +366,7 @@ class Login extends React.Component {
 
         return (
             <div className="login-container">
-                {this.state.loggedIn ? <Navigate to="/overview" /> : null}
+                {this.state.loggedIn ? <Navigate to="/resources" /> : null}
                 <div className="login-signup-switch-container">
                     <button className={this.state.display===0? "active" : "inactive"} onClick={() => this.setState({ display: 0 })}>
                         Login

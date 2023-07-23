@@ -16,7 +16,7 @@ import RatingNetworkAnalysis from "./RatingNetworkAnalysis";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import logo2 from "./logos/logo2.png";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Impressum from "./Impressum";
 import Datenschutz from "./Datenschutz";
 import DILABoration from "./DILABoration";
@@ -25,25 +25,152 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      user: null,
       session: "",
       count: 0,
+      redirect: null,
     };
   }
 
-  getUsername() {
-    return this.state.username;
+  getAPIAddress() {
+    return "https://toolsforurbanspace.onrender.com/";
   }
 
-  setUser(username, session) {
-    this.setState({ username: username, session: session });
+  async apiRequest(method, endpoint, body, token = null) {
+    if (endpoint.startsWith("/")) endpoint = endpoint.substring(1, endpoint.length);
+    let url = this.getAPIAddress() + endpoint;
+    let options = {
+      redirect: "follow",
+      method: method,
+      // CORS Access-Control-Allow-Origin
+
+      /*
+      headers: {
+        'Content-Type': 'application/json'
+      }
+      */
+    };
+    if (token) {
+      options.headers = {
+        'Authorization': 'Bearer ' + token
+      };
+    }
+
+    if (body) {
+      var formData = new FormData();
+      for (let key in body) {
+        formData.append(key, body[key]);
+      }
+      options.body = formData;
+    }
+    let response = await fetch(url, options);
+    return response;
+  }
+
+  _storeUser(user) {
+    localStorage.setItem("user", JSON.stringify(user));
+  }
+
+  _loadUser() {
+    let user = localStorage.getItem("user");
+    if (user) {
+      user = JSON.parse(user);
+      this.setUser(user);
+    }
+  }
+
+
+
+  async login(username, password) {
+    let response = await this.apiRequest("POST", "auth/login", {
+      username: username,
+      password: password,
+    });
+
+    if (response.status !== 200) {
+      return {
+        success: false,
+        message: "Falscher Benutzername oder Passwort",
+        status: response.status
+      };
+    }
+
+    let token = await response.text();
+    //console.log(text);
+
+
+
+    // get user
+    response = await this.apiRequest("GET", "/auth/getUser", null, token);
+    let user = await response.json();
+    console.log(user);
+
+    user.token = token;
+
+    this.setUser(user);
+
+    return {
+      success: response.status === 200,
+      message: "Login erfolgreich",
+      status: response.status
+    };
+  }
+
+  async register(username, password, email) {
+    let response = await this.apiRequest("POST", "auth/regis", {
+      name: username,
+      password: password,
+      email: email,
+      budget: 10000.0
+    });
+    /*
+    "email": "strihn@g",
+    "password": "string",
+    "budget": "420.0",
+    "name": "strinyog"
+  */
+
+    if (response.status !== 200) {
+      return {
+        success: false,
+        message: "Fehler beim Registrieren",
+        status: response.status
+      };
+    }
+
+    // automatic login
+    return await this.login(username, password);
+  }
+
+  async logout() {
+    this.setUser(null);
+    this.redirect("/");
+  }
+
+  redirect(path) {
+    this.setState({ redirect: path });
+  }
+
+
+  getUser() {
+    return this.state.user;
+  }
+
+  setUser(user) {
+    this.setState({ user: user });
+    this._storeUser(user);
   }
 
   render() {
+    let redirect = this.state.redirect;
+    if (redirect) {
+      this.setState({ redirect: null });
+    }
     return (
       <div className="appRoot">
         <BrowserRouter>
-          <Navbar app={this} />
+          {redirect ? <Navigate to={redirect} /> : null}
+          <Navbar app={this} user={this.state.user} />
 
           <Routes>
             <Route path="/" element={<Homepage app={this} />} />
