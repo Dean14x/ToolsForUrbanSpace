@@ -107,6 +107,11 @@ button:hover {
     margin: 20px;
 }
 
+.feedbackValue {
+    padding-top: 10px;
+    color: #EB7C61;
+}
+
 .feedback-input-container {
     display: flex;
     flex-direction: row;

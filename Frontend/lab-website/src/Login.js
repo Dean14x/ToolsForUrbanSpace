@@ -252,7 +252,7 @@ class LoginPanel extends React.Component {
     render() {
         return (
             <div className="login-signup-controls-container">
-                <CustomFeedbackField ref={this.usernameField} type="text" placeholder="Username" />
+                <CustomFeedbackField ref={this.usernameField} type="text" placeholder="Email" />
                 <CustomFeedbackField ref={this.passwordField} type="password" placeholder="Password" />
                 <div className="loginButton" onClick={() => { this.login(); }}><div>Login</div></div>
             </div>
