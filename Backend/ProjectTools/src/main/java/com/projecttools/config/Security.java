@@ -25,21 +25,7 @@ public class Security {
     public SecurityFilterChain filterChain(HttpSecurity httpRequest) throws Exception {
 
         httpRequest
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .csrf(AbstractHttpConfigurer::disable)
-                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-                        CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(Collections.singletonList("*"));
-                        config.setAllowedMethods(Collections.singletonList("*"));
-                        config.setAllowCredentials(true);
-                        config.setAllowedHeaders(Collections.singletonList("*"));
-                        config.setExposedHeaders(Arrays.asList("Authorization"));
-                        config.setMaxAge(3600L);
-                        return config;
-                    }
-                })).authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
+                .cors(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
 
                 {
                     authorizationManagerRequestMatcherRegistry.requestMatchers("/auth/**", "/test/**")
@@ -49,6 +35,7 @@ public class Security {
                             .anyRequest().permitAll();
 
                 })
+                .csrf(AbstractHttpConfigurer::disable)
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .formLogin().disable()
                 .httpBasic().disable()

@@ -35,7 +35,6 @@ com\projecttools\service\AdminService.class
 com\projecttools\Web\AuthController.class
 com\projecttools\request\UserResourceRequest.class
 com\projecttools\repository\ResourceRepository.class
-com\projecttools\config\Security$1.class
 com\projecttools\models\UserResources.class
 com\projecttools\exception\ExceptionsHandler.class
 com\projecttools\service\implementation\NetworkService.class

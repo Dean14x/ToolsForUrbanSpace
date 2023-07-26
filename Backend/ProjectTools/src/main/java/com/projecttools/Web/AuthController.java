@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin(maxAge = 3600)
 public class AuthController {
 
     private AuthService authService;
