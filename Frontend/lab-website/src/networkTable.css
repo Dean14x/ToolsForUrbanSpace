@@ -1,0 +1,33 @@
+.tabelle{
+    margin-top: 5rem;
+}
+
+.networkTableButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    margin-top: 20px;
+    margin-right: 200px;
+}
+
+.tableButton {
+    font-size: 20px;
+    margin: 5px;
+    width: 150px;
+    text-decoration: none;
+    background-color: rgb(56, 56, 241);
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+    
+}
+
+.tableButton:hover {
+    background-color: rgb(138, 138, 245);
+    color: white;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
+}

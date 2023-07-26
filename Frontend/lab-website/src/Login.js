@@ -43,18 +43,27 @@ class FeedbackField extends React.Component {
         let placeholder = "";
         if (this.props.placeholder)
             placeholder = this.props.placeholder;
+        let lgIcon = "";
+        if(this.props.placeholder === "Username") {
+            lgIcon = "./static/images/login/email-icon.png";
+        } else if(this.props.placeholder === "Password" || this.props.placeholder === "Confirm Password") {
+            lgIcon = "./static/images/login/lg-lock.png";
+        } else if(this.props.placeholder === "Email") {
+            lgIcon = "./static/images/login/lg-mail.png";
+        }
 
         // set feedback for current input
         let feedbackVal = this.getFeedback();
         let feedback = <div className="feedbackValue">
             {feedbackVal}
         </div>;
+        let feedbackIcon = <img className="lg-Icon" src={lgIcon}></img>
 
         return (
             <div className="feedbackField">
                 <div className="feedback-input-container">
                     <div className="feedback-input-icon">
-                        Q
+                        {feedbackIcon}
                     </div>
                     <input type={type} onChange={(event) => { this.setVal(event.target.value); }} placeholder={placeholder} />
                 </div>
@@ -130,6 +139,7 @@ class PasswordFeedbackField extends FeedbackField {
     setVal(val) {
         this.props.setMyVal(val);
         super.setVal(val);
+
     }
 
 
@@ -222,43 +232,29 @@ class LoginPanel extends React.Component {
         // call api to sign up
         let username = this.usernameField.current.getVal();
         let password = this.passwordField.current.getVal();
-        // let res = await fetch("http://localhost:5000/login", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({
-        //         username: username,
-        //         password: password
-        //     })
-        // });
-        // let data = await res.json();
-        // console.log(data);
+        
+        let response = await this.props.app.login(username, password);
 
-        if (username === "admin" && password === "admin") {
+        if(response.success) {
+            // return to home page
             this.props.login.setState({ loggedIn: true });
-            this.props.app.setUser("admin", "some session");
-            return;
         }
-        if (username === "user" && password === "user") {
-            this.props.login.setState({ loggedIn: true });
-            this.props.app.setUser("user", "some session");
-            return;
-        }
+
+
+        
         //this.usernameField.current.setFeedback("Invalid username or password");
-        this.passwordField.current.setFeedback("Invalid username or password");
-        return;
+        this.passwordField.current.setFeedback(response.message);
+        
 
-        // on success, redirect to overview
-        this.props.login.setState({ loggedIn: true });
+        
     };
 
     render() {
         return (
             <div className="login-signup-controls-container">
-                <CustomFeedbackField ref={this.usernameField} type="text" placeholder="Username" />
+                <CustomFeedbackField ref={this.usernameField} type="text" placeholder="Email" />
                 <CustomFeedbackField ref={this.passwordField} type="password" placeholder="Password" />
-                <div className="basicButton loginButton" onClick={() => { this.login(); }}>Login</div>
+                <div className="loginButton" onClick={() => { this.login(); }}><div>Login</div></div>
             </div>
         );
     }
@@ -275,6 +271,9 @@ class SignupPanel extends React.Component {
         this.emailField = React.createRef();
         this.passwordField = React.createRef();
         this.passwordMatchField = React.createRef();
+        let { get, set } = createGetterSetterPair();
+        this.pwGetter = get;
+        this.pwSetter = set;
     }
 
     setFeedback(val) {
@@ -305,15 +304,17 @@ class SignupPanel extends React.Component {
         let username = this.usernameField.current.getVal();
         let email = this.emailField.current.getVal();
         let password = this.passwordField.current.getVal();
-        // call api to sign up
-        // let res = await fetch("http://localhost:5000/signup", {
-        // ...
-        // });
+        
+        let response = await this.props.app.register(username, password, email);
+        if (response.success) {
+            this.setFeedback("Signup successful");
+            this.props.login.setState({ loggedIn: true });
+            this.props.app.setUser(username, "some session");
+        } else {
+            this.setFeedback(response.message);
+        }
 
-        // let data = await res.json();
-
-        this.props.login.setState({ loggedIn: true });
-        this.props.app.setUser(username, "some session");
+        
         return;
 
         // on success, redirect to overview
@@ -321,7 +322,8 @@ class SignupPanel extends React.Component {
 
     render() {
 
-        let { get, set } = createGetterSetterPair();
+        let get = this.pwGetter;
+        let set = this.pwSetter;
 
         return (
             <div className="login-signup-controls-container">
@@ -330,8 +332,7 @@ class SignupPanel extends React.Component {
                 <PasswordFeedbackField ref={this.passwordField} setMyVal={set} type="password" placeholder="Password" />
                 <PasswordMatchFeedbackField ref={this.passwordMatchField} getOtherVal={get} type="password" placeholder="Confirm Password" />
                 <div className="signup-feedback">{this.state.signupFeedback}</div>
-                <div className="basicButton loginButton" onClick={() => { this.signUp(); }}>Sign up</div>
-
+                <div className="loginButton" onClick={() => { this.signUp(); }}><div>Sign up</div></div>
             </div>
         );
     }
@@ -365,7 +366,7 @@ class Login extends React.Component {
 
         return (
             <div className="login-container">
-                {this.state.loggedIn ? <Navigate to="/overview" /> : null}
+                {this.state.loggedIn ? <Navigate to="/resources" /> : null}
                 <div className="login-signup-switch-container">
                     <button className={this.state.display===0? "active" : "inactive"} onClick={() => this.setState({ display: 0 })}>
                         Login
@@ -379,6 +380,15 @@ class Login extends React.Component {
                 </div>
 
                 {panel}
+
+            <div className="login-bg">
+                <div>
+                    <a className="login-text">SmartCommune</a>
+                </div>
+                <img src="/static/images/login/Vector3.png" alt="login-vec3"/>
+                <img src="/static/images/login/Vector4.png" alt="login-vec4"/>
+                <img src="/static/images/login/Ellipse2.png" alt="login-ellipse"/>
+            </div>
 
             </div>
         );

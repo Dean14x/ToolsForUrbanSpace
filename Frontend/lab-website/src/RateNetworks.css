@@ -1,0 +1,198 @@
+.networkRater {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.networkRaterTable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 400px;
+}
+
+.networkRaterTableRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 400px;
+}
+
+.networkRaterTableRow:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.networkRaterTableName {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: 400px;
+}
+
+.networkRaterTableNames {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px;
+    width: 400px;
+}
+
+.networkRaterTableRating {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: 150px;
+}
+
+.networkRaterTableRatings {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px;
+    width: 150px;
+}
+
+.networkRaterRadio {
+    /* radio input */
+    width: 20px;
+    height: 20px;
+}
+
+.networkRaterTableControls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.networkRaterTableControls > button {
+    width: 100px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 10px;
+    padding: 5px;
+}
+
+.networkRaterTableControls > .continue {
+    color: #EB7C61;
+}
+
+.networkRaterTableControls > .back {
+    color: #EB7C61;
+}
+
+.networkRaterTableControls > button:hover {
+    background-color: #EB7C61;
+    color: white;
+}
+
+.networkRaterStartButton {
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #EB7C61;
+    /* text hight center */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.networkRaterStartButton:hover {
+    background-color: #EB7C61;
+    color: white;
+}
+
+.networkRaterEndTableContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.networkRaterEndButton {
+    margin: 10px;
+    width: 300px;
+    min-width: 200px;
+    height: 40px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #EB7C61;
+    /* text hight center */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.networkRaterEndButton:hover {
+    transform: scale(1.1);
+}
+
+.networkMapContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.networkMapSplitView {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.mapSliderContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+
+.mapSlider {
+    width: 100%;
+    min-width: 400px;
+}
+
+.networkMapList {
+    width: 200px;
+}
+
+.networkMap {
+    width: 100%;
+    min-width: 400px;
+    height: 100%;
+    min-height: 400px;
+    margin-bottom: 20px;
+}
+
