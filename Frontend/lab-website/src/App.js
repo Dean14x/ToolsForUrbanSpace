@@ -34,7 +34,7 @@ class App extends React.Component {
   }
 
   getAPIAddress() {
-    return "https://toolsforurbanspace.onrender.com/";
+    return "http://localhost:8080g/";
   }
 
   async apiRequest(method, endpoint, body, token = null) {
