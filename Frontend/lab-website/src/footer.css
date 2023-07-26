@@ -9,23 +9,54 @@
 }
 
 .footer-item {
+    display: flex;
     color: black;
     text-align: center;
+    justify-content: center;
     padding: 14px 16px;
     text-decoration: none;
     border-radius: 28px;
     min-width: 40px;
     margin: 0px 15px;
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+#links {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#logos {
+    position: absolute;
+    display: flex;
+    right: 50px;
 }
 
 .footer-link {
-    float: left;
-    display: block;
     color: black;
-    text-align: center;
-    padding: 14px 16px;
     text-decoration: none;
-    border-radius: 28px;
-    min-width: 40px;
-    margin: 0px 15px;
+    margin: 0em 1em 0em 1em;
+}
+
+.m2c img {
+    height: 20px;
+    width: 45px;
+}
+
+.bmbf img {
+    height: 20px;
+    width: 45px; 
+}
+
+.logoTxt {
+    font-size: 12px;
+    font-weight: 600;
+    padding-top: .25em;
+}
+
+
+.lab img{
+    height: 20px;
+    width: 45px;
 }
