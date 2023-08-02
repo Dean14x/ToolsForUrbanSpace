@@ -49,7 +49,7 @@ function NetworkTable() {
                     Add
                 </button>
                 <Link className="tableButton" to="/rateNetworks">
-                    Netzwerk bewerten
+                    Bewerten
                 </Link>
             </div>
             <Table rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
