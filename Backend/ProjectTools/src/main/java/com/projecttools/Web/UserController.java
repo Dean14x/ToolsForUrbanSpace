@@ -14,6 +14,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/user")
 @PreAuthorize("hasRole('ROLE_user')")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final IUserService _userService;

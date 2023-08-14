@@ -25,8 +25,9 @@ public class Security {
     public SecurityFilterChain filterChain(HttpSecurity httpRequest) throws Exception {
 
         httpRequest
-                .cors(AbstractHttpConfigurer::disable).authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
-
+                .cors()
+                .and()
+                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
                 {
                     authorizationManagerRequestMatcherRegistry.requestMatchers("/auth/**", "/test/**")
                             .permitAll()
@@ -35,7 +36,7 @@ public class Security {
                             .anyRequest().permitAll();
 
                 })
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf().disable()
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .formLogin().disable()
                 .httpBasic().disable()

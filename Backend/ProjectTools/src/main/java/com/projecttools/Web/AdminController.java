@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 @PreAuthorize("hasRole('ROLE_admin')")
+@CrossOrigin(origins = "*")
 public class AdminController {
 
     private CategoryService categoryService;
